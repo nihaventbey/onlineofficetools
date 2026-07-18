@@ -23,6 +23,12 @@ export default function ToolGrid({
     );
   }
 
+  const badgeLabels = {
+    new: dict.common.newBadge,
+    popular: dict.common.popularBadge,
+    beta: dict.common.betaBadge,
+  };
+
   return (
     <div
       className={
@@ -41,6 +47,8 @@ export default function ToolGrid({
           categoryLabel={dict.categories[tool.category]}
           cta={dict.common.openTool}
           compact={compact}
+          coverUrl={tool.coverUrl}
+          badgeLabels={badgeLabels}
         />
       ))}
     </div>

@@ -69,7 +69,7 @@ export default function PdfCompress({ labels }: Props) {
       <FileDropZone
         accept="application/pdf,.pdf"
         dropHint={labels.dropHint}
-        selectHint={labels.selectHint}
+        selectHint={labels.selectHint ?? ""}
         onFiles={addFiles}
         disabled={busy}
       />

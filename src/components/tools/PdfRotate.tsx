@@ -79,7 +79,7 @@ export default function PdfRotate({ labels }: Props) {
       <FileDropZone
         accept="application/pdf,.pdf"
         dropHint={labels.dropHint}
-        selectHint={labels.selectHint}
+        selectHint={labels.selectHint ?? ""}
         onFiles={(f) => void addFiles(f)}
         disabled={busy}
       />

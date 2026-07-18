@@ -30,7 +30,9 @@ export default function AdsLayout({ children }: { children: React.ReactNode }) {
           showSidebar ? "lg:grid-cols-[minmax(0,1fr)_280px]" : ""
         }`}
       >
-        <main className="min-w-0">{children}</main>
+        <main id="main-content" className="min-w-0">
+          {children}
+        </main>
         {showSidebar ? (
           <aside className="hidden lg:block">
             <div className="sticky top-24">

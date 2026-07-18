@@ -1,4 +1,5 @@
 import { PDFDocument, degrees, type PDFPage } from "pdf-lib";
+import { imageFileToPngOrJpeg } from "@/lib/files/utils";
 import { readFileBytes } from "@/lib/pdf/utils";
 
 export async function loadPdfDoc(file: File): Promise<PDFDocument> {
@@ -63,12 +64,9 @@ export async function imagesToPdf(
   const A4 = { w: 595.28, h: 841.89 };
 
   for (const file of files) {
-    const bytes = await readFileBytes(file);
-    const isPng =
-      file.type === "image/png" || file.name.toLowerCase().endsWith(".png");
-    const image = isPng
-      ? await doc.embedPng(bytes)
-      : await doc.embedJpg(bytes);
+    const { bytes, kind } = await imageFileToPngOrJpeg(file);
+    const image =
+      kind === "png" ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
 
     let pageW: number;
     let pageH: number;

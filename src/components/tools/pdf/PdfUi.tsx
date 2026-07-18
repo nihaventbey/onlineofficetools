@@ -11,7 +11,7 @@ type FileDropZoneProps = {
   accept: string;
   multiple?: boolean;
   dropHint: string;
-  selectHint: string;
+  selectHint?: string;
   onFiles: (files: File[]) => void;
   disabled?: boolean;
 };
@@ -36,7 +36,7 @@ export function FileDropZone({
   );
 
   return (
-    <div
+    <label
       onDragOver={(e) => {
         e.preventDefault();
         if (!disabled) setDragging(true);
@@ -47,8 +47,7 @@ export function FileDropZone({
         setDragging(false);
         if (!disabled) handle(e.dataTransfer.files);
       }}
-      onClick={() => !disabled && inputRef.current?.click()}
-      className={`flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-4 py-8 text-center transition ${
+      className={`flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-4 py-8 text-center transition focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-500/15 ${
         dragging
           ? "border-blue-400 bg-blue-50/60"
           : "border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-blue-50/40"
@@ -61,13 +60,14 @@ export function FileDropZone({
         type="file"
         accept={accept}
         multiple={multiple}
-        className="hidden"
+        className="sr-only"
+        disabled={disabled}
         onChange={(e) => {
           handle(e.target.files);
           e.target.value = "";
         }}
       />
-    </div>
+    </label>
   );
 }
 

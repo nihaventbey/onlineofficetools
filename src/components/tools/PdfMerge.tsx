@@ -78,7 +78,7 @@ export default function PdfMerge({ labels }: Props) {
         accept="application/pdf,.pdf"
         multiple
         dropHint={labels.dropHint}
-        selectHint={labels.selectHint}
+        selectHint={labels.selectHint ?? ""}
         onFiles={addFiles}
         disabled={busy}
       />

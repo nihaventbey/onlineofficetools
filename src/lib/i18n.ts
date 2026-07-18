@@ -55,6 +55,18 @@ export type ToolSharedLabels = {
   clear: string;
 };
 
+export type ToolFileLabels = ToolSharedLabels & {
+  dropHint: string;
+  selectHint?: string;
+  remove: string;
+  download: string;
+  processing: string;
+  invalidFile: string;
+  tooLarge: string;
+  error: string;
+  limitHint: string;
+};
+
 export type Dictionary = {
   common: {
     siteName: string;
@@ -80,6 +92,26 @@ export type Dictionary = {
     trustPrivate: string;
     trustFast: string;
     trustFree: string;
+    trustOnDevice: string;
+    newBadge: string;
+    popularBadge: string;
+    betaBadge: string;
+    recentTools: string;
+    favoriteTools: string;
+    addFavorite: string;
+    removeFavorite: string;
+    categoryTools: string;
+    categoryDescription: string;
+    nextStep: string;
+    wasHelpful: string;
+    yes: string;
+    no: string;
+    thanksFeedback: string;
+    commandPalette: string;
+    skipToContent: string;
+    consentMessage: string;
+    consentAccept: string;
+    consentDecline: string;
   };
   home: {
     title: string;
@@ -94,11 +126,14 @@ export type Dictionary = {
   };
   categories: {
     text: string;
+    documents: string;
+    spreadsheets: string;
+    presentations: string;
+    pdf: string;
+    image: string;
     developer: string;
     security: string;
-    image: string;
     calculator: string;
-    pdf: string;
   };
   legal: {
     privacy: {
@@ -320,6 +355,86 @@ export type Dictionary = {
       tooLarge: string;
       error: string;
       limitHint: string;
+    };
+    findReplace: ToolSharedLabels & {
+      placeholder: string;
+      find: string;
+      replace: string;
+      apply: string;
+      trim: string;
+      dedupe: string;
+      sort: string;
+    };
+    pdfToText: ToolFileLabels & { empty: string; pages: string };
+    docxViewer: ToolFileLabels & { extract: string };
+    docxToHtml: ToolFileLabels;
+    htmlToDocx: ToolSharedLabels & {
+      placeholder: string;
+      download: string;
+      error: string;
+    };
+    docxDiff: ToolFileLabels & {
+      left: string;
+      right: string;
+      compare: string;
+      identical: string;
+      differences: string;
+    };
+    textToPdf: ToolSharedLabels & {
+      placeholder: string;
+      download: string;
+      error: string;
+    };
+    xlsxViewer: ToolFileLabels & { sheet: string; rows: string };
+    xlsxToCsv: ToolFileLabels & { sheet: string };
+    csvToXlsx: ToolFileLabels & { placeholder: string };
+    csvEditor: ToolFileLabels & {
+      addRow: string;
+      addCol: string;
+      placeholder: string;
+    };
+    imagesToPptx: ToolFileLabels;
+    textToPptx: ToolSharedLabels & {
+      placeholder: string;
+      download: string;
+      error: string;
+    };
+    pptxExtract: ToolFileLabels;
+    pdfToImages: ToolFileLabels & { downloadAll: string };
+    imageResize: ToolFileLabels & {
+      width: string;
+      height: string;
+      keepRatio: string;
+      percent: string;
+    };
+    imageCompress: ToolFileLabels & {
+      quality: string;
+      resultSize: string;
+    };
+    imageCrop: ToolFileLabels & {
+      rotate: string;
+      flipH: string;
+      flipV: string;
+    };
+    imageConvert: ToolFileLabels & {
+      format: string;
+      quality: string;
+    };
+    imageMetadata: ToolFileLabels & {
+      strip: string;
+      info: string;
+    };
+    imageEnhance: ToolFileLabels & {
+      scale: string;
+      sharpen: string;
+      contrast: string;
+      compare: string;
+    };
+    imageAiUpscale: ToolFileLabels & {
+      start: string;
+      unsupported: string;
+      loadingModel: string;
+      privacyNote: string;
     };
   };
 };

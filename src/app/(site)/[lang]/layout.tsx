@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import AdsLayout from "@/components/AdsLayout";
+import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ADSENSE_CLIENT, isAdSenseConfigured } from "@/lib/adsense";
@@ -68,7 +69,15 @@ export async function generateMetadata({
       siteName: dict.common.siteName,
       title: dict.home.title,
       description: dict.home.description,
+      images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630 }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: dict.home.title,
+      description: dict.home.description,
+      images: [absoluteUrl("/og-default.png")],
+    },
+    manifest: "/manifest.webmanifest",
   };
 }
 
@@ -99,6 +108,11 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
         <Header locale={locale} dict={dict} logoUrl={logoUrl} />
         <AdsLayout>{children}</AdsLayout>
         <Footer locale={locale} dict={dict} />
+        <ConsentBanner
+          message={dict.common.consentMessage}
+          acceptLabel={dict.common.consentAccept}
+          declineLabel={dict.common.consentDecline}
+        />
       </body>
     </html>
   );

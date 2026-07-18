@@ -2,9 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ToolSearch from "@/components/tools/ToolSearch";
 import ToolGrid from "@/components/tools/ToolGrid";
+import RecentTools from "@/components/tools/RecentTools";
 import { getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
+import { absoluteUrl } from "@/lib/site";
 import { categoryStyles, toolCategories } from "@/lib/tools/categories";
+import { featuredTools } from "@/lib/tools/registry";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
@@ -17,14 +20,40 @@ export default async function HomePage({ params }: PageProps) {
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
   const tools = await getPublishedTools(locale);
-  const popular = tools.slice(0, 4);
+  const featuredSlugs = new Set(featuredTools().map((t) => t.slug));
+  const popular = [
+    ...tools.filter((t) => featuredSlugs.has(t.slug)),
+    ...tools,
+  ]
+    .filter(
+      (t, i, arr) => arr.findIndex((x) => x.slug === t.slug) === i,
+    )
+    .slice(0, 4);
+
   const toolsCountLabel = dict.home.toolsCount.replace(
     "{count}",
     String(tools.length),
   );
 
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: dict.common.siteName,
+    url: absoluteUrl(`/${locale}`),
+    inLanguage: locale,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${absoluteUrl(`/${locale}`)}#tools`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <div className="space-y-14 pb-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+      />
       <section className="relative overflow-hidden rounded-[2rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-6 py-12 shadow-sm sm:px-12 sm:py-16 lg:px-16 lg:py-20">
         <div
           aria-hidden
@@ -33,10 +62,6 @@ export default async function HomePage({ params }: PageProps) {
         <div
           aria-hidden
           className="pointer-events-none absolute -bottom-28 -left-16 h-80 w-80 rounded-full bg-sky-300/25 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-1/4 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-indigo-300/15 blur-2xl"
         />
 
         <div className="relative mx-auto max-w-4xl text-center">
@@ -69,10 +94,10 @@ export default async function HomePage({ params }: PageProps) {
               {dict.common.exploreCta}
             </Link>
             <Link
-              href={`/${locale}/tools/pdf-merge`}
+              href={`/${locale}/categories/documents`}
               className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 px-6 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-blue-200 hover:bg-white"
             >
-              {dict.categories.pdf} →
+              {dict.categories.documents} →
             </Link>
           </div>
 
@@ -97,7 +122,7 @@ export default async function HomePage({ params }: PageProps) {
               return (
                 <Link
                   key={cat}
-                  href={`/${locale}#category-${cat}`}
+                  href={`/${locale}/categories/${cat}`}
                   className={`inline-flex min-h-10 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold transition hover:scale-[1.02] ${style.bg} ${style.text}`}
                 >
                   {dict.categories[cat]}
@@ -107,6 +132,8 @@ export default async function HomePage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      <RecentTools locale={locale} dict={dict} />
 
       <section id="tools" className="scroll-mt-24 space-y-4">
         <div>
@@ -135,17 +162,25 @@ export default async function HomePage({ params }: PageProps) {
             id={`category-${cat}`}
             className="scroll-mt-24 space-y-4"
           >
-            <div className="flex items-center gap-3">
-              <span
-                className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold ${style.bg} ${style.text}`}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span
+                  className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold ${style.bg} ${style.text}`}
+                >
+                  {cat.slice(0, 1).toUpperCase()}
+                </span>
+                <h2 className="text-xl font-semibold text-slate-900">
+                  {dict.categories[cat]}
+                </h2>
+              </div>
+              <Link
+                href={`/${locale}/categories/${cat}`}
+                className={`text-sm font-semibold ${style.text}`}
               >
-                {cat.slice(0, 1).toUpperCase()}
-              </span>
-              <h2 className="text-xl font-semibold text-slate-900">
-                {dict.categories[cat]}
-              </h2>
+                {dict.common.openTool} →
+              </Link>
             </div>
-            <ToolGrid locale={locale} tools={group} dict={dict} />
+            <ToolGrid locale={locale} tools={group.slice(0, 8)} dict={dict} />
           </section>
         );
       })}

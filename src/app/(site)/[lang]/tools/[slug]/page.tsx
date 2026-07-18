@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ToolPageShell from "@/components/tools/ToolPageShell";
+import ToolFeedback from "@/components/tools/ToolFeedback";
 import { getPublishedSlugs, getPublishedTool, getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { getToolBySlug } from "@/lib/tools/registry";
+import { loadToolComponent } from "@/lib/tools/loaders";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -33,14 +35,12 @@ export async function generateMetadata({
   const description =
     tool?.seoDescription || labels?.metaDescription || labels?.description || "";
 
-  const languages = languageAlternates(`/tools/${slug}`);
-
   return {
     title,
     description,
     alternates: {
       canonical: absoluteUrl(`/${locale}/tools/${slug}`),
-      languages,
+      languages: languageAlternates(`/tools/${slug}`),
     },
     openGraph: {
       title,
@@ -62,31 +62,82 @@ export default async function ToolPage({ params }: PageProps) {
   const tool = await getPublishedTool(slug, locale);
   if (!tool) notFound();
 
+  const Component = await loadToolComponent(slug);
+  if (!Component) notFound();
+
   const labels = dict.tools[reg.dictKey];
   const all = await getPublishedTools(locale);
-  const related = all
-    .filter((t) => t.slug !== slug && t.category === tool.category)
-    .slice(0, 3);
+  const same = all.filter((t) => t.slug !== slug && t.category === tool.category);
+  const cross = all.filter((t) => t.slug !== slug && t.category !== tool.category);
+  const related = [...same.slice(0, 2), ...cross.slice(0, 1)];
 
-  const Component = reg.Component;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: tool.title || labels.title,
+    description: tool.description || labels.description,
+    url: absoluteUrl(`/${locale}/tools/${slug}`),
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    inLanguage: locale,
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: dict.common.home,
+        item: absoluteUrl(`/${locale}`),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: dict.categories[tool.category],
+        item: absoluteUrl(`/${locale}/categories/${tool.category}`),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: tool.title || labels.title,
+        item: absoluteUrl(`/${locale}/tools/${slug}`),
+      },
+    ],
+  };
 
   return (
-    <ToolPageShell
-      locale={locale}
-      dict={dict}
-      title={tool.title || labels.title}
-      description={tool.description || labels.description}
-      categoryLabel={dict.categories[tool.category]}
-      related={related}
-    >
-      <Component labels={labels} />
-      {tool.content ? (
-        <article className="prose prose-zinc max-w-none dark:prose-invert">
-          <div className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-            {tool.content}
-          </div>
-        </article>
-      ) : null}
-    </ToolPageShell>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <ToolPageShell
+        locale={locale}
+        dict={dict}
+        title={tool.title || labels.title}
+        description={tool.description || labels.description}
+        category={tool.category}
+        categoryLabel={dict.categories[tool.category]}
+        related={related}
+        slug={slug}
+      >
+        <Component labels={labels} />
+        <ToolFeedback dict={dict} slug={slug} />
+        {tool.content ? (
+          <article className="prose prose-slate max-w-none">
+            <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-600">
+              {tool.content}
+            </div>
+          </article>
+        ) : null}
+      </ToolPageShell>
+    </>
   );
 }

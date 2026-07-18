@@ -30,7 +30,7 @@ export default function Footer({ locale, dict }: FooterProps) {
             {toolCategories.map((cat) => (
               <li key={cat}>
                 <Link
-                  href={`/${locale}#category-${cat}`}
+                  href={`/${locale}/categories/${cat}`}
                   className="text-slate-700 hover:text-blue-600"
                 >
                   {dict.categories[cat]}

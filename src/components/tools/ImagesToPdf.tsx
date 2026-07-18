@@ -72,7 +72,7 @@ export default function ImagesToPdf({ labels }: Props) {
         accept="image/png,image/jpeg,image/jpg,image/webp,.png,.jpg,.jpeg,.webp"
         multiple
         dropHint={labels.dropHint}
-        selectHint={labels.selectHint}
+        selectHint={labels.selectHint ?? ""}
         onFiles={addFiles}
         disabled={busy}
       />

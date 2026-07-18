@@ -9,6 +9,8 @@ import type {
   ToolTranslationRow,
 } from "@/lib/supabase/types";
 import { locales, type Locale } from "@/lib/i18n";
+import { toolCategories } from "@/lib/tools/categories";
+import { isRegisteredSlug } from "@/lib/tools/registry";
 
 type ToolWithTranslations = ToolRow & {
   tool_translations: ToolTranslationRow[] | null;
@@ -113,6 +115,13 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
 
     if (!slug.trim() || !translations.en.title.trim()) {
       setError("Slug and English title are required.");
+      return;
+    }
+
+    if (!isRegisteredSlug(slug.trim())) {
+      setError(
+        "Slug is not in the tool registry. Add the component/loader before publishing.",
+      );
       return;
     }
 
@@ -226,11 +235,17 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
         </label>
         <label className="block text-sm">
           <span className="mb-1 block font-medium">Category</span>
-          <input
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-950"
-          />
+          >
+            {toolCategories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </label>
         <label className="block text-sm">
           <span className="mb-1 block font-medium">Status</span>

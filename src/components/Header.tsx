@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import CommandPalette from "@/components/CommandPalette";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { categoryStyles, toolCategories } from "@/lib/tools/categories";
 import { toolRegistry, toolsByCategory } from "@/lib/tools/registry";
@@ -16,6 +17,7 @@ type HeaderProps = {
 export default function Header({ locale, dict, logoUrl }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [mobileCat, setMobileCat] = useState<string | null>(null);
   const megaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,8 +39,14 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur-md">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+      >
+        {dict.common.skipToContent}
+      </a>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-5">
+        <div className="flex min-w-0 items-center gap-5">
           <Link
             href={`/${locale}`}
             className="group flex min-w-0 items-center gap-2.5"
@@ -65,11 +73,12 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 xl:flex">
             <div className="relative" ref={megaRef}>
               <button
                 type="button"
                 aria-expanded={megaOpen}
+                aria-controls="tools-mega-menu"
                 onClick={() => setMegaOpen((v) => !v)}
                 className={`inline-flex min-h-11 items-center gap-1.5 rounded-xl px-3.5 text-sm font-semibold transition ${
                   megaOpen
@@ -84,7 +93,10 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
               </button>
 
               {megaOpen ? (
-                <div className="absolute left-0 top-full z-50 mt-2 w-[min(92vw,56rem)] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
+                <div
+                  id="tools-mega-menu"
+                  className="absolute left-0 top-full z-50 mt-2 w-[min(94vw,64rem)] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
+                >
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {toolCategories.map((cat) => {
                       const tools = toolsByCategory(cat);
@@ -92,13 +104,15 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
                       const style = categoryStyles[cat];
                       return (
                         <div key={cat}>
-                          <p
-                            className={`mb-2 text-xs font-bold uppercase tracking-wide ${style.text}`}
+                          <Link
+                            href={`/${locale}/categories/${cat}`}
+                            onClick={() => setMegaOpen(false)}
+                            className={`mb-2 inline-flex text-xs font-bold uppercase tracking-wide ${style.text}`}
                           >
                             {dict.categories[cat]}
-                          </p>
+                          </Link>
                           <ul className="space-y-0.5">
-                            {tools.map((tool) => (
+                            {tools.slice(0, 6).map((tool) => (
                               <li key={tool.slug}>
                                 <Link
                                   href={`/${locale}/tools/${tool.slug}`}
@@ -119,44 +133,36 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
                       );
                     })}
                   </div>
-                  <div className="mt-4 border-t border-slate-100 pt-3">
-                    <Link
-                      href={`/${locale}#tools`}
-                      onClick={() => setMegaOpen(false)}
-                      className="text-sm font-semibold text-blue-600 hover:text-blue-700"
-                    >
-                      {dict.common.exploreCta} →
-                    </Link>
-                  </div>
                 </div>
               ) : null}
             </div>
 
-            <Link
-              href={`/${locale}`}
-              className="rounded-lg px-2.5 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            >
-              {dict.common.home}
-            </Link>
-            <Link
-              href={`/${locale}/about`}
-              className="rounded-lg px-2.5 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            >
-              {dict.common.about}
-            </Link>
+            {toolCategories.slice(0, 6).map((cat) => {
+              const style = categoryStyles[cat];
+              return (
+                <Link
+                  key={cat}
+                  href={`/${locale}/categories/${cat}`}
+                  className={`rounded-lg px-2 py-2 text-xs font-semibold ${style.text} hover:bg-slate-50`}
+                >
+                  {dict.categories[cat]}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
         <div className="flex items-center gap-2">
+          <CommandPalette locale={locale} dict={dict} />
           <LanguageSwitcher
             currentLocale={locale}
             label={dict.common.language}
           />
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 xl:hidden"
             aria-expanded={mobileOpen}
-            aria-label="Menu"
+            aria-label={dict.common.allTools}
             onClick={() => setMobileOpen((v) => !v)}
           >
             <span className="flex flex-col gap-1.5">
@@ -169,7 +175,7 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
       </div>
 
       {mobileOpen ? (
-        <div className="max-h-[70vh] overflow-y-auto border-t border-slate-200 bg-white px-4 py-4 lg:hidden">
+        <div className="max-h-[70vh] overflow-y-auto border-t border-slate-200 bg-white px-4 py-4 xl:hidden">
           <nav className="flex flex-col gap-1 text-sm font-medium">
             <Link
               href={`/${locale}`}
@@ -178,19 +184,48 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
             >
               {dict.common.home}
             </Link>
-            <p className="mt-2 px-3 text-xs font-bold uppercase tracking-wide text-slate-400">
-              {dict.common.allTools}
-            </p>
-            {toolRegistry.map((tool) => (
-              <Link
-                key={tool.slug}
-                href={`/${locale}/tools/${tool.slug}`}
-                onClick={() => setMobileOpen(false)}
-                className="min-h-11 rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-100"
-              >
-                {dict.tools[tool.dictKey].title}
-              </Link>
-            ))}
+            {toolCategories.map((cat) => {
+              const tools = toolsByCategory(cat);
+              if (!tools.length) return null;
+              const open = mobileCat === cat;
+              const style = categoryStyles[cat];
+              return (
+                <div key={cat}>
+                  <button
+                    type="button"
+                    onClick={() => setMobileCat(open ? null : cat)}
+                    className={`flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 ${style.text}`}
+                  >
+                    <span className="font-semibold">{dict.categories[cat]}</span>
+                    <span>{open ? "▴" : "▾"}</span>
+                  </button>
+                  {open ? (
+                    <ul className="mb-2 ml-2 space-y-0.5 border-l border-slate-100 pl-2">
+                      <li>
+                        <Link
+                          href={`/${locale}/categories/${cat}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="block min-h-10 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-50"
+                        >
+                          {dict.common.allTools}
+                        </Link>
+                      </li>
+                      {tools.map((tool) => (
+                        <li key={tool.slug}>
+                          <Link
+                            href={`/${locale}/tools/${tool.slug}`}
+                            onClick={() => setMobileOpen(false)}
+                            className="block min-h-10 rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-50"
+                          >
+                            {dict.tools[tool.dictKey].title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              );
+            })}
             <Link
               href={`/${locale}/about`}
               onClick={() => setMobileOpen(false)}
@@ -198,14 +233,10 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
             >
               {dict.common.about}
             </Link>
-            <Link
-              href={`/${locale}/contact`}
-              onClick={() => setMobileOpen(false)}
-              className="min-h-11 rounded-lg px-3 py-2 hover:bg-slate-100"
-            >
-              {dict.common.contact}
-            </Link>
           </nav>
+          <p className="mt-3 px-3 text-xs text-slate-400">
+            {toolRegistry.length} {dict.common.tools.toLowerCase()}
+          </p>
         </div>
       ) : null}
     </header>

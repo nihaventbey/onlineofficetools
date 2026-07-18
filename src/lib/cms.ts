@@ -234,7 +234,10 @@ function withRegistryCategory(
     category === "text" ||
     category === "image" ||
     category === "calculator" ||
-    category === "pdf"
+    category === "pdf" ||
+    category === "documents" ||
+    category === "spreadsheets" ||
+    category === "presentations"
   ) {
     return category;
   }
@@ -260,23 +263,36 @@ export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> 
     isRegisteredSlug(tool.slug),
   );
 
-  if (!tools.length) return fallbackTools(locale);
-
   const dict = await getDictionary(locale);
+  const bySlug = new Map(
+    tools.map((tool) => {
+      const exact = (tool.translations ?? []).find((t) => t.locale === locale);
+      const labels = dictLabels(tool.slug, dict);
+      const en = pickTranslation(tool.translations ?? [], locale);
+      return [
+        tool.slug,
+        {
+          slug: tool.slug,
+          title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
+          description:
+            exact?.short_description ??
+            labels?.description ??
+            en?.short_description ??
+            "",
+          coverUrl: publicMediaUrl(tool.cover_path),
+          sortOrder: tool.sort_order,
+          category: withRegistryCategory(tool.slug, tool.category),
+        } satisfies CmsToolCard,
+      ] as const;
+    }),
+  );
 
-  return tools.map((tool) => {
-    const exact = (tool.translations ?? []).find((t) => t.locale === locale);
-    const labels = dictLabels(tool.slug, dict);
-    const en = pickTranslation(tool.translations ?? [], locale);
-    return {
-      slug: tool.slug,
-      title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
-      description:
-        exact?.short_description ?? labels?.description ?? en?.short_description ?? "",
-      coverUrl: publicMediaUrl(tool.cover_path),
-      sortOrder: tool.sort_order,
-      category: withRegistryCategory(tool.slug, tool.category),
-    };
+  // Always expose every registered tool; CMS overlays metadata when present.
+  const local = await fallbackTools(locale);
+  return local.map((card, index) => {
+    const cms = bySlug.get(card.slug);
+    if (!cms) return { ...card, sortOrder: 1000 + index };
+    return cms;
   });
 }
 
@@ -380,17 +396,8 @@ export async function getSiteLogoUrl(): Promise<string | null> {
 }
 
 export async function getPublishedSlugs(): Promise<string[]> {
-  const supabase = getBuildClient();
-  if (!supabase) return toolRegistry.map((t) => t.slug);
-
-  const { data, error } = await supabase
-    .from("tools")
-    .select("slug")
-    .eq("status", "published");
-
-  if (error || !data?.length) return toolRegistry.map((t) => t.slug);
-
-  return data.map((row) => row.slug).filter(isRegisteredSlug);
+  // Tool executables live in the registry; CMS cannot invent unknown slugs.
+  return toolRegistry.map((t) => t.slug);
 }
 
 export { MEDIA_BUCKET, publicMediaUrl };
