@@ -27,8 +27,10 @@
   "home": {
     "title": "Free Online Office Tools",
     "description": "Fast, private, browser-based office utilities. No uploads, no server processing.",
-    "heroTitle": "Office tools that run in your browser",
-    "heroSubtitle": "Convert, count, format, and generate instantly — zero uploads, zero server cost, full privacy.",
+    "heroTitle": "All the office tools you need —",
+    "heroHighlight": "right in your browser",
+    "heroSubtitle": "Merge PDFs, convert files, format text, and more. No uploads. No sign-up. Free forever.",
+    "toolsCount": "{count} free tools",
     "toolsHeading": "All tools",
     "popularHeading": "Popular right now",
     "categoryHeading": "Browse by category"

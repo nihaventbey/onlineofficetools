@@ -27,8 +27,10 @@
   "home": {
     "title": "Ücretsiz Online Ofis Araçları",
     "description": "Hızlı, gizli ve tarayıcıda çalışan ofis araçları. Yükleme yok, sunucu işlemi yok.",
-    "heroTitle": "Tarayıcınızda çalışan ofis araçları",
-    "heroSubtitle": "Sayın, biçimlendirin, dönüştürün ve üretin — yükleme yok, sunucu maliyeti yok, tam gizlilik.",
+    "heroTitle": "İhtiyacınız olan tüm ofis araçları —",
+    "heroHighlight": "doğrudan tarayıcınızda",
+    "heroSubtitle": "PDF birleştirin, dosya dönüştürün, metin biçimlendirin ve daha fazlası. Yükleme yok. Kayıt yok. Sonsuza kadar ücretsiz.",
+    "toolsCount": "{count} ücretsiz araç",
     "toolsHeading": "Tüm araçlar",
     "popularHeading": "Şu an popüler",
     "categoryHeading": "Kategoriye göre göz at"

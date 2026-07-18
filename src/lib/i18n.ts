@@ -74,6 +74,8 @@ export type Dictionary = {
     description: string;
     heroTitle: string;
     heroSubtitle: string;
+    heroHighlight: string;
+    toolsCount: string;
     toolsHeading: string;
     popularHeading: string;
     categoryHeading: string;
