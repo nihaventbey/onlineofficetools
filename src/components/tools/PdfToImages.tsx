@@ -92,7 +92,11 @@ export default function PdfToImages({ labels }: Props) {
         onFiles={(files) => void renderPdf(files[0])}
         disabled={busy}
       />
-      {pageCount ? <p className="text-sm text-slate-600">{pageCount} pages</p> : null}
+      {pageCount ? (
+        <p className="text-sm text-slate-600">
+          {labels.pagesLabel.replace("{count}", String(pageCount))}
+        </p>
+      ) : null}
       {busy ? <p className="text-sm text-slate-500">{labels.processing}</p> : null}
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       {previews.length ? (
@@ -100,7 +104,11 @@ export default function PdfToImages({ labels }: Props) {
           {previews.map((url, i) => (
             <div key={i} className="rounded-xl border border-slate-200 p-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={url} alt={`Page ${i + 1}`} className="mb-2 max-h-48 w-full object-contain" />
+              <img
+                src={url}
+                alt={labels.pageAlt.replace("{n}", String(i + 1))}
+                className="mb-2 max-h-48 w-full object-contain"
+              />
               <button
                 type="button"
                 onClick={() => void downloadOne(i)}

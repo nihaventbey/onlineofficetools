@@ -6,7 +6,8 @@ import { useToolDraft } from "@/lib/state/useToolDraft";
 
 type Props = { labels: Dictionary["tools"]["htmlEditor"] };
 
-const SAMPLE = `<!DOCTYPE html>
+function createSample(title: string, text: string) {
+  return `<!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -15,10 +16,11 @@ const SAMPLE = `<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>Hello</h1>
-  <p>Edit HTML on the left to preview here.</p>
+  <h1>${title}</h1>
+  <p>${text}</p>
 </body>
 </html>`;
+}
 
 /**
  * Bidirectional editor: code textarea ↔ contentEditable body panel.
@@ -41,7 +43,8 @@ function replaceBody(html: string, bodyInner: string): string {
 type Tab = "code" | "visual";
 
 export default function HtmlEditor({ labels }: Props) {
-  const [html, setHtml, clear] = useToolDraft("html-editor", SAMPLE);
+  const sample = createSample(labels.sampleTitle, labels.sampleText);
+  const [html, setHtml, clear] = useToolDraft("html-editor", sample);
   const [copied, setCopied] = useState(false);
   const [tab, setTab] = useState<Tab>("code");
   const [showSandbox, setShowSandbox] = useState(false);
@@ -122,9 +125,11 @@ export default function HtmlEditor({ labels }: Props) {
 
   const sandboxPanel = showSandbox ? (
     <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm lg:col-span-2">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Sandbox preview</p>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {labels.sandboxPreview}
+      </p>
       <iframe
-        title="Sandbox preview"
+        title={labels.sandboxPreview}
         sandbox=""
         srcDoc={html}
         className="h-64 w-full rounded-xl border border-slate-200 bg-white lg:h-80"
@@ -160,7 +165,7 @@ export default function HtmlEditor({ labels }: Props) {
 
       <label className="flex items-center gap-2 text-sm text-slate-600">
         <input type="checkbox" checked={showSandbox} onChange={(e) => setShowSandbox(e.target.checked)} />
-        Show optional sandbox iframe preview
+        {labels.showSandbox}
       </label>
       {sandboxPanel}
 
@@ -168,7 +173,7 @@ export default function HtmlEditor({ labels }: Props) {
         <button type="button" onClick={handleCopy} className="min-h-11 rounded-xl bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-500">
           {copied ? labels.copied : labels.copy}
         </button>
-        <button type="button" onClick={() => setHtml(SAMPLE)} className="min-h-11 rounded-xl border border-slate-200 px-4 text-sm font-medium">
+        <button type="button" onClick={() => setHtml(sample)} className="min-h-11 rounded-xl border border-slate-200 px-4 text-sm font-medium">
           {labels.reset}
         </button>
         <button type="button" onClick={clear} className="min-h-11 rounded-xl border border-slate-200 px-4 text-sm font-medium">

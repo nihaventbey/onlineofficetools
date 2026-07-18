@@ -145,11 +145,11 @@ export default function ImageAiUpscale({ labels }: Props) {
       {ortAvailable === false ? (
         <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           {labels.unsupported}{" "}
-          <span className="block mt-1 text-xs">Canvas 2× upscale will be used instead.</span>
+          <span className="mt-1 block text-xs">{labels.fallbackNote}</span>
         </p>
       ) : (
         <p className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-xs text-blue-900">
-          Beta: AI model loads from CDN when you click {labels.start}. Falls back to canvas 2× if unavailable.
+          {labels.betaNote}
         </p>
       )}
       <FileDropZone accept="image/*" dropHint={labels.dropHint} selectHint={labels.selectHint ?? ""} onFiles={(f) => void onFile(f[0])} disabled={busy} />
@@ -166,7 +166,7 @@ export default function ImageAiUpscale({ labels }: Props) {
       </div>
       {loadingModel ? <p className="text-sm text-slate-500">{labels.loadingModel}</p> : null}
       {usedFallback ? (
-        <p className="text-xs text-slate-500">Used canvas 2× fallback (AI model unavailable).</p>
+        <p className="text-xs text-slate-500">{labels.fallbackUsed}</p>
       ) : null}
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       <div className="flex flex-wrap gap-2">

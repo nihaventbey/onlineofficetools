@@ -180,6 +180,7 @@ export type Dictionary = {
       minify: string;
       valid: string;
       invalid: string;
+      linesLabel: string;
     };
     passwordGenerator: ToolSharedLabels & {
       length: string;
@@ -235,6 +236,7 @@ export type Dictionary = {
       download: string;
       empty: string;
       error: string;
+      alt: string;
     };
     colorConverter: ToolSharedLabels & {
       picker: string;
@@ -247,6 +249,10 @@ export type Dictionary = {
       editor: string;
       preview: string;
       reset: string;
+      sandboxPreview: string;
+      showSandbox: string;
+      sampleTitle: string;
+      sampleText: string;
     };
     markdownPreview: ToolSharedLabels & {
       editor: string;
@@ -400,7 +406,11 @@ export type Dictionary = {
       error: string;
     };
     pptxExtract: ToolFileLabels;
-    pdfToImages: ToolFileLabels & { downloadAll: string };
+    pdfToImages: ToolFileLabels & {
+      downloadAll: string;
+      pagesLabel: string;
+      pageAlt: string;
+    };
     imageResize: ToolFileLabels & {
       width: string;
       height: string;
@@ -415,6 +425,8 @@ export type Dictionary = {
       rotate: string;
       flipH: string;
       flipV: string;
+      cropWidth: string;
+      cropHeight: string;
     };
     imageConvert: ToolFileLabels & {
       format: string;
@@ -423,18 +435,24 @@ export type Dictionary = {
     imageMetadata: ToolFileLabels & {
       strip: string;
       info: string;
+      unknownType: string;
     };
     imageEnhance: ToolFileLabels & {
       scale: string;
       sharpen: string;
       contrast: string;
       compare: string;
+      before: string;
+      after: string;
     };
     imageAiUpscale: ToolFileLabels & {
       start: string;
       unsupported: string;
       loadingModel: string;
       privacyNote: string;
+      betaNote: string;
+      fallbackNote: string;
+      fallbackUsed: string;
     };
   };
 };

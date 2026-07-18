@@ -140,12 +140,12 @@ export default function ImageEnhance({ labels }: Props) {
       {showCompare && before && after ? (
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
-            <p className="mb-1 text-xs font-semibold uppercase text-slate-500">{labels.compare} — before</p>
+            <p className="mb-1 text-xs font-semibold uppercase text-slate-500">{labels.before}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={before} alt="" className="max-h-48 w-full rounded-xl border border-slate-200 object-contain" />
           </div>
           <div>
-            <p className="mb-1 text-xs font-semibold uppercase text-slate-500">{labels.compare} — after</p>
+            <p className="mb-1 text-xs font-semibold uppercase text-slate-500">{labels.after}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={after} alt="" className="max-h-48 w-full rounded-xl border border-slate-200 object-contain" />
           </div>

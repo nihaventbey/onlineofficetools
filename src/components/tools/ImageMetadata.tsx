@@ -76,7 +76,7 @@ export default function ImageMetadata({ labels }: Props) {
           <ul className="mt-2 space-y-1">
             <li>{file.name}</li>
             <li>{formatBytes(file.size)}</li>
-            <li>{file.type || "unknown"}</li>
+            <li>{file.type || labels.unknownType}</li>
             <li>{width} × {height} px</li>
           </ul>
         </div>

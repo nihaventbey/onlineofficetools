@@ -94,11 +94,11 @@ export default function ImageCrop({ labels }: Props) {
       ) : null}
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-sm text-slate-600">
-          Crop W
+          {labels.cropWidth}
           <input type="number" min={1} max={origW || 9999} value={cropW} onChange={(e) => setCropW(Number(e.target.value))} className="mt-1 w-full min-h-11 rounded-xl border border-slate-200 px-3" />
         </label>
         <label className="text-sm text-slate-600">
-          Crop H
+          {labels.cropHeight}
           <input type="number" min={1} max={origH || 9999} value={cropH} onChange={(e) => setCropH(Number(e.target.value))} className="mt-1 w-full min-h-11 rounded-xl border border-slate-200 px-3" />
         </label>
       </div>

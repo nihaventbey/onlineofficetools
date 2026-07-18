@@ -60,7 +60,7 @@ export default function QrGenerator({ labels }: Props) {
       {dataUrl ? (
         <div className="flex flex-col items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={dataUrl} alt="QR" className="rounded-xl border border-slate-200" width={280} height={280} />
+          <img src={dataUrl} alt={labels.alt} className="rounded-xl border border-slate-200" width={280} height={280} />
         </div>
       ) : (
         <p className="text-center text-sm text-slate-500">{labels.empty}</p>

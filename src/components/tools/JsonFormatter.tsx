@@ -65,7 +65,9 @@ export default function JsonFormatter({ labels }: Props) {
           <button type="button" onClick={clear} className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700">
             {labels.clear}
           </button>
-          <span className="ml-auto text-xs text-zinc-500">{lineCount} lines</span>
+          <span className="ml-auto text-xs text-zinc-500">
+            {labels.linesLabel.replace("{count}", String(lineCount))}
+          </span>
         </div>
         {status !== "idle" ? (
           <p className={`mt-3 text-sm ${status === "valid" ? "text-emerald-600" : "text-red-600"}`}>
