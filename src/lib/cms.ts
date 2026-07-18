@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Locale } from "@/lib/i18n";
+import { getDictionary, type Dictionary, type Locale } from "@/lib/i18n";
 import type { Database, PublishedTool, ToolTranslationRow } from "@/lib/supabase/types";
 import { getToolBySlug, isRegisteredSlug, toolRegistry } from "@/lib/tools/registry";
 import type { ToolCategory } from "@/lib/tools/categories";
@@ -50,6 +50,22 @@ function pickTranslation(
     translations.find((t) => t.locale === locale) ??
     translations.find((t) => t.locale === "en")
   );
+}
+
+/**
+ * Localized labels from the bundled dictionaries (available for every locale),
+ * used when the CMS has no translation row for the requested locale.
+ */
+function dictLabels(slug: string, dict: Dictionary) {
+  const reg = getToolBySlug(slug);
+  if (!reg) return null;
+  const labels = dict.tools[reg.dictKey];
+  return {
+    title: labels.title,
+    description: labels.description,
+    seoTitle: labels.metaTitle,
+    seoDescription: labels.metaDescription,
+  };
 }
 
 const FALLBACK_COPY: Record<
@@ -184,18 +200,21 @@ const FALLBACK_COPY: Record<
   },
 };
 
-function fallbackTools(locale: Locale): CmsToolCard[] {
+async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {
+  const dict = await getDictionary(locale);
   return toolRegistry.map((tool, index) => {
-    const meta = FALLBACK_COPY[tool.slug] ?? {
-      en: tool.slug,
-      tr: tool.slug,
-      enDesc: "",
-      trDesc: "",
-    };
+    const labels = dictLabels(tool.slug, dict);
+    const meta = FALLBACK_COPY[tool.slug];
     return {
       slug: tool.slug,
-      title: locale === "tr" ? meta.tr : meta.en,
-      description: locale === "tr" ? meta.trDesc : meta.enDesc,
+      title:
+        labels?.title ??
+        (locale === "tr" ? meta?.tr : meta?.en) ??
+        tool.slug,
+      description:
+        labels?.description ??
+        (locale === "tr" ? meta?.trDesc : meta?.enDesc) ??
+        "",
       coverUrl: null,
       sortOrder: index,
       category: tool.category,
@@ -243,12 +262,17 @@ export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> 
 
   if (!tools.length) return fallbackTools(locale);
 
+  const dict = await getDictionary(locale);
+
   return tools.map((tool) => {
-    const tr = pickTranslation(tool.translations ?? [], locale);
+    const exact = (tool.translations ?? []).find((t) => t.locale === locale);
+    const labels = dictLabels(tool.slug, dict);
+    const en = pickTranslation(tool.translations ?? [], locale);
     return {
       slug: tool.slug,
-      title: tr?.title ?? tool.slug,
-      description: tr?.short_description ?? "",
+      title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
+      description:
+        exact?.short_description ?? labels?.description ?? en?.short_description ?? "",
       coverUrl: publicMediaUrl(tool.cover_path),
       sortOrder: tool.sort_order,
       category: withRegistryCategory(tool.slug, tool.category),
@@ -264,7 +288,7 @@ export async function getPublishedTool(
 
   const supabase = getBuildClient();
   if (!supabase) {
-    const card = fallbackTools(locale).find((c) => c.slug === slug);
+    const card = (await fallbackTools(locale)).find((c) => c.slug === slug);
     if (!card) return null;
     return {
       slug: card.slug,
@@ -286,7 +310,7 @@ export async function getPublishedTool(
     .maybeSingle();
 
   if (error || !data) {
-    const card = fallbackTools(locale).find((c) => c.slug === slug);
+    const card = (await fallbackTools(locale)).find((c) => c.slug === slug);
     if (!card) return null;
     return {
       slug: card.slug,
@@ -301,19 +325,58 @@ export async function getPublishedTool(
   }
 
   const tool = data as unknown as PublishedTool;
-  const tr = pickTranslation(tool.translations ?? [], locale);
-  if (!tr) return null;
+  const exact = (tool.translations ?? []).find((t) => t.locale === locale);
+  const en = pickTranslation(tool.translations ?? [], locale);
+  const dict = await getDictionary(locale);
+  const labels = dictLabels(tool.slug, dict);
+
+  const tr = exact ?? en;
+  if (!tr && !labels) return null;
 
   return {
     slug: tool.slug,
-    title: tr.title,
-    description: tr.short_description,
-    seoTitle: tr.seo_title || tr.title,
-    seoDescription: tr.seo_description || tr.short_description,
-    content: tr.content,
+    title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
+    description:
+      exact?.short_description ?? labels?.description ?? en?.short_description ?? "",
+    seoTitle:
+      exact?.seo_title || exact?.title || labels?.seoTitle || en?.seo_title || en?.title || tool.slug,
+    seoDescription:
+      exact?.seo_description ||
+      exact?.short_description ||
+      labels?.seoDescription ||
+      en?.seo_description ||
+      en?.short_description ||
+      "",
+    content: exact?.content ?? null,
     coverUrl: publicMediaUrl(tool.cover_path),
     category: withRegistryCategory(tool.slug, tool.category),
   };
+}
+
+export const LOGO_SETTING_KEY = "logo_path";
+
+/** Public URL of the uploaded site logo, or null when none is set. */
+export async function getSiteLogoUrl(): Promise<string | null> {
+  const supabase = getBuildClient();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("key, translations:site_setting_translations(value, locale)")
+    .eq("key", LOGO_SETTING_KEY)
+    .maybeSingle();
+
+  if (error || !data) return null;
+
+  const translations =
+    (data as unknown as { translations?: { value: string; locale: string }[] })
+      .translations ?? [];
+  const value =
+    translations.find((t) => t.locale === "en")?.value ??
+    translations[0]?.value ??
+    null;
+
+  return publicMediaUrl(value);
 }
 
 export async function getPublishedSlugs(): Promise<string[]> {

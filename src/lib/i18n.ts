@@ -24,10 +24,22 @@ export const plannedLocales = [
 
 export type PlannedLocale = (typeof plannedLocales)[number];
 
-export const locales = ["en", "tr"] as const;
+export const locales = ["en", "tr", "de", "fr", "es", "it", "pt", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "en";
+
+/** Native display names for the language switcher. */
+export const localeNames: Record<Locale, string> = {
+  en: "English",
+  tr: "Türkçe",
+  de: "Deutsch",
+  fr: "Français",
+  es: "Español",
+  it: "Italiano",
+  pt: "Português",
+  ru: "Русский",
+};
 
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
@@ -315,6 +327,12 @@ export type Dictionary = {
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import("@/dictionaries/en.json").then((m) => m.default as Dictionary),
   tr: () => import("@/dictionaries/tr.json").then((m) => m.default as Dictionary),
+  de: () => import("@/dictionaries/de.json").then((m) => m.default as Dictionary),
+  fr: () => import("@/dictionaries/fr.json").then((m) => m.default as Dictionary),
+  es: () => import("@/dictionaries/es.json").then((m) => m.default as Dictionary),
+  it: () => import("@/dictionaries/it.json").then((m) => m.default as Dictionary),
+  pt: () => import("@/dictionaries/pt.json").then((m) => m.default as Dictionary),
+  ru: () => import("@/dictionaries/ru.json").then((m) => m.default as Dictionary),
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {

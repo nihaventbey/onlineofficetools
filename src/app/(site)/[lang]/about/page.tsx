@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import LegalPage from "@/components/legal/LegalPage";
-import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
-import { absoluteUrl } from "@/lib/site";
+import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
+import { absoluteUrl, languageAlternates } from "@/lib/site";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -15,9 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: dict.legal.about.metaDescription,
     alternates: {
       canonical: absoluteUrl(`/${lang}/about`),
-      languages: Object.fromEntries(
-        locales.map((l) => [l, absoluteUrl(`/${l}/about`)]),
-      ),
+      languages: languageAlternates("/about"),
     },
   };
 }

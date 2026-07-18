@@ -6,13 +6,14 @@ import AdsLayout from "@/components/AdsLayout";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ADSENSE_CLIENT, isAdSenseConfigured } from "@/lib/adsense";
+import { getSiteLogoUrl } from "@/lib/cms";
 import {
   getDictionary,
   isLocale,
   locales,
   type Locale,
 } from "@/lib/i18n";
-import { absoluteUrl, SITE_URL } from "@/lib/site";
+import { absoluteUrl, languageAlternates, SITE_URL } from "@/lib/site";
 import "../../globals.css";
 
 const geistSans = Geist({
@@ -26,6 +27,8 @@ const geistMono = Geist_Mono({
 });
 
 export const dynamicParams = false;
+// Re-generate periodically so CMS changes (e.g. an uploaded logo) show up.
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -45,9 +48,7 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
 
   const dict = await getDictionary(lang);
-  const languages = Object.fromEntries(
-    locales.map((locale) => [locale, absoluteUrl(`/${locale}`)]),
-  );
+  const languages = languageAlternates("/");
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -78,6 +79,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
   const adsEnabled = isAdSenseConfigured();
+  const logoUrl = await getSiteLogoUrl();
 
   return (
     <html
@@ -94,7 +96,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
             strategy="lazyOnload"
           />
         ) : null}
-        <Header locale={locale} dict={dict} />
+        <Header locale={locale} dict={dict} logoUrl={logoUrl} />
         <AdsLayout>{children}</AdsLayout>
         <Footer locale={locale} dict={dict} />
       </body>

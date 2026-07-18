@@ -34,6 +34,11 @@ const emptyTranslation = (): TranslationForm => ({
   content: "",
 });
 
+const emptyTranslations = (): Record<Locale, TranslationForm> =>
+  Object.fromEntries(
+    locales.map((locale) => [locale, emptyTranslation()]),
+  ) as Record<Locale, TranslationForm>;
+
 export default function ToolEditor({ toolId }: ToolEditorProps) {
   const router = useRouter();
   const isNew = !toolId;
@@ -45,10 +50,7 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
   const [sortOrder, setSortOrder] = useState(0);
   const [translations, setTranslations] = useState<
     Record<Locale, TranslationForm>
-  >({
-    en: emptyTranslation(),
-    tr: emptyTranslation(),
-  });
+  >(emptyTranslations);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(!isNew);
@@ -81,13 +83,10 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
       setCoverPath(tool.cover_path ?? "");
       setSortOrder(tool.sort_order);
 
-      const next = {
-        en: emptyTranslation(),
-        tr: emptyTranslation(),
-      };
+      const next = emptyTranslations();
 
       for (const row of tool.tool_translations ?? []) {
-        if (row.locale === "en" || row.locale === "tr") {
+        if ((locales as readonly string[]).includes(row.locale)) {
           next[row.locale as Locale] = {
             title: row.title,
             short_description: row.short_description,

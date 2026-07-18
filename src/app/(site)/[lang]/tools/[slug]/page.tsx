@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getPublishedSlugs, getPublishedTool, getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { getToolBySlug } from "@/lib/tools/registry";
 
 type PageProps = {
@@ -33,9 +33,7 @@ export async function generateMetadata({
   const description =
     tool?.seoDescription || labels?.metaDescription || labels?.description || "";
 
-  const languages = Object.fromEntries(
-    locales.map((l) => [l, absoluteUrl(`/${l}/tools/${slug}`)]),
-  );
+  const languages = languageAlternates(`/tools/${slug}`);
 
   return {
     title,

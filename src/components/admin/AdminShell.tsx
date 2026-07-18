@@ -110,6 +110,7 @@ export default function AdminShell({ children }: AdminShellProps) {
     { href: "/admin", label: "Dashboard" },
     { href: "/admin/tools", label: "Tools" },
     { href: "/admin/media", label: "Media" },
+    { href: "/admin/settings", label: "Settings" },
   ];
 
   return (

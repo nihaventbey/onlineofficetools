@@ -11,14 +11,10 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
+    // Note: "/" is handled by src/proxy.ts (geo/language-aware redirect).
     return [
       {
-        source: "/",
-        destination: "/en",
-        permanent: true,
-      },
-      {
-        source: "/:lang/word-counter",
+        source: "/:lang(en|tr|de|fr|es|it|pt|ru)/word-counter",
         destination: "/:lang/tools/word-counter",
         permanent: true,
       },

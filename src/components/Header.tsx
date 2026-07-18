@@ -10,9 +10,10 @@ import { toolRegistry, toolsByCategory } from "@/lib/tools/registry";
 type HeaderProps = {
   locale: Locale;
   dict: Dictionary;
+  logoUrl?: string | null;
 };
 
-export default function Header({ locale, dict }: HeaderProps) {
+export default function Header({ locale, dict, logoUrl }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const megaRef = useRef<HTMLDivElement>(null);
@@ -40,17 +41,27 @@ export default function Header({ locale, dict }: HeaderProps) {
         <div className="flex items-center gap-5">
           <Link
             href={`/${locale}`}
-            className="group"
+            className="group flex min-w-0 items-center gap-2.5"
             onClick={() => {
               setMobileOpen(false);
               setMegaOpen(false);
             }}
           >
-            <span className="text-lg font-semibold tracking-tight text-slate-900">
-              {dict.common.siteName}
-            </span>
-            <span className="mt-0.5 hidden text-xs text-slate-500 sm:block">
-              {dict.common.siteTagline}
+            {logoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logoUrl}
+                alt={dict.common.siteName}
+                className="h-8 w-auto shrink-0 sm:h-9"
+              />
+            ) : null}
+            <span className="min-w-0">
+              <span className="block truncate text-base font-semibold tracking-tight text-slate-900 sm:text-lg">
+                {dict.common.siteName}
+              </span>
+              <span className="mt-0.5 hidden text-xs text-slate-500 md:block">
+                {dict.common.siteTagline}
+              </span>
             </span>
           </Link>
 
