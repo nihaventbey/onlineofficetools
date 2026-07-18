@@ -57,7 +57,7 @@ export default function Base64Tool({ labels }: Props) {
         className="w-full resize-y rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 font-mono text-sm dark:border-zinc-700 dark:bg-zinc-950"
       />
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={encode} className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-500">
+        <button type="button" onClick={encode} className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
           {labels.encode}
         </button>
         <button type="button" onClick={decode} className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-medium dark:border-zinc-700">

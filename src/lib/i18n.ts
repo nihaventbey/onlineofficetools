@@ -82,6 +82,8 @@ export type Dictionary = {
     text: string;
     developer: string;
     security: string;
+    image: string;
+    calculator: string;
   };
   legal: {
     privacy: {
@@ -168,6 +170,67 @@ export type Dictionary = {
       camelCase: string;
       snakeCase: string;
       kebabCase: string;
+    };
+    ocr: ToolSharedLabels & {
+      placeholder: string;
+      dropHint: string;
+      selectImage: string;
+      processing: string;
+      langEn: string;
+      langTr: string;
+      error: string;
+    };
+    qrGenerator: ToolSharedLabels & {
+      placeholder: string;
+      download: string;
+      empty: string;
+      error: string;
+    };
+    colorConverter: ToolSharedLabels & {
+      picker: string;
+      hex: string;
+      rgb: string;
+      hsl: string;
+      invalid: string;
+    };
+    htmlEditor: ToolSharedLabels & {
+      editor: string;
+      preview: string;
+      reset: string;
+    };
+    markdownPreview: ToolSharedLabels & {
+      editor: string;
+      preview: string;
+      reset: string;
+    };
+    urlEncoder: ToolSharedLabels & {
+      placeholder: string;
+      encode: string;
+      decode: string;
+      error: string;
+    };
+    uuidGenerator: ToolSharedLabels & {
+      count: string;
+      generate: string;
+    };
+    unitConverter: ToolSharedLabels & {
+      length: string;
+      weight: string;
+      temperature: string;
+      data: string;
+      from: string;
+      to: string;
+      value: string;
+      result: string;
+    };
+    dateDifference: ToolSharedLabels & {
+      start: string;
+      end: string;
+      days: string;
+      weeks: string;
+      months: string;
+      years: string;
+      invalid: string;
     };
   };
 };

@@ -36,13 +36,15 @@
   "categories": {
     "text": "Text",
     "developer": "Developer",
-    "security": "Security"
+    "security": "Security",
+    "image": "Image",
+    "calculator": "Calculator"
   },
   "legal": {
     "privacy": {
       "title": "Privacy Policy",
       "metaDescription": "How Online Office Tools handles privacy, cookies, and advertising.",
-      "body": "Last updated: July 18, 2026\n\nOnline Office Tools (“we”, “our”, “the site”) provides free browser-based utilities. We designed the product so that tool processing happens on your device whenever possible.\n\n1. Tool processing\nText, files, and other inputs you enter into our tools are processed locally in your browser. We do not upload your tool content to our servers for processing, and we do not store tool drafts on our servers. Drafts may be kept temporarily in your browser’s session storage so language switches do not erase your work; those drafts are cleared when you close the tab.\n\n2. Analytics and advertising\nWe may use Google AdSense to display ads. Google and its partners may use cookies or similar technologies to show relevant ads based on your prior visits to this or other websites. You can learn more and manage ad personalization at https://www.google.com/settings/ads and https://policies.google.com/technologies/ads.\n\n3. Cookies\nEssential cookies may be used for site operation. Advertising cookies from Google AdSense may be set when ads are shown. By using the site with ads enabled, you acknowledge these technologies as described in Google’s policies.\n\n4. Contact pages and email\nIf you contact us by email, we will use your message only to respond to your inquiry.\n\n5. Children’s privacy\nThe site is not directed at children under 13. We do not knowingly collect personal information from children.\n\n6. Changes\nWe may update this Privacy Policy. The “Last updated” date at the top will change when we do.\n\n7. Contact\nFor privacy questions, use the Contact page on this site."
+      "body": "Last updated: July 18, 2026\n\nOnline Office Tools (“we”, “our”, “the site”) provides free browser-based utilities. We designed the product so that tool processing happens on your device whenever possible.\n\n1. Tool processing\nText, files, and other inputs you enter into our tools are processed locally in your browser. We do not upload your tool content to our servers for processing, and we do not store tool drafts on our servers. Drafts may be kept temporarily in your browser’s session storage so language switches do not erase your work; those drafts are cleared when you close the tab.\n\n2. Analytics and advertising\nWe may use Google AdSense to display ads. Google and its partners may use cookies or similar technologies to show relevant ads based on your prior visits to this or other websites. You can learn more and manage ad personalization at https://www.google.com/settings/ads and https://policies.google.com/technologies/ads.\n\n3. Cookies\nEssential cookies may be used for site operation. Advertising cookies from Google AdSense may be set when ads are shown. By using the site with ads enabled, you acknowledge these technologies as described in Google’s policies.\n\n4. Contact pages and email\nIf you contact us by email, we will use your message only to respond to your inquiry.\n\n5. Children’s privacy\nThe site is not directed at children under 13. We do not knowingly collect personal information from children.\n\n6. Changes\nWe may update this Privacy Policy. The “Last updated” date at the top will change when we do.\n\n7. Contact\nFor privacy questions, use the Contact page on this site.\n\n8. OCR language data\nThe OCR tool may download language model files from a public CDN (jsDelivr) to run recognition in your browser. Your images stay on your device and are not uploaded to our servers."
     },
     "terms": {
       "title": "Terms of Service",
@@ -169,6 +171,130 @@
       "camelCase": "camelCase",
       "snakeCase": "snake_case",
       "kebabCase": "kebab-case",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "ocr": {
+      "title": "OCR — Image to Text",
+      "description": "Extract text from images entirely in your browser.",
+      "metaTitle": "OCR Image to Text — Free Online Tool",
+      "metaDescription": "Convert images to text with on-device OCR. Nothing is uploaded.",
+      "placeholder": "Recognized text appears here…",
+      "dropHint": "Drop an image here or click to select",
+      "selectImage": "PNG, JPG, WEBP supported",
+      "processing": "Recognizing text…",
+      "langEn": "English",
+      "langTr": "Turkish",
+      "error": "Could not read that image.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "qrGenerator": {
+      "title": "QR Code Generator",
+      "description": "Create QR codes from text or URLs and download as PNG.",
+      "metaTitle": "QR Code Generator — Free Online Tool",
+      "metaDescription": "Generate QR codes instantly in your browser.",
+      "placeholder": "Enter text or URL…",
+      "download": "Download PNG",
+      "empty": "Enter text to generate a QR code.",
+      "error": "Could not generate QR code.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "colorConverter": {
+      "title": "Color Converter",
+      "description": "Convert between HEX, RGB, and HSL with a live color picker.",
+      "metaTitle": "Color Converter — Free Online Tool",
+      "metaDescription": "Convert HEX, RGB, and HSL colors in your browser.",
+      "picker": "Color picker",
+      "hex": "HEX",
+      "rgb": "RGB",
+      "hsl": "HSL",
+      "invalid": "Invalid HEX color.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "htmlEditor": {
+      "title": "HTML Editor",
+      "description": "Edit HTML and preview it live in a sandboxed iframe.",
+      "metaTitle": "HTML Editor — Free Online Tool",
+      "metaDescription": "Live HTML editor and preview in your browser.",
+      "editor": "HTML",
+      "preview": "Preview",
+      "reset": "Reset sample",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "markdownPreview": {
+      "title": "Markdown Preview",
+      "description": "Write Markdown and preview rendered HTML safely.",
+      "metaTitle": "Markdown Preview — Free Online Tool",
+      "metaDescription": "Preview Markdown in your browser with a sandboxed renderer.",
+      "editor": "Markdown",
+      "preview": "Preview",
+      "reset": "Reset sample",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "urlEncoder": {
+      "title": "URL Encode / Decode",
+      "description": "Encode or decode URL components locally.",
+      "metaTitle": "URL Encoder Decoder — Free Online Tool",
+      "metaDescription": "Encode and decode URLs in your browser.",
+      "placeholder": "Enter text or encoded URL…",
+      "encode": "Encode",
+      "decode": "Decode",
+      "error": "Could not decode that input.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "uuidGenerator": {
+      "title": "UUID Generator",
+      "description": "Generate UUID v4 identifiers with Web Crypto.",
+      "metaTitle": "UUID Generator — Free Online Tool",
+      "metaDescription": "Generate random UUID v4 values in your browser.",
+      "count": "How many",
+      "generate": "Generate",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "unitConverter": {
+      "title": "Unit Converter",
+      "description": "Convert length, weight, temperature, and data units.",
+      "metaTitle": "Unit Converter — Free Online Tool",
+      "metaDescription": "Convert common units instantly in your browser.",
+      "length": "Length",
+      "weight": "Weight",
+      "temperature": "Temperature",
+      "data": "Data",
+      "from": "From",
+      "to": "To",
+      "value": "Value",
+      "result": "Result",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "dateDifference": {
+      "title": "Date Difference",
+      "description": "Calculate days, weeks, months, and years between two dates.",
+      "metaTitle": "Date Difference Calculator — Free Online Tool",
+      "metaDescription": "Find the difference between two dates in your browser.",
+      "start": "Start date",
+      "end": "End date",
+      "days": "Days",
+      "weeks": "Weeks",
+      "months": "Months",
+      "years": "Years",
+      "invalid": "Enter two valid dates.",
       "copy": "Copy",
       "copied": "Copied!",
       "clear": "Clear"

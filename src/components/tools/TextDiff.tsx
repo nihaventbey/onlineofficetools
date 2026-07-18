@@ -68,7 +68,7 @@ export default function TextDiff({ labels }: Props) {
           }}
           placeholder={labels.leftPlaceholder}
           rows={10}
-          className="w-full resize-y rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm outline-none focus:border-violet-400 dark:border-zinc-800 dark:bg-zinc-900"
+          className="w-full resize-y rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm outline-none focus:border-blue-400 dark:border-zinc-800 dark:bg-zinc-900"
         />
         <textarea
           value={draft.right}
@@ -78,14 +78,14 @@ export default function TextDiff({ labels }: Props) {
           }}
           placeholder={labels.rightPlaceholder}
           rows={10}
-          className="w-full resize-y rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm outline-none focus:border-violet-400 dark:border-zinc-800 dark:bg-zinc-900"
+          className="w-full resize-y rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm outline-none focus:border-blue-400 dark:border-zinc-800 dark:bg-zinc-900"
         />
       </div>
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => setShow(true)}
-          className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-500"
+          className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500"
         >
           {labels.compare}
         </button>

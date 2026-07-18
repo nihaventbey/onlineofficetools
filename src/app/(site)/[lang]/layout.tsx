@@ -84,7 +84,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+      <body className="flex min-h-full flex-col bg-slate-50 text-slate-900">
         {adsEnabled ? (
           <Script
             id="adsense-init"

@@ -36,13 +36,15 @@
   "categories": {
     "text": "Metin",
     "developer": "Geliştirici",
-    "security": "Güvenlik"
+    "security": "Güvenlik",
+    "image": "Görsel",
+    "calculator": "Hesaplama"
   },
   "legal": {
     "privacy": {
       "title": "Gizlilik Politikası",
       "metaDescription": "Online Office Tools gizlilik, çerez ve reklam politikası.",
-      "body": "Son güncelleme: 18 Temmuz 2026\n\nOnline Office Tools (“biz”, “sitemiz”) ücretsiz, tarayıcı tabanlı araçlar sunar. Ürünü, mümkün olduğunca işlemlerin cihazınızda yapılacağı şekilde tasarladık.\n\n1. Araç işlemleri\nAraçlara girdiğiniz metin ve diğer veriler tarayıcınızda işlenir. Araç içeriğinizi sunucularımıza işlem için yüklemeyiz ve araç taslaklarını sunucularımızda saklamayız. Dil değişiminde çalışmanız kaybolmasın diye taslaklar tarayıcınızın oturum depolamasında (sessionStorage) geçici tutulabilir; sekmeyi kapattığınızda silinir.\n\n2. Analitik ve reklam\nReklam göstermek için Google AdSense kullanabiliriz. Google ve iş ortakları, bu veya diğer siteleri ziyaretinize göre ilgili reklamlar göstermek amacıyla çerez veya benzer teknolojiler kullanabilir. Daha fazla bilgi ve reklam kişiselleştirme ayarları: https://www.google.com/settings/ads ve https://policies.google.com/technologies/ads.\n\n3. Çerezler\nSitenin çalışması için zorunlu çerezler kullanılabilir. Reklamlar gösterildiğinde Google AdSense çerezleri yerleştirilebilir.\n\n4. İletişim\nE-posta ile yazarsanız mesajınızı yalnızca yanıtlamak için kullanırız.\n\n5. Çocukların gizliliği\nSite 13 yaş altı çocuklara yönelik değildir.\n\n6. Değişiklikler\nBu politikayı güncelleyebiliriz. Üstteki tarih değiştiğinde güncelleme yapılmış demektir.\n\n7. İletişim\nGizlilik soruları için İletişim sayfasını kullanın."
+      "body": "Son güncelleme: 18 Temmuz 2026\n\nOnline Office Tools (“biz”, “sitemiz”) ücretsiz, tarayıcı tabanlı araçlar sunar. Ürünü, mümkün olduğunca işlemlerin cihazınızda yapılacağı şekilde tasarladık.\n\n1. Araç işlemleri\nAraçlara girdiğiniz metin ve diğer veriler tarayıcınızda işlenir. Araç içeriğinizi sunucularımıza işlem için yüklemeyiz ve araç taslaklarını sunucularımızda saklamayız. Dil değişiminde çalışmanız kaybolmasın diye taslaklar tarayıcınızın oturum depolamasında (sessionStorage) geçici tutulabilir; sekmeyi kapattığınızda silinir.\n\n2. Analitik ve reklam\nReklam göstermek için Google AdSense kullanabiliriz. Google ve iş ortakları, bu veya diğer siteleri ziyaretinize göre ilgili reklamlar göstermek amacıyla çerez veya benzer teknolojiler kullanabilir. Daha fazla bilgi ve reklam kişiselleştirme ayarları: https://www.google.com/settings/ads ve https://policies.google.com/technologies/ads.\n\n3. Çerezler\nSitenin çalışması için zorunlu çerezler kullanılabilir. Reklamlar gösterildiğinde Google AdSense çerezleri yerleştirilebilir.\n\n4. İletişim\nE-posta ile yazarsanız mesajınızı yalnızca yanıtlamak için kullanırız.\n\n5. Çocukların gizliliği\nSite 13 yaş altı çocuklara yönelik değildir.\n\n6. Değişiklikler\nBu politikayı güncelleyebiliriz. Üstteki tarih değiştiğinde güncelleme yapılmış demektir.\n\n7. İletişim\nGizlilik soruları için İletişim sayfasını kullanın.\n\n8. OCR dil verileri\nOCR aracı, tanımayı tarayıcınızda çalıştırmak için bir genel CDN'den (jsDelivr) dil modeli dosyaları indirebilir. Görselleriniz cihazınızda kalır ve sunucularımıza yüklenmez."
     },
     "terms": {
       "title": "Kullanım Şartları",
@@ -169,6 +171,130 @@
       "camelCase": "camelCase",
       "snakeCase": "snake_case",
       "kebabCase": "kebab-case",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "ocr": {
+      "title": "OCR — Görselden Metin",
+      "description": "Görsellerdeki metni tamamen tarayıcınızda çıkarın.",
+      "metaTitle": "OCR Görselden Metin — Ücretsiz Online Araç",
+      "metaDescription": "Görselleri cihazda OCR ile metne çevirin. Hiçbir şey yüklenmez.",
+      "placeholder": "Tanınan metin burada görünür…",
+      "dropHint": "Görseli buraya bırakın veya seçmek için tıklayın",
+      "selectImage": "PNG, JPG, WEBP desteklenir",
+      "processing": "Metin tanınıyor…",
+      "langEn": "İngilizce",
+      "langTr": "Türkçe",
+      "error": "Bu görsel okunamadı.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "qrGenerator": {
+      "title": "QR Kod Üretici",
+      "description": "Metin veya URL'den QR kod oluşturun ve PNG indirin.",
+      "metaTitle": "QR Kod Üretici — Ücretsiz Online Araç",
+      "metaDescription": "QR kodları tarayıcınızda anında üretin.",
+      "placeholder": "Metin veya URL girin…",
+      "download": "PNG indir",
+      "empty": "QR üretmek için metin girin.",
+      "error": "QR kod üretilemedi.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "colorConverter": {
+      "title": "Renk Dönüştürücü",
+      "description": "HEX, RGB ve HSL arasında dönüştürün; canlı renk seçici.",
+      "metaTitle": "Renk Dönüştürücü — Ücretsiz Online Araç",
+      "metaDescription": "HEX, RGB ve HSL renklerini tarayıcınızda dönüştürün.",
+      "picker": "Renk seçici",
+      "hex": "HEX",
+      "rgb": "RGB",
+      "hsl": "HSL",
+      "invalid": "Geçersiz HEX renk.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "htmlEditor": {
+      "title": "HTML Editör",
+      "description": "HTML düzenleyin ve güvenli önizlemede canlı görün.",
+      "metaTitle": "HTML Editör — Ücretsiz Online Araç",
+      "metaDescription": "Tarayıcınızda canlı HTML editör ve önizleme.",
+      "editor": "HTML",
+      "preview": "Önizleme",
+      "reset": "Örneği sıfırla",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "markdownPreview": {
+      "title": "Markdown Önizleme",
+      "description": "Markdown yazın ve güvenli HTML önizlemesini görün.",
+      "metaTitle": "Markdown Önizleme — Ücretsiz Online Araç",
+      "metaDescription": "Markdown'ı tarayıcınızda güvenli önizleyin.",
+      "editor": "Markdown",
+      "preview": "Önizleme",
+      "reset": "Örneği sıfırla",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "urlEncoder": {
+      "title": "URL Kodla / Çöz",
+      "description": "URL bileşenlerini yerelde kodlayın veya çözün.",
+      "metaTitle": "URL Kodlayıcı Çözücü — Ücretsiz Online Araç",
+      "metaDescription": "URL'leri tarayıcınızda kodlayın ve çözün.",
+      "placeholder": "Metin veya kodlanmış URL girin…",
+      "encode": "Kodla",
+      "decode": "Çöz",
+      "error": "Bu girdi çözülemedi.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "uuidGenerator": {
+      "title": "UUID Üretici",
+      "description": "Web Crypto ile UUID v4 tanımlayıcılar üretin.",
+      "metaTitle": "UUID Üretici — Ücretsiz Online Araç",
+      "metaDescription": "Rastgele UUID v4 değerlerini tarayıcınızda üretin.",
+      "count": "Adet",
+      "generate": "Üret",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "unitConverter": {
+      "title": "Birim Dönüştürücü",
+      "description": "Uzunluk, ağırlık, sıcaklık ve veri birimlerini dönüştürün.",
+      "metaTitle": "Birim Dönüştürücü — Ücretsiz Online Araç",
+      "metaDescription": "Yaygın birimleri tarayıcınızda anında dönüştürün.",
+      "length": "Uzunluk",
+      "weight": "Ağırlık",
+      "temperature": "Sıcaklık",
+      "data": "Veri",
+      "from": "Kaynak",
+      "to": "Hedef",
+      "value": "Değer",
+      "result": "Sonuç",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "dateDifference": {
+      "title": "Tarih Farkı",
+      "description": "İki tarih arasındaki gün, hafta, ay ve yılı hesaplayın.",
+      "metaTitle": "Tarih Farkı Hesaplayıcı — Ücretsiz Online Araç",
+      "metaDescription": "İki tarih arasındaki farkı tarayıcınızda bulun.",
+      "start": "Başlangıç",
+      "end": "Bitiş",
+      "days": "Gün",
+      "weeks": "Hafta",
+      "months": "Ay",
+      "years": "Yıl",
+      "invalid": "İki geçerli tarih girin.",
       "copy": "Kopyala",
       "copied": "Kopyalandı!",
       "clear": "Temizle"

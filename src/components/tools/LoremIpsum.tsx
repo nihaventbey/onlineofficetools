@@ -76,7 +76,7 @@ export default function LoremIpsum({ labels }: Props) {
         </label>
       </div>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={generate} className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-500">
+        <button type="button" onClick={generate} className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
           {labels.generate}
         </button>
         <button type="button" onClick={handleCopy} className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-medium dark:border-zinc-700">

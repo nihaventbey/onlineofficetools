@@ -52,54 +52,116 @@ function pickTranslation(
   );
 }
 
+const FALLBACK_COPY: Record<
+  string,
+  { en: string; tr: string; enDesc: string; trDesc: string }
+> = {
+  "word-counter": {
+    en: "Word Counter",
+    tr: "Kelime Sayacı",
+    enDesc: "Count words, characters, lines, and sentences instantly.",
+    trDesc: "Kelime, karakter, satır ve cümleleri anında sayın.",
+  },
+  "case-converter": {
+    en: "Case Converter",
+    tr: "Harf Dönüştürücü",
+    enDesc: "Convert text between common case formats.",
+    trDesc: "Metni yaygın harf biçimleri arasında dönüştürün.",
+  },
+  "lorem-ipsum": {
+    en: "Lorem Ipsum Generator",
+    tr: "Lorem Ipsum Üretici",
+    enDesc: "Generate placeholder paragraphs for designs and drafts.",
+    trDesc: "Tasarım ve taslaklar için yer tutucu paragraflar üretin.",
+  },
+  "text-diff": {
+    en: "Text Diff Checker",
+    tr: "Metin Karşılaştırıcı",
+    enDesc: "Compare two texts and highlight differences.",
+    trDesc: "İki metni karşılaştırın ve farkları görün.",
+  },
+  "json-formatter": {
+    en: "JSON Formatter",
+    tr: "JSON Biçimlendirici",
+    enDesc: "Pretty-print, minify, and validate JSON in your browser.",
+    trDesc: "JSON’u tarayıcınızda güzelleştirin, küçültün ve doğrulayın.",
+  },
+  base64: {
+    en: "Base64 Encode / Decode",
+    tr: "Base64 Kodla / Çöz",
+    enDesc: "Encode or decode Base64 text locally.",
+    trDesc: "Base64 metni yerelde kodlayın veya çözün.",
+  },
+  "html-editor": {
+    en: "HTML Editor",
+    tr: "HTML Editör",
+    enDesc: "Edit HTML and preview it live in a sandboxed iframe.",
+    trDesc: "HTML düzenleyin ve güvenli önizlemede canlı görün.",
+  },
+  "markdown-preview": {
+    en: "Markdown Preview",
+    tr: "Markdown Önizleme",
+    enDesc: "Write Markdown and preview rendered HTML safely.",
+    trDesc: "Markdown yazın ve güvenli HTML önizlemesini görün.",
+  },
+  "url-encoder": {
+    en: "URL Encode / Decode",
+    tr: "URL Kodla / Çöz",
+    enDesc: "Encode or decode URL components locally.",
+    trDesc: "URL bileşenlerini yerelde kodlayın veya çözün.",
+  },
+  "uuid-generator": {
+    en: "UUID Generator",
+    tr: "UUID Üretici",
+    enDesc: "Generate UUID v4 identifiers with Web Crypto.",
+    trDesc: "Web Crypto ile UUID v4 tanımlayıcılar üretin.",
+  },
+  "password-generator": {
+    en: "Password Generator",
+    tr: "Şifre Üretici",
+    enDesc: "Generate strong passwords with Web Crypto in your browser.",
+    trDesc: "Web Crypto ile tarayıcınızda güçlü şifreler üretin.",
+  },
+  ocr: {
+    en: "OCR — Image to Text",
+    tr: "OCR — Görselden Metin",
+    enDesc: "Extract text from images entirely in your browser.",
+    trDesc: "Görsellerdeki metni tamamen tarayıcınızda çıkarın.",
+  },
+  "qr-generator": {
+    en: "QR Code Generator",
+    tr: "QR Kod Üretici",
+    enDesc: "Create QR codes from text or URLs and download as PNG.",
+    trDesc: "Metin veya URL'den QR kod oluşturun ve PNG indirin.",
+  },
+  "color-converter": {
+    en: "Color Converter",
+    tr: "Renk Dönüştürücü",
+    enDesc: "Convert between HEX, RGB, and HSL with a live color picker.",
+    trDesc: "HEX, RGB ve HSL arasında dönüştürün; canlı renk seçici.",
+  },
+  "unit-converter": {
+    en: "Unit Converter",
+    tr: "Birim Dönüştürücü",
+    enDesc: "Convert length, weight, temperature, and data units.",
+    trDesc: "Uzunluk, ağırlık, sıcaklık ve veri birimlerini dönüştürün.",
+  },
+  "date-difference": {
+    en: "Date Difference",
+    tr: "Tarih Farkı",
+    enDesc: "Calculate days, weeks, months, and years between two dates.",
+    trDesc: "İki tarih arasındaki gün, hafta, ay ve yılı hesaplayın.",
+  },
+};
+
 function fallbackTools(locale: Locale): CmsToolCard[] {
   return toolRegistry.map((tool, index) => {
-    // Titles come from dictionaries at render time for fallback; keep English defaults here for CMS-less builds.
-    const titles: Record<string, { en: string; tr: string; enDesc: string; trDesc: string }> = {
-      "word-counter": {
-        en: "Word Counter",
-        tr: "Kelime Sayacı",
-        enDesc: "Count words, characters, lines, and sentences instantly.",
-        trDesc: "Kelime, karakter, satır ve cümleleri anında sayın.",
-      },
-      "case-converter": {
-        en: "Case Converter",
-        tr: "Harf Dönüştürücü",
-        enDesc: "Convert text between common case formats.",
-        trDesc: "Metni yaygın harf biçimleri arasında dönüştürün.",
-      },
-      "lorem-ipsum": {
-        en: "Lorem Ipsum Generator",
-        tr: "Lorem Ipsum Üretici",
-        enDesc: "Generate placeholder paragraphs for designs and drafts.",
-        trDesc: "Tasarım ve taslaklar için yer tutucu paragraflar üretin.",
-      },
-      "text-diff": {
-        en: "Text Diff Checker",
-        tr: "Metin Karşılaştırıcı",
-        enDesc: "Compare two texts and highlight differences.",
-        trDesc: "İki metni karşılaştırın ve farkları görün.",
-      },
-      "json-formatter": {
-        en: "JSON Formatter",
-        tr: "JSON Biçimlendirici",
-        enDesc: "Pretty-print, minify, and validate JSON in your browser.",
-        trDesc: "JSON’u tarayıcınızda güzelleştirin, küçültün ve doğrulayın.",
-      },
-      base64: {
-        en: "Base64 Encode / Decode",
-        tr: "Base64 Kodla / Çöz",
-        enDesc: "Encode or decode Base64 text locally.",
-        trDesc: "Base64 metni yerelde kodlayın veya çözün.",
-      },
-      "password-generator": {
-        en: "Password Generator",
-        tr: "Şifre Üretici",
-        enDesc: "Generate strong passwords with Web Crypto in your browser.",
-        trDesc: "Web Crypto ile tarayıcınızda güçlü şifreler üretin.",
-      },
+    const meta = FALLBACK_COPY[tool.slug] ?? {
+      en: tool.slug,
+      tr: tool.slug,
+      enDesc: "",
+      trDesc: "",
     };
-    const meta = titles[tool.slug];
     return {
       slug: tool.slug,
       title: locale === "tr" ? meta.tr : meta.en,
@@ -117,7 +179,13 @@ function withRegistryCategory(
 ): ToolCategory {
   const reg = getToolBySlug(slug);
   if (reg) return reg.category;
-  if (category === "developer" || category === "security" || category === "text") {
+  if (
+    category === "developer" ||
+    category === "security" ||
+    category === "text" ||
+    category === "image" ||
+    category === "calculator"
+  ) {
     return category;
   }
   return "text";

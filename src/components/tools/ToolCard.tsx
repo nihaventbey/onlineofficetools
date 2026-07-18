@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
+import { categoryStyles } from "@/lib/tools/categories";
 import { getToolBySlug } from "@/lib/tools/registry";
 
 type ToolCardProps = {
@@ -9,6 +10,7 @@ type ToolCardProps = {
   description: string;
   categoryLabel: string;
   cta: string;
+  compact?: boolean;
 };
 
 export default function ToolCard({
@@ -18,32 +20,52 @@ export default function ToolCard({
   description,
   categoryLabel,
   cta,
+  compact = false,
 }: ToolCardProps) {
   const meta = getToolBySlug(slug);
   const icon = meta?.icon ?? "•";
+  const styles = categoryStyles[meta?.category ?? "text"];
 
   return (
     <Link
       href={`/${locale}/tools/${slug}`}
-      className="group flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-violet-500/40"
+      className={`group flex h-full rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${styles.ring} ${
+        compact ? "flex-row items-center gap-4 p-4" : "flex-col p-5"
+      }`}
     >
-      <div className="mb-4 flex items-start justify-between gap-3">
-        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-100 text-sm font-bold text-violet-700 dark:bg-violet-950 dark:text-violet-200">
-          {icon}
-        </span>
-        <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-          {categoryLabel}
-        </span>
-      </div>
-      <h3 className="text-lg font-semibold text-zinc-900 group-hover:text-violet-700 dark:text-white dark:group-hover:text-violet-300">
-        {title}
-      </h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-        {description}
-      </p>
-      <span className="mt-5 text-sm font-medium text-violet-700 dark:text-violet-300">
-        {cta} →
+      <span
+        className={`flex shrink-0 items-center justify-center rounded-xl text-sm font-bold ${styles.bg} ${styles.text} ${
+          compact ? "h-11 w-11" : "mb-4 h-12 w-12"
+        }`}
+      >
+        {icon}
       </span>
+      <div className="min-w-0 flex-1">
+        {!compact ? (
+          <span className="mb-2 inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+            {categoryLabel}
+          </span>
+        ) : null}
+        <h3
+          className={`font-semibold text-slate-900 group-hover:text-blue-700 ${
+            compact ? "text-base" : "mt-1 text-lg"
+          }`}
+        >
+          {title}
+        </h3>
+        <p
+          className={`text-sm leading-relaxed text-slate-600 ${
+            compact ? "mt-0.5 line-clamp-1" : "mt-2 line-clamp-2 flex-1"
+          }`}
+        >
+          {description}
+        </p>
+        {!compact ? (
+          <span className="mt-4 inline-block text-sm font-medium text-blue-600">
+            {cta} →
+          </span>
+        ) : null}
+      </div>
     </Link>
   );
 }

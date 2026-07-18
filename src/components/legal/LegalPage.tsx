@@ -42,7 +42,7 @@ export default function LegalPage({
           <span className="font-medium">{contactEmail.label}: </span>
           <a
             href={`mailto:${contactEmail.email}`}
-            className="text-violet-700 hover:underline dark:text-violet-300"
+            className="text-blue-700 hover:underline dark:text-blue-300"
           >
             {contactEmail.email}
           </a>

@@ -23,27 +23,27 @@ export default function ToolPageShell({
   children,
 }: ToolPageShellProps) {
   return (
-    <div className="space-y-8 pb-8">
-      <nav className="flex flex-wrap items-center gap-2 text-sm text-zinc-500">
-        <Link href={`/${locale}`} className="hover:text-violet-600">
+    <div className="mx-auto max-w-4xl space-y-8 pb-10">
+      <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+        <Link href={`/${locale}`} className="hover:text-blue-600">
           {dict.common.breadcrumbHome}
         </Link>
         <span>/</span>
-        <Link href={`/${locale}#tools`} className="hover:text-violet-600">
+        <Link href={`/${locale}#tools`} className="hover:text-blue-600">
           {dict.common.tools}
         </Link>
         <span>/</span>
-        <span className="text-zinc-800 dark:text-zinc-200">{title}</span>
+        <span className="text-slate-800">{title}</span>
       </nav>
 
       <header className="space-y-3">
-        <span className="inline-flex rounded-full bg-violet-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-violet-700 dark:bg-violet-950 dark:text-violet-200">
+        <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-700">
           {categoryLabel}
         </span>
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           {title}
         </h1>
-        <p className="max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
+        <p className="max-w-2xl text-base leading-relaxed text-slate-600">
           {description}
         </p>
       </header>
@@ -51,9 +51,11 @@ export default function ToolPageShell({
       {children}
 
       {related.length > 0 ? (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">{dict.common.relatedTools}</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+        <section className="space-y-4 border-t border-slate-200 pt-8">
+          <h2 className="text-xl font-semibold text-slate-900">
+            {dict.common.relatedTools}
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2">
             {related.map((tool) => (
               <ToolCard
                 key={tool.slug}
@@ -63,6 +65,7 @@ export default function ToolPageShell({
                 description={tool.description}
                 categoryLabel={dict.categories[tool.category]}
                 cta={dict.common.openTool}
+                compact
               />
             ))}
           </div>
