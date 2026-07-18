@@ -1,0 +1,43 @@
+{
+  "common": {
+    "siteName": "Online Office Tools",
+    "siteTagline": "Tarayıcıda çalışan ücretsiz ofis araçları",
+    "home": "Ana Sayfa",
+    "tools": "Araçlar",
+    "language": "Dil",
+    "footerRights": "Tüm hakları saklıdır.",
+    "privacy": "Gizlilik",
+    "terms": "Şartlar"
+  },
+  "home": {
+    "title": "Ücretsiz Online Ofis Araçları",
+    "description": "Hızlı, gizli ve tarayıcıda çalışan ofis araçları. Yükleme yok, sunucu işlemi yok.",
+    "heroTitle": "Tarayıcınızda çalışan ofis araçları",
+    "heroSubtitle": "Metni anında sayın, dönüştürün ve düzenleyin — yükleme yok, sunucu maliyeti yok.",
+    "toolsHeading": "Popüler araçlar",
+    "openTool": "Aracı aç"
+  },
+  "tools": {
+    "wordCounter": {
+      "title": "Kelime Sayacı & Metin Dönüştürücü",
+      "description": "Kelime, karakter, satır ve cümleleri anında sayın. Tek tıkla büyük/küçük harf dönüştürün.",
+      "metaTitle": "Kelime Sayacı & Metin Dönüştürücü — Ücretsiz Online Araç",
+      "metaDescription": "Ücretsiz tarayıcı tabanlı kelime sayacı ve metin dönüştürücü. Yükleme olmadan kelime, karakter, satır ve cümle sayın.",
+      "placeholder": "Metninizi buraya yazın veya yapıştırın…",
+      "words": "Kelime",
+      "characters": "Karakter",
+      "charactersNoSpaces": "Karakter (boşluksuz)",
+      "lines": "Satır",
+      "sentences": "Cümle",
+      "uppercase": "BÜYÜK HARF",
+      "lowercase": "küçük harf",
+      "titleCase": "Başlık Düzeni",
+      "sentenceCase": "Cümle düzeni",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle",
+      "statsHeading": "Anlık istatistikler",
+      "convertHeading": "Harf dönüştürücü"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "common": {
+    "siteName": "Online Office Tools",
+    "siteTagline": "Free browser-based office utilities",
+    "home": "Home",
+    "tools": "Tools",
+    "language": "Language",
+    "footerRights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "home": {
+    "title": "Free Online Office Tools",
+    "description": "Fast, private, browser-based office utilities. No uploads, no server processing.",
+    "heroTitle": "Office tools that run in your browser",
+    "heroSubtitle": "Convert, count, and transform text instantly — zero uploads, zero server cost.",
+    "toolsHeading": "Popular tools",
+    "openTool": "Open tool"
+  },
+  "tools": {
+    "wordCounter": {
+      "title": "Word Counter & Text Converter",
+      "description": "Count words, characters, lines, and sentences instantly. Convert case with one click.",
+      "metaTitle": "Word Counter & Text Converter — Free Online Tool",
+      "metaDescription": "Free browser-based word counter and text case converter. Count words, characters, lines, and sentences with no uploads.",
+      "placeholder": "Type or paste your text here…",
+      "words": "Words",
+      "characters": "Characters",
+      "charactersNoSpaces": "Characters (no spaces)",
+      "lines": "Lines",
+      "sentences": "Sentences",
+      "uppercase": "UPPERCASE",
+      "lowercase": "lowercase",
+      "titleCase": "Title Case",
+      "sentenceCase": "Sentence case",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear",
+      "statsHeading": "Live statistics",
+      "convertHeading": "Case converter"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# Minimal Supabase CLI config. Link a remote project with:
+#   supabase link --project-ref lqdmkzgsghxdmfergcgm
+# Apply migrations with:
+#   supabase db push
+
+project_id = "lqdmkzgsghxdmfergcgm"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+enable_signup = false
