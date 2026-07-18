@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
+/* Site is light-only: make the `dark:` variant class-based (never triggered by
+   the OS color scheme) so leftover dark: utilities can't activate. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  color-scheme: light;
   --background: #f8fafc;
   --foreground: #0f172a;
   --accent: #2563eb;
