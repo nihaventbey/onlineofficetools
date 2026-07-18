@@ -17,6 +17,11 @@ import UrlEncoder from "@/components/tools/UrlEncoder";
 import UuidGenerator from "@/components/tools/UuidGenerator";
 import UnitConverter from "@/components/tools/UnitConverter";
 import DateDifference from "@/components/tools/DateDifference";
+import PdfMerge from "@/components/tools/PdfMerge";
+import PdfSplit from "@/components/tools/PdfSplit";
+import PdfRotate from "@/components/tools/PdfRotate";
+import PdfCompress from "@/components/tools/PdfCompress";
+import ImagesToPdf from "@/components/tools/ImagesToPdf";
 
 export type ToolDictKey = keyof Dictionary["tools"];
 
@@ -53,6 +58,11 @@ export const toolRegistry: ToolDefinition[] = [
   { slug: "color-converter", category: "image", dictKey: "colorConverter", icon: "◈", Component: asTool(ColorConverter) },
   { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", Component: asTool(UnitConverter) },
   { slug: "date-difference", category: "calculator", dictKey: "dateDifference", icon: "📅", Component: asTool(DateDifference) },
+  { slug: "pdf-merge", category: "pdf", dictKey: "pdfMerge", icon: "⧉", Component: asTool(PdfMerge) },
+  { slug: "pdf-split", category: "pdf", dictKey: "pdfSplit", icon: "✂", Component: asTool(PdfSplit) },
+  { slug: "pdf-rotate", category: "pdf", dictKey: "pdfRotate", icon: "↻", Component: asTool(PdfRotate) },
+  { slug: "pdf-compress", category: "pdf", dictKey: "pdfCompress", icon: "↓", Component: asTool(PdfCompress) },
+  { slug: "images-to-pdf", category: "pdf", dictKey: "imagesToPdf", icon: "▣", Component: asTool(ImagesToPdf) },
 ];
 
 export const toolSlugs = toolRegistry.map((t) => t.slug);

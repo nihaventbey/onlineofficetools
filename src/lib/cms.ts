@@ -152,6 +152,36 @@ const FALLBACK_COPY: Record<
     enDesc: "Calculate days, weeks, months, and years between two dates.",
     trDesc: "İki tarih arasındaki gün, hafta, ay ve yılı hesaplayın.",
   },
+  "pdf-merge": {
+    en: "Merge PDF",
+    tr: "PDF Birleştir",
+    enDesc: "Combine multiple PDF files into one, in your browser.",
+    trDesc: "Birden fazla PDF dosyasını tarayıcınızda tek dosyada birleştirin.",
+  },
+  "pdf-split": {
+    en: "Split PDF",
+    tr: "PDF Böl",
+    enDesc: "Extract pages or page ranges into a new PDF.",
+    trDesc: "Sayfa veya sayfa aralıklarını yeni bir PDF olarak çıkarın.",
+  },
+  "pdf-rotate": {
+    en: "Rotate PDF",
+    tr: "PDF Döndür",
+    enDesc: "Rotate all or selected pages by 90°, 180°, or 270°.",
+    trDesc: "Tüm veya seçili sayfaları 90°, 180° veya 270° döndürün.",
+  },
+  "pdf-compress": {
+    en: "Compress PDF",
+    tr: "PDF Sıkıştır",
+    enDesc: "Reduce PDF size by re-encoding pages as images.",
+    trDesc: "Sayfaları yeniden kodlayarak PDF boyutunu küçültün.",
+  },
+  "images-to-pdf": {
+    en: "Images to PDF",
+    tr: "Görsellerden PDF",
+    enDesc: "Convert PNG or JPG images into a single PDF.",
+    trDesc: "PNG veya JPG görsellerini tek bir PDF'e dönüştürün.",
+  },
 };
 
 function fallbackTools(locale: Locale): CmsToolCard[] {
@@ -184,7 +214,8 @@ function withRegistryCategory(
     category === "security" ||
     category === "text" ||
     category === "image" ||
-    category === "calculator"
+    category === "calculator" ||
+    category === "pdf"
   ) {
     return category;
   }

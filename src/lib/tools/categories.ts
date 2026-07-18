@@ -4,6 +4,7 @@ export const toolCategories = [
   "security",
   "image",
   "calculator",
+  "pdf",
 ] as const;
 
 export type ToolCategory = (typeof toolCategories)[number];
@@ -37,5 +38,10 @@ export const categoryStyles: Record<
     bg: "bg-cyan-50",
     text: "text-cyan-700",
     ring: "hover:border-cyan-300",
+  },
+  pdf: {
+    bg: "bg-rose-50",
+    text: "text-rose-700",
+    ring: "hover:border-rose-300",
   },
 };

@@ -84,6 +84,7 @@ export type Dictionary = {
     security: string;
     image: string;
     calculator: string;
+    pdf: string;
   };
   legal: {
     privacy: {
@@ -231,6 +232,80 @@ export type Dictionary = {
       months: string;
       years: string;
       invalid: string;
+    };
+    pdfMerge: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      needTwo: string;
+      invalidFile: string;
+      tooLarge: string;
+      mergeTooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    pdfSplit: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      rangeLabel: string;
+      rangePlaceholder: string;
+      pages: string;
+      invalidRange: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    pdfRotate: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      rangeLabel: string;
+      rangePlaceholder: string;
+      invalidRange: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    pdfCompress: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      quality: string;
+      rasterNote: string;
+      resultSize: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    imagesToPdf: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      pageAuto: string;
+      pageA4: string;
+      invalidFile: string;
+      tooLarge: string;
+      error: string;
+      limitHint: string;
     };
   };
 };
