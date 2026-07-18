@@ -220,7 +220,7 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
           <input
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
-            placeholder="word-counter"
+            placeholder="word-counter (must match registry)"
             className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 font-mono text-sm dark:border-zinc-700 dark:bg-zinc-950"
             required
           />

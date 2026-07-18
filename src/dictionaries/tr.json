@@ -7,22 +7,67 @@
     "language": "Dil",
     "footerRights": "Tüm hakları saklıdır.",
     "privacy": "Gizlilik",
-    "terms": "Şartlar"
+    "terms": "Şartlar",
+    "about": "Hakkında",
+    "contact": "İletişim",
+    "legal": "Yasal",
+    "search": "Ara",
+    "searchPlaceholder": "Araç ara…",
+    "categories": "Kategoriler",
+    "allTools": "Tüm araçlar",
+    "openTool": "Aracı aç",
+    "relatedTools": "İlgili araçlar",
+    "breadcrumbHome": "Ana Sayfa",
+    "noResults": "Aramanızla eşleşen araç yok.",
+    "exploreCta": "Popüler araçları keşfet",
+    "trustPrivate": "Gizli — tarayıcınızda çalışır",
+    "trustFast": "Anında sonuç",
+    "trustFree": "Sonsuza kadar ücretsiz"
   },
   "home": {
     "title": "Ücretsiz Online Ofis Araçları",
     "description": "Hızlı, gizli ve tarayıcıda çalışan ofis araçları. Yükleme yok, sunucu işlemi yok.",
     "heroTitle": "Tarayıcınızda çalışan ofis araçları",
-    "heroSubtitle": "Metni anında sayın, dönüştürün ve düzenleyin — yükleme yok, sunucu maliyeti yok.",
-    "toolsHeading": "Popüler araçlar",
-    "openTool": "Aracı aç"
+    "heroSubtitle": "Sayın, biçimlendirin, dönüştürün ve üretin — yükleme yok, sunucu maliyeti yok, tam gizlilik.",
+    "toolsHeading": "Tüm araçlar",
+    "popularHeading": "Şu an popüler",
+    "categoryHeading": "Kategoriye göre göz at"
+  },
+  "categories": {
+    "text": "Metin",
+    "developer": "Geliştirici",
+    "security": "Güvenlik"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "metaDescription": "Online Office Tools gizlilik, çerez ve reklam politikası.",
+      "body": "Son güncelleme: 18 Temmuz 2026\n\nOnline Office Tools (“biz”, “sitemiz”) ücretsiz, tarayıcı tabanlı araçlar sunar. Ürünü, mümkün olduğunca işlemlerin cihazınızda yapılacağı şekilde tasarladık.\n\n1. Araç işlemleri\nAraçlara girdiğiniz metin ve diğer veriler tarayıcınızda işlenir. Araç içeriğinizi sunucularımıza işlem için yüklemeyiz ve araç taslaklarını sunucularımızda saklamayız. Dil değişiminde çalışmanız kaybolmasın diye taslaklar tarayıcınızın oturum depolamasında (sessionStorage) geçici tutulabilir; sekmeyi kapattığınızda silinir.\n\n2. Analitik ve reklam\nReklam göstermek için Google AdSense kullanabiliriz. Google ve iş ortakları, bu veya diğer siteleri ziyaretinize göre ilgili reklamlar göstermek amacıyla çerez veya benzer teknolojiler kullanabilir. Daha fazla bilgi ve reklam kişiselleştirme ayarları: https://www.google.com/settings/ads ve https://policies.google.com/technologies/ads.\n\n3. Çerezler\nSitenin çalışması için zorunlu çerezler kullanılabilir. Reklamlar gösterildiğinde Google AdSense çerezleri yerleştirilebilir.\n\n4. İletişim\nE-posta ile yazarsanız mesajınızı yalnızca yanıtlamak için kullanırız.\n\n5. Çocukların gizliliği\nSite 13 yaş altı çocuklara yönelik değildir.\n\n6. Değişiklikler\nBu politikayı güncelleyebiliriz. Üstteki tarih değiştiğinde güncelleme yapılmış demektir.\n\n7. İletişim\nGizlilik soruları için İletişim sayfasını kullanın."
+    },
+    "terms": {
+      "title": "Kullanım Şartları",
+      "metaDescription": "Online Office Tools kullanım şartları.",
+      "body": "Son güncelleme: 18 Temmuz 2026\n\nOnline Office Tools’u kullanarak bu şartları kabul etmiş olursunuz.\n\n1. Hizmet\nÜcretsiz, tarayıcı tabanlı araçlar sunarız. Özellikler değişebilir veya sonlandırılabilir.\n\n2. Kabul edilebilir kullanım\nSiteyi kötüye kullanmamayı, hizmeti aksatmamayı ve yasalara aykırı kullanmamayı kabul edersiniz.\n\n3. Garanti yok\nSite “olduğu gibi” sunulur. Araç çıktılarını kullanmadan önce doğrulamak sizin sorumluluğunuzdadır.\n\n4. Sorumluluk sınırlaması\nYasaların izin verdiği ölçüde, siteden doğan zararlardan sorumlu değiliz.\n\n5. Fikri mülkiyet\nMarka, düzen ve özgün içerik bize aittir. Araçlara girdiğiniz içerik size aittir.\n\n6. Reklam\nSite Google AdSense dahil üçüncü taraf reklam gösterebilir.\n\n7. Değişiklikler\nŞartları güncelleyebiliriz. Kullanıma devam etmek kabul anlamına gelir.\n\n8. İletişim\nSorularınız için İletişim sayfasını kullanın."
+    },
+    "about": {
+      "title": "Online Office Tools Hakkında",
+      "metaDescription": "Online Office Tools hakkında — gizli, tarayıcı tabanlı araçlar.",
+      "body": "Online Office Tools, tamamen tarayıcınızda çalışan ücretsiz araçlardan oluşan bir koleksiyondur.\n\nAmacımız basit: dosya yüklemeden ve sunucu işlemi olmadan hızlı ofis ve geliştirici yardımcıları sunmak. Bu, tasarım gereği daha iyi gizlilik, düşük maliyet ve anında sonuç demektir.\n\nOdaklandığımız konular:\n• Her gün aranan pratik araçlar (kelime sayma, JSON biçimlendirme, şifre üretme ve daha fazlası)\n• Mobil ve masaüstünde çalışan temiz arayüzler\n• İngilizce ve Türkçe çok dilli deneyim\n• Araç girdilerinizi satmayan şeffaf reklam modeli\n\nKataloğu istemci taraflı ve yararlı araçlarla büyütmeye devam ediyoruz. Geri bildiriminiz için İletişim sayfasını kullanın."
+    },
+    "contact": {
+      "title": "İletişim",
+      "metaDescription": "Online Office Tools ile iletişime geçin.",
+      "body": "Sorunuz, iş birliği fikriniz veya araç öneriniz mi var? Bizimle iletişime geçin.\n\nLütfen yardımcı olabilmemiz için yeterli ayrıntı yazın. Birkaç iş günü içinde yanıtlamaya çalışırız.",
+      "emailLabel": "E-posta",
+      "email": "hello@onlineofficetools.com"
+    }
   },
   "tools": {
     "wordCounter": {
-      "title": "Kelime Sayacı & Metin Dönüştürücü",
-      "description": "Kelime, karakter, satır ve cümleleri anında sayın. Tek tıkla büyük/küçük harf dönüştürün.",
-      "metaTitle": "Kelime Sayacı & Metin Dönüştürücü — Ücretsiz Online Araç",
-      "metaDescription": "Ücretsiz tarayıcı tabanlı kelime sayacı ve metin dönüştürücü. Yükleme olmadan kelime, karakter, satır ve cümle sayın.",
+      "title": "Kelime Sayacı",
+      "description": "Kelime, karakter, satır ve cümleleri anında sayın.",
+      "metaTitle": "Kelime Sayacı — Ücretsiz Online Araç",
+      "metaDescription": "Ücretsiz tarayıcı tabanlı kelime sayacı. Yükleme olmadan kelime, karakter, satır ve cümle sayın.",
       "placeholder": "Metninizi buraya yazın veya yapıştırın…",
       "words": "Kelime",
       "characters": "Karakter",
@@ -37,7 +82,96 @@
       "copied": "Kopyalandı!",
       "clear": "Temizle",
       "statsHeading": "Anlık istatistikler",
-      "convertHeading": "Harf dönüştürücü"
+      "convertHeading": "Hızlı dönüşüm"
+    },
+    "jsonFormatter": {
+      "title": "JSON Biçimlendirici",
+      "description": "JSON’u tarayıcınızda güzelleştirin, küçültün ve doğrulayın.",
+      "metaTitle": "JSON Biçimlendirici & Doğrulayıcı — Ücretsiz Online Araç",
+      "metaDescription": "JSON’u anında biçimlendirin, küçültün ve doğrulayın. Yükleme yok.",
+      "placeholder": "JSON’u buraya yapıştırın…",
+      "format": "Biçimlendir",
+      "minify": "Küçült",
+      "valid": "Geçerli JSON",
+      "invalid": "Geçersiz JSON",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "passwordGenerator": {
+      "title": "Şifre Üretici",
+      "description": "Web Crypto ile tarayıcınızda güçlü şifreler üretin.",
+      "metaTitle": "Şifre Üretici — Ücretsiz Online Araç",
+      "metaDescription": "Güçlü rastgele şifreleri tarayıcınızda üretin. Hiçbir şey yüklenmez.",
+      "length": "Uzunluk",
+      "uppercase": "Büyük harf",
+      "lowercase": "Küçük harf",
+      "numbers": "Rakamlar",
+      "symbols": "Semboller",
+      "generate": "Üret",
+      "strength": "Güç",
+      "weak": "Zayıf",
+      "medium": "Orta",
+      "strong": "Güçlü",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "loremIpsum": {
+      "title": "Lorem Ipsum Üretici",
+      "description": "Tasarım ve taslaklar için yer tutucu paragraflar üretin.",
+      "metaTitle": "Lorem Ipsum Üretici — Ücretsiz Online Araç",
+      "metaDescription": "Lorem ipsum yer tutucu metni tarayıcınızda anında üretin.",
+      "paragraphs": "Paragraf",
+      "words": "Paragraf başına kelime",
+      "generate": "Üret",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "textDiff": {
+      "title": "Metin Karşılaştırıcı",
+      "description": "İki metni karşılaştırın ve farkları görün.",
+      "metaTitle": "Metin Karşılaştırıcı — Ücretsiz Online Araç",
+      "metaDescription": "İki metin bloğunu karşılaştırın. Tarayıcınızda çalışır.",
+      "leftPlaceholder": "Orijinal metin…",
+      "rightPlaceholder": "Değişen metin…",
+      "compare": "Karşılaştır",
+      "identical": "Metinler aynı",
+      "differences": "Fark bulundu",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "base64": {
+      "title": "Base64 Kodla / Çöz",
+      "description": "Base64 metni yerelde kodlayın veya çözün.",
+      "metaTitle": "Base64 Kodlayıcı Çözücü — Ücretsiz Online Araç",
+      "metaDescription": "Base64 dizilerini tarayıcınızda kodlayın ve çözün. Yükleme yok.",
+      "inputPlaceholder": "Metin veya Base64 girin…",
+      "encode": "Kodla",
+      "decode": "Çöz",
+      "error": "Bu girdi çözülemedi.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
+    },
+    "caseConverter": {
+      "title": "Harf Dönüştürücü",
+      "description": "Metni büyük, küçük, başlık, camel, snake ve kebab biçimlerine dönüştürün.",
+      "metaTitle": "Harf Dönüştürücü — Ücretsiz Online Araç",
+      "metaDescription": "Metin biçimlerini tarayıcınızda anında dönüştürün.",
+      "placeholder": "Metin yazın veya yapıştırın…",
+      "uppercase": "BÜYÜK HARF",
+      "lowercase": "küçük harf",
+      "titleCase": "Başlık Düzeni",
+      "sentenceCase": "Cümle düzeni",
+      "camelCase": "camelCase",
+      "snakeCase": "snake_case",
+      "kebabCase": "kebab-case",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle"
     }
   }
 }

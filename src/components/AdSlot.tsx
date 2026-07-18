@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { ADSENSE_CLIENT } from "@/lib/adsense";
+import { ADSENSE_CLIENT, isAdSlotConfigured } from "@/lib/adsense";
 
 type AdSlotProps = {
   slot: string;
@@ -23,20 +23,23 @@ export default function AdSlot({
 }: AdSlotProps) {
   const pathname = usePathname();
   const pushed = useRef(false);
+  const enabled = isAdSlotConfigured(slot);
 
   useEffect(() => {
     pushed.current = false;
   }, [pathname]);
 
   useEffect(() => {
-    if (pushed.current) return;
+    if (!enabled || pushed.current) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
       pushed.current = true;
     } catch {
       // Ignore AdSense race conditions on client navigations.
     }
-  }, [pathname, slot]);
+  }, [pathname, slot, enabled]);
+
+  if (!enabled) return null;
 
   return (
     <div

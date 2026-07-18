@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
         destination: "/en",
         permanent: true,
       },
+      {
+        source: "/:lang/word-counter",
+        destination: "/:lang/tools/word-counter",
+        permanent: true,
+      },
     ];
   },
 };

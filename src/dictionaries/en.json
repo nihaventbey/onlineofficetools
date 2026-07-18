@@ -7,22 +7,67 @@
     "language": "Language",
     "footerRights": "All rights reserved.",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "about": "About",
+    "contact": "Contact",
+    "legal": "Legal",
+    "search": "Search",
+    "searchPlaceholder": "Search tools…",
+    "categories": "Categories",
+    "allTools": "All tools",
+    "openTool": "Open tool",
+    "relatedTools": "Related tools",
+    "breadcrumbHome": "Home",
+    "noResults": "No tools match your search.",
+    "exploreCta": "Explore popular tools",
+    "trustPrivate": "Private — runs in your browser",
+    "trustFast": "Instant results",
+    "trustFree": "Free forever"
   },
   "home": {
     "title": "Free Online Office Tools",
     "description": "Fast, private, browser-based office utilities. No uploads, no server processing.",
     "heroTitle": "Office tools that run in your browser",
-    "heroSubtitle": "Convert, count, and transform text instantly — zero uploads, zero server cost.",
-    "toolsHeading": "Popular tools",
-    "openTool": "Open tool"
+    "heroSubtitle": "Convert, count, format, and generate instantly — zero uploads, zero server cost, full privacy.",
+    "toolsHeading": "All tools",
+    "popularHeading": "Popular right now",
+    "categoryHeading": "Browse by category"
+  },
+  "categories": {
+    "text": "Text",
+    "developer": "Developer",
+    "security": "Security"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "metaDescription": "How Online Office Tools handles privacy, cookies, and advertising.",
+      "body": "Last updated: July 18, 2026\n\nOnline Office Tools (“we”, “our”, “the site”) provides free browser-based utilities. We designed the product so that tool processing happens on your device whenever possible.\n\n1. Tool processing\nText, files, and other inputs you enter into our tools are processed locally in your browser. We do not upload your tool content to our servers for processing, and we do not store tool drafts on our servers. Drafts may be kept temporarily in your browser’s session storage so language switches do not erase your work; those drafts are cleared when you close the tab.\n\n2. Analytics and advertising\nWe may use Google AdSense to display ads. Google and its partners may use cookies or similar technologies to show relevant ads based on your prior visits to this or other websites. You can learn more and manage ad personalization at https://www.google.com/settings/ads and https://policies.google.com/technologies/ads.\n\n3. Cookies\nEssential cookies may be used for site operation. Advertising cookies from Google AdSense may be set when ads are shown. By using the site with ads enabled, you acknowledge these technologies as described in Google’s policies.\n\n4. Contact pages and email\nIf you contact us by email, we will use your message only to respond to your inquiry.\n\n5. Children’s privacy\nThe site is not directed at children under 13. We do not knowingly collect personal information from children.\n\n6. Changes\nWe may update this Privacy Policy. The “Last updated” date at the top will change when we do.\n\n7. Contact\nFor privacy questions, use the Contact page on this site."
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "metaDescription": "Terms of use for Online Office Tools.",
+      "body": "Last updated: July 18, 2026\n\nBy using Online Office Tools, you agree to these Terms of Service.\n\n1. Service description\nWe provide free, browser-based utilities for text and related tasks. Features may change or be discontinued at any time.\n\n2. Acceptable use\nYou agree not to misuse the site, attempt to disrupt service, use the tools for unlawful purposes, or violate applicable laws.\n\n3. No warranty\nThe site is provided “as is” without warranties of any kind. Results from tools may contain errors. You are responsible for verifying outputs before relying on them.\n\n4. Limitation of liability\nTo the fullest extent permitted by law, we are not liable for any damages arising from your use of the site or tools.\n\n5. Intellectual property\nSite branding, layout, and original content are owned by Online Office Tools. You retain ownership of content you enter into tools.\n\n6. Advertising\nThe site may display third-party advertisements, including Google AdSense.\n\n7. Changes\nWe may update these terms. Continued use after changes constitutes acceptance.\n\n8. Contact\nQuestions about these terms can be sent via the Contact page."
+    },
+    "about": {
+      "title": "About Online Office Tools",
+      "metaDescription": "Learn about Online Office Tools — private, browser-based utilities.",
+      "body": "Online Office Tools is a collection of free utilities that run entirely in your browser.\n\nOur mission is simple: give people fast office and developer helpers without forcing file uploads or server-side processing. That means better privacy by design, lower cost, and instant results.\n\nWhat we focus on:\n• Practical tools people search for every day (counting words, formatting JSON, generating passwords, and more)\n• Clean, accessible interfaces that work on mobile and desktop\n• Multilingual experiences so the same tools work in English and Turkish\n• Transparent advertising that does not require selling your tool inputs\n\nWe continuously expand the catalog with tools that stay client-side and useful. If you have feedback, reach us through the Contact page."
+    },
+    "contact": {
+      "title": "Contact",
+      "metaDescription": "Contact Online Office Tools.",
+      "body": "Have a question, partnership idea, or tool suggestion? We’d love to hear from you.\n\nPlease email us and include enough detail for us to help. We aim to respond within a few business days.",
+      "emailLabel": "Email",
+      "email": "hello@onlineofficetools.com"
+    }
   },
   "tools": {
     "wordCounter": {
-      "title": "Word Counter & Text Converter",
-      "description": "Count words, characters, lines, and sentences instantly. Convert case with one click.",
-      "metaTitle": "Word Counter & Text Converter — Free Online Tool",
-      "metaDescription": "Free browser-based word counter and text case converter. Count words, characters, lines, and sentences with no uploads.",
+      "title": "Word Counter",
+      "description": "Count words, characters, lines, and sentences instantly.",
+      "metaTitle": "Word Counter — Free Online Tool",
+      "metaDescription": "Free browser-based word counter. Count words, characters, lines, and sentences with no uploads.",
       "placeholder": "Type or paste your text here…",
       "words": "Words",
       "characters": "Characters",
@@ -37,7 +82,96 @@
       "copied": "Copied!",
       "clear": "Clear",
       "statsHeading": "Live statistics",
-      "convertHeading": "Case converter"
+      "convertHeading": "Quick case"
+    },
+    "jsonFormatter": {
+      "title": "JSON Formatter",
+      "description": "Pretty-print, minify, and validate JSON in your browser.",
+      "metaTitle": "JSON Formatter & Validator — Free Online Tool",
+      "metaDescription": "Format, minify, and validate JSON instantly in your browser. No uploads.",
+      "placeholder": "Paste JSON here…",
+      "format": "Format",
+      "minify": "Minify",
+      "valid": "Valid JSON",
+      "invalid": "Invalid JSON",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "passwordGenerator": {
+      "title": "Password Generator",
+      "description": "Generate strong passwords with Web Crypto in your browser.",
+      "metaTitle": "Password Generator — Free Online Tool",
+      "metaDescription": "Create strong random passwords locally in your browser. Nothing is uploaded.",
+      "length": "Length",
+      "uppercase": "Uppercase",
+      "lowercase": "Lowercase",
+      "numbers": "Numbers",
+      "symbols": "Symbols",
+      "generate": "Generate",
+      "strength": "Strength",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "loremIpsum": {
+      "title": "Lorem Ipsum Generator",
+      "description": "Generate placeholder paragraphs for designs and drafts.",
+      "metaTitle": "Lorem Ipsum Generator — Free Online Tool",
+      "metaDescription": "Generate lorem ipsum placeholder text instantly in your browser.",
+      "paragraphs": "Paragraphs",
+      "words": "Words per paragraph",
+      "generate": "Generate",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "textDiff": {
+      "title": "Text Diff Checker",
+      "description": "Compare two texts and highlight differences.",
+      "metaTitle": "Text Diff Checker — Free Online Tool",
+      "metaDescription": "Compare two blocks of text and see differences instantly. Runs in your browser.",
+      "leftPlaceholder": "Original text…",
+      "rightPlaceholder": "Changed text…",
+      "compare": "Compare",
+      "identical": "Texts are identical",
+      "differences": "Differences found",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "base64": {
+      "title": "Base64 Encode / Decode",
+      "description": "Encode or decode Base64 text locally.",
+      "metaTitle": "Base64 Encoder Decoder — Free Online Tool",
+      "metaDescription": "Encode and decode Base64 strings in your browser. No uploads.",
+      "inputPlaceholder": "Enter text or Base64…",
+      "encode": "Encode",
+      "decode": "Decode",
+      "error": "Could not decode that input.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
+    },
+    "caseConverter": {
+      "title": "Case Converter",
+      "description": "Convert text between upper, lower, title, camel, snake, and kebab case.",
+      "metaTitle": "Case Converter — Free Online Tool",
+      "metaDescription": "Convert text case formats instantly in your browser.",
+      "placeholder": "Type or paste text…",
+      "uppercase": "UPPERCASE",
+      "lowercase": "lowercase",
+      "titleCase": "Title Case",
+      "sentenceCase": "Sentence case",
+      "camelCase": "camelCase",
+      "snakeCase": "snake_case",
+      "kebabCase": "kebab-case",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear"
     }
   }
 }

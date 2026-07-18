@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
+import { useToolDraft } from "@/lib/state/useToolDraft";
 
 type WordCounterProps = {
   labels: Dictionary["tools"]["wordCounter"];
@@ -21,7 +22,7 @@ function toSentenceCase(text: string): string {
 }
 
 export default function WordCounter({ labels }: WordCounterProps) {
-  const [text, setText] = useState("");
+  const [text, setText, clear] = useToolDraft("word-counter", "");
   const [copied, setCopied] = useState(false);
 
   const stats = useMemo(() => {
@@ -33,7 +34,6 @@ export default function WordCounter({ labels }: WordCounterProps) {
     const sentences = trimmed
       ? trimmed.split(/[.!?]+/).filter((part) => part.trim().length > 0).length
       : 0;
-
     return { words, characters, charactersNoSpaces, lines, sentences };
   }, [text]);
 
@@ -82,7 +82,7 @@ export default function WordCounter({ labels }: WordCounterProps) {
           </button>
           <button
             type="button"
-            onClick={() => setText("")}
+            onClick={clear}
             className="rounded-xl border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
             {labels.clear}
@@ -120,7 +120,7 @@ export default function WordCounter({ labels }: WordCounterProps) {
             <button
               key={item.label}
               type="button"
-              onClick={() => setText((current) => item.apply(current))}
+              onClick={() => setText(item.apply(text))}
               className="rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:border-violet-500/50 dark:hover:bg-violet-950/40 dark:hover:text-violet-200"
             >
               {item.label}

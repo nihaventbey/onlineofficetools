@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { locales, type Locale } from "@/lib/i18n";
 
 const labels: Record<Locale, string> = {
@@ -14,24 +15,30 @@ type LanguageSwitcherProps = {
   label: string;
 };
 
-export default function LanguageSwitcher({
+function LanguageSwitcherInner({
   currentLocale,
   label,
 }: LanguageSwitcherProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   function switchLocale(next: Locale): string {
     const segments = pathname.split("/");
     if (segments.length > 1) {
       segments[1] = next;
-      return segments.join("/") || `/${next}`;
     }
-    return `/${next}`;
+    const base = segments.join("/") || `/${next}`;
+    const query = searchParams.toString();
+    const hash =
+      typeof window !== "undefined" ? window.location.hash : "";
+    return `${base}${query ? `?${query}` : ""}${hash}`;
   }
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      <span className="text-zinc-500 dark:text-zinc-400">{label}</span>
+      <span className="hidden text-zinc-500 sm:inline dark:text-zinc-400">
+        {label}
+      </span>
       <div className="flex items-center gap-1 rounded-full border border-zinc-200 bg-white p-0.5 dark:border-zinc-700 dark:bg-zinc-900">
         {locales.map((locale) => {
           const active = locale === currentLocale;
@@ -46,6 +53,7 @@ export default function LanguageSwitcher({
               }`}
               hrefLang={locale}
               aria-current={active ? "true" : undefined}
+              prefetch={false}
             >
               {labels[locale]}
             </Link>
@@ -53,5 +61,13 @@ export default function LanguageSwitcher({
         })}
       </div>
     </div>
+  );
+}
+
+export default function LanguageSwitcher(props: LanguageSwitcherProps) {
+  return (
+    <Suspense fallback={<div className="h-8 w-28 animate-pulse rounded-full bg-zinc-100 dark:bg-zinc-800" />}>
+      <LanguageSwitcherInner {...props} />
+    </Suspense>
   );
 }
