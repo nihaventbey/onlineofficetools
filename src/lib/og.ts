@@ -53,3 +53,23 @@ export async function getOgBrandName(locale: Locale = "en"): Promise<string> {
   const settings = await getSiteSettings(locale);
   return settings.siteName?.trim() || "Online Office Tools";
 }
+
+/**
+ * Resolve the favicon artwork for PNG icon generation as a data URI.
+ * Prefers the CMS favicon, then the CMS logo, then the bundled app icon.
+ */
+export async function resolveFaviconSrc(): Promise<string> {
+  const [faviconUrl, logoUrl] = await Promise.all([
+    getSiteFaviconUrl(),
+    getSiteLogoUrl(),
+  ]);
+  for (const candidate of [faviconUrl, logoUrl]) {
+    if (!candidate) continue;
+    const dataUri = await toDataUri(candidate);
+    if (dataUri) return dataUri;
+  }
+  return (
+    (await toDataUri(absoluteUrl("/icon-192.png"))) ??
+    absoluteUrl("/icon-192.png")
+  );
+}

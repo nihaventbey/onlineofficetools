@@ -55,7 +55,6 @@ export async function generateMetadata({
 
   const dict = await getDictionary(lang);
   const siteSettings = await getSiteSettings(lang);
-  const faviconUrl = publicMediaUrl(siteSettings.faviconPath);
   const languages = languageAlternates("/");
   const siteName = siteSettings.siteName || dict.common.siteName;
   const description = dict.home.description;
@@ -71,12 +70,9 @@ export async function generateMetadata({
       canonical: absoluteUrl(`/${lang}`),
       languages,
     },
-    icons: faviconUrl
-      ? { icon: [{ url: faviconUrl }] }
-      : {
-          icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
-          apple: [{ url: "/icon-192.png", sizes: "180x180", type: "image/png" }],
-        },
+    // Favicon/apple icons come from the icon.tsx / apple-icon.tsx file
+    // convention, which converts the CMS SVG artwork to PNG (Safari and
+    // Google Search do not support SVG favicons).
     robots: {
       index: true,
       follow: true,
