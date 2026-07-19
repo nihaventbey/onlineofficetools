@@ -136,7 +136,13 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
             {siteSettings.maintenanceMessage}
           </div>
         ) : null}
-        <Header locale={locale} dict={dict} logoUrl={logoUrl} />
+        <Header
+          locale={locale}
+          dict={dict}
+          logoUrl={logoUrl}
+          siteName={siteSettings.siteName || dict.common.siteName}
+          siteTagline={siteSettings.siteTagline || dict.common.siteTagline}
+        />
         <AdsLayout adConfig={adConfig} adLabel={dict.common.advertisement}>
           {children}
         </AdsLayout>

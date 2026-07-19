@@ -9,12 +9,69 @@ import { getToolBySlug } from "@/lib/tools/registry";
 type Props = {
   locale: Locale;
   dict: Dictionary;
+  /** Icon-only header button (hides label). */
   compact?: boolean;
+  /**
+   * `dropdown` = header popover (default).
+   * `inline` = render lists directly (mobile drawer; no nested popup).
+   */
+  variant?: "dropdown" | "inline";
+  className?: string;
 };
 
 type Tab = "favorites" | "recent";
 
-export default function QuickAccessMenu({ locale, dict, compact }: Props) {
+function ToolList({
+  locale,
+  dict,
+  items,
+  emptyLabel,
+  onNavigate,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  items: ReturnType<typeof getToolBySlug>[];
+  emptyLabel: string;
+  onNavigate?: () => void;
+}) {
+  if (!items.length) {
+    return (
+      <p className="px-1 py-4 text-center text-sm text-slate-500">{emptyLabel}</p>
+    );
+  }
+
+  return (
+    <ul className="max-h-64 space-y-1 overflow-y-auto">
+      {items.map((tool) => {
+        if (!tool) return null;
+        return (
+          <li key={tool.slug}>
+            <Link
+              href={`/${locale}/tools/${tool.slug}`}
+              onClick={onNavigate}
+              className="flex min-h-11 items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-800 transition hover:bg-slate-50"
+            >
+              <span aria-hidden className="text-base">
+                {tool.emoji ?? "🛠️"}
+              </span>
+              <span className="truncate font-medium">
+                {dict.tools[tool.dictKey].title}
+              </span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+export default function QuickAccessMenu({
+  locale,
+  dict,
+  compact,
+  variant = "dropdown",
+  className = "",
+}: Props) {
   const { recent, favorites } = useRecentTools();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("favorites");
@@ -34,6 +91,7 @@ export default function QuickAccessMenu({ locale, dict, compact }: Props) {
     tab === "favorites" ? dict.common.favoritesEmpty : dict.common.recentEmpty;
 
   useEffect(() => {
+    if (variant !== "dropdown") return;
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") setOpen(false);
     }
@@ -48,25 +106,60 @@ export default function QuickAccessMenu({ locale, dict, compact }: Props) {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClick);
     };
-  }, []);
+  }, [variant]);
+
+  if (variant === "inline") {
+    return (
+      <div className={`space-y-3 ${className}`}>
+        <div className="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
+          {(
+            [
+              ["favorites", dict.common.favoriteTools],
+              ["recent", dict.common.recentTools],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setTab(id)}
+              className={`min-h-10 rounded-lg px-2 py-1.5 text-xs font-semibold transition ${
+                tab === id
+                  ? "bg-white text-blue-700 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <ToolList
+          locale={locale}
+          dict={dict}
+          items={items}
+          emptyLabel={emptyLabel}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="relative" ref={rootRef}>
+    <div className={`relative ${className}`} ref={rootRef}>
       <button
         type="button"
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen((value) => !value)}
-        className={`inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 text-xs font-medium text-slate-600 hover:border-blue-300 ${
-          compact ? "w-full justify-center" : ""
+        title={dict.common.quickAccess}
+        className={`inline-flex h-11 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 text-xs font-medium text-slate-600 transition hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 ${
+          compact ? "w-11 shrink-0 px-0" : "min-w-11"
         }`}
       >
         <span aria-hidden>★</span>
-        <span className={compact ? "" : "hidden sm:inline"}>
-          {dict.common.quickAccess}
-        </span>
+        {!compact ? (
+          <span className="hidden lg:inline">{dict.common.quickAccess}</span>
+        ) : null}
         {count > 0 ? (
-          <span className="rounded-full bg-blue-600 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+          <span className="rounded-full bg-blue-600 px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
             {count}
           </span>
         ) : null}
@@ -76,9 +169,7 @@ export default function QuickAccessMenu({ locale, dict, compact }: Props) {
         <div
           role="dialog"
           aria-label={dict.common.quickAccess}
-          className={`absolute z-50 mt-2 w-[min(92vw,20rem)] rounded-2xl border border-slate-200 bg-white p-3 shadow-xl ${
-            compact ? "left-0" : "right-0"
-          }`}
+          className="absolute right-0 z-50 mt-2 w-[min(92vw,20rem)] rounded-2xl border border-slate-200 bg-white p-3 shadow-xl"
         >
           <div className="mb-3 grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
             {(
@@ -91,7 +182,7 @@ export default function QuickAccessMenu({ locale, dict, compact }: Props) {
                 key={id}
                 type="button"
                 onClick={() => setTab(id)}
-                className={`rounded-lg px-2 py-1.5 text-xs font-semibold ${
+                className={`min-h-9 rounded-lg px-2 py-1.5 text-xs font-semibold ${
                   tab === id
                     ? "bg-white text-blue-700 shadow-sm"
                     : "text-slate-600"
@@ -101,32 +192,13 @@ export default function QuickAccessMenu({ locale, dict, compact }: Props) {
               </button>
             ))}
           </div>
-
-          {items.length ? (
-            <ul className="max-h-64 space-y-1 overflow-y-auto">
-              {items.map((tool) => {
-                if (!tool) return null;
-                return (
-                  <li key={tool.slug}>
-                    <Link
-                      href={`/${locale}/tools/${tool.slug}`}
-                      onClick={() => setOpen(false)}
-                      className="flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-800 hover:bg-slate-50"
-                    >
-                      <span aria-hidden>{tool.emoji ?? "🛠️"}</span>
-                      <span className="truncate font-medium">
-                        {dict.tools[tool.dictKey].title}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p className="px-1 py-4 text-center text-sm text-slate-500">
-              {emptyLabel}
-            </p>
-          )}
+          <ToolList
+            locale={locale}
+            dict={dict}
+            items={items}
+            emptyLabel={emptyLabel}
+            onNavigate={() => setOpen(false)}
+          />
         </div>
       ) : null}
     </div>

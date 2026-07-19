@@ -54,7 +54,7 @@ export default async function HomePage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
       />
-      <section className="relative overflow-hidden rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-5 py-8 shadow-sm sm:px-10 sm:py-10 lg:px-12 lg:py-12">
+      <section className="relative overflow-hidden rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-5 py-7 shadow-sm sm:px-10 sm:py-10 lg:px-12 lg:py-12">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-400/20 blur-3xl"
@@ -65,10 +65,10 @@ export default async function HomePage({ params }: PageProps) {
         />
 
         <div className="relative mx-auto max-w-3xl text-center">
-          <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              {dict.common.siteTagline}
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2 sm:mb-4">
+            <span className="inline-flex max-w-full items-center gap-1.5 truncate rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+              <span className="truncate">{dict.common.siteTagline}</span>
             </span>
             <span className="inline-flex rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white shadow-sm">
               {toolsCountLabel}
