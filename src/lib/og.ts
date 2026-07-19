@@ -30,15 +30,16 @@ async function toDataUri(url: string): Promise<string | null> {
 }
 
 /**
- * Resolve the site logo for next/og as a data URI.
- * Prefers CMS logo, then CMS favicon, then the bundled app icon.
+ * Resolve the brand mark for Open Graph share cards as a data URI.
+ * Prefers CMS favicon (square mark for social previews), then logo, then
+ * the bundled app icon.
  */
 export async function resolveOgLogoSrc(): Promise<string> {
-  const [logoUrl, faviconUrl] = await Promise.all([
-    getSiteLogoUrl(),
+  const [faviconUrl, logoUrl] = await Promise.all([
     getSiteFaviconUrl(),
+    getSiteLogoUrl(),
   ]);
-  for (const candidate of [logoUrl, faviconUrl]) {
+  for (const candidate of [faviconUrl, logoUrl]) {
     if (!candidate) continue;
     const dataUri = await toDataUri(candidate);
     if (dataUri) return dataUri;
