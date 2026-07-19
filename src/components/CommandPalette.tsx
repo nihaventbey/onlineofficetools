@@ -179,7 +179,7 @@ export default function CommandPalette({
 
       {showDesktop ? (
         <button
-          ref={variant !== "compact" ? triggerRef : undefined}
+          ref={triggerRef}
           type="button"
           onClick={openPalette}
           className={`h-11 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-medium text-slate-600 transition hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 ${
