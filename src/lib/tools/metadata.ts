@@ -66,6 +66,17 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "qr-generator", category: "image", dictKey: "qrGenerator", icon: "QR", emoji: "🔳", keywords: ["qr", "code"], badge: null, featured: false, nextSteps: ["url-encoder", "color-converter"] },
   { slug: "color-converter", category: "image", dictKey: "colorConverter", icon: "◈", emoji: "🎨", keywords: ["color", "hex", "rgb"], badge: null, featured: false, nextSteps: ["qr-generator", "html-editor"] },
 
+  // Archive / ZIP
+  { slug: "zip-create", category: "archive", dictKey: "zipCreate", icon: "ZIP", emoji: "📦", keywords: ["zip", "archive", "compress", "pack"], badge: "new", featured: true, outputs: ["zip"], nextSteps: ["zip-extract", "zip-viewer"] },
+  { slug: "zip-extract", category: "archive", dictKey: "zipExtract", icon: "⇄Z", emoji: "📂", keywords: ["zip", "extract", "unzip", "unpack"], badge: "new", featured: true, accepts: ["zip"], nextSteps: ["zip-viewer", "zip-create"] },
+  { slug: "zip-viewer", category: "archive", dictKey: "zipViewer", icon: "Z", emoji: "🗂️", keywords: ["zip", "view", "inspect", "list"], badge: "new", featured: false, accepts: ["zip"], nextSteps: ["zip-extract", "zip-create"] },
+
+  // Video
+  { slug: "video-frame-extractor", category: "video", dictKey: "videoFrames", icon: "▣", emoji: "🎞️", keywords: ["video", "frame", "screenshot", "png"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["png", "zip"], nextSteps: ["video-to-gif", "image-compress"] },
+  { slug: "video-to-gif", category: "video", dictKey: "videoToGif", icon: "GIF", emoji: "🎬", keywords: ["video", "gif", "convert", "animate"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["gif"], nextSteps: ["video-frame-extractor", "video-trim"] },
+  { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-to-gif", "video-metadata"] },
+  { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-frame-extractor"] },
+
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },
   { slug: "base64", category: "developer", dictKey: "base64", icon: "64", emoji: "🔐", keywords: ["base64"], badge: null, featured: false, nextSteps: ["url-encoder", "json-formatter"] },

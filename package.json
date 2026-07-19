@@ -12,6 +12,7 @@
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.50.0",
     "docx": "^9.5.1",
+    "gifenc": "^1.0.3",
     "jszip": "^3.10.1",
     "mammoth": "^1.9.1",
     "marked": "^18.0.6",

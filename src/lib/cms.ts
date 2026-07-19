@@ -228,6 +228,48 @@ const FALLBACK_COPY: Record<
     enDesc: "Convert PNG or JPG images into a single PDF.",
     trDesc: "PNG veya JPG görsellerini tek bir PDF'e dönüştürün.",
   },
+  "zip-create": {
+    en: "Create ZIP",
+    tr: "ZIP Oluştur",
+    enDesc: "Pack multiple files into a ZIP archive in your browser.",
+    trDesc: "Birden fazla dosyayı tarayıcıda ZIP arşivine paketleyin.",
+  },
+  "zip-extract": {
+    en: "Extract ZIP",
+    tr: "ZIP Aç",
+    enDesc: "Open a ZIP archive and download files individually or all at once.",
+    trDesc: "ZIP arşivini açın; dosyaları tek tek veya toplu indirin.",
+  },
+  "zip-viewer": {
+    en: "ZIP Viewer",
+    tr: "ZIP Görüntüleyici",
+    enDesc: "Inspect ZIP contents, sizes, and preview text or images.",
+    trDesc: "ZIP içeriğini, boyutları inceleyin; metin veya görsel önizleyin.",
+  },
+  "video-frame-extractor": {
+    en: "Video Frame Extractor",
+    tr: "Video Kare Çıkarıcı",
+    enDesc: "Capture still frames from a video as PNG images.",
+    trDesc: "Videodan PNG kareler yakalayın.",
+  },
+  "video-to-gif": {
+    en: "Video to GIF",
+    tr: "Videodan GIF",
+    enDesc: "Convert a short video clip into an animated GIF.",
+    trDesc: "Kısa bir video klipini animasyonlu GIF'e dönüştürün.",
+  },
+  "video-trim": {
+    en: "Trim Video",
+    tr: "Video Kes",
+    enDesc: "Cut a time range and optionally mute audio. Output is WebM.",
+    trDesc: "Zaman aralığını kesin ve isteğe bağlı olarak sesi kapatın. Çıktı WebM.",
+  },
+  "video-metadata": {
+    en: "Video Metadata",
+    tr: "Video Meta Verisi",
+    enDesc: "View duration, resolution, aspect ratio, and other video details.",
+    trDesc: "Süre, çözünürlük, en-boy oranı ve diğer video ayrıntılarını görün.",
+  },
 };
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {

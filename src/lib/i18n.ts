@@ -167,6 +167,8 @@ export type Dictionary = {
     presentations: string;
     pdf: string;
     image: string;
+    archive: string;
+    video: string;
     developer: string;
     security: string;
     calculator: string;
@@ -489,6 +491,56 @@ export type Dictionary = {
       betaNote: string;
       fallbackNote: string;
       fallbackUsed: string;
+    };
+    zipCreate: ToolFileLabels & {
+      fileName: string;
+      fileCount: string;
+    };
+    zipExtract: ToolFileLabels & {
+      downloadAll: string;
+      fileCount: string;
+      emptyZip: string;
+    };
+    zipViewer: ToolFileLabels & {
+      fileCount: string;
+      emptyZip: string;
+      preview: string;
+      compressed: string;
+      uncompressed: string;
+      noPreview: string;
+    };
+    videoFrames: ToolFileLabels & {
+      interval: string;
+      downloadAll: string;
+      frameCount: string;
+      frameAlt: string;
+      capture: string;
+    };
+    videoToGif: ToolFileLabels & {
+      startTime: string;
+      endTime: string;
+      fps: string;
+      width: string;
+      maxDurationHint: string;
+    };
+    videoTrim: ToolFileLabels & {
+      startTime: string;
+      endTime: string;
+      muteAudio: string;
+      safariWarning: string;
+      duration: string;
+    };
+    videoInfo: ToolFileLabels & {
+      duration: string;
+      resolution: string;
+      aspectRatio: string;
+      estimatedFps: string;
+      hasAudio: string;
+      fileSize: string;
+      mimeType: string;
+      yes: string;
+      no: string;
+      unknown: string;
     };
   };
 };

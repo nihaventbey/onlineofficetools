@@ -42,6 +42,13 @@ export const toolDictKeys = [
   "imageMetadata",
   "imageEnhance",
   "imageAiUpscale",
+  "zipCreate",
+  "zipExtract",
+  "zipViewer",
+  "videoFrames",
+  "videoToGif",
+  "videoTrim",
+  "videoInfo",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];
