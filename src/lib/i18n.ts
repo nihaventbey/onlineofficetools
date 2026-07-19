@@ -113,6 +113,21 @@ export type Dictionary = {
     consentAccept: string;
     consentDecline: string;
   };
+  toolPage: {
+    howToTitle: string;
+    howToStep1: string;
+    howToStep2: string;
+    howToStep3: string;
+    faqTitle: string;
+    faq1q: string;
+    faq1a: string;
+    faq2q: string;
+    faq2a: string;
+    faq3q: string;
+    faq3a: string;
+    faq4q: string;
+    faq4a: string;
+  };
   home: {
     title: string;
     description: string;

@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import { notFound } from "next/navigation";
+import AdSenseLoader from "@/components/AdSenseLoader";
 import AdsLayout from "@/components/AdsLayout";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ADSENSE_CLIENT, isAdSenseConfigured } from "@/lib/adsense";
-import { getSiteLogoUrl } from "@/lib/cms";
+import { getAdSenseConfig, getSiteLogoUrl, getSiteSettings } from "@/lib/cms";
 import {
   getDictionary,
   isLocale,
@@ -28,8 +27,8 @@ const geistMono = Geist_Mono({
 });
 
 export const dynamicParams = false;
-// Re-generate periodically so CMS changes (e.g. an uploaded logo) show up.
-export const revalidate = 3600;
+// CMS branding (logo) and settings should refresh reasonably quickly.
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -87,8 +86,11 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
 
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const adsEnabled = isAdSenseConfigured();
-  const logoUrl = await getSiteLogoUrl();
+  const [logoUrl, adConfig, siteSettings] = await Promise.all([
+    getSiteLogoUrl(),
+    getAdSenseConfig(),
+    getSiteSettings(),
+  ]);
 
   return (
     <html
@@ -96,17 +98,14 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-slate-50 text-slate-900">
-        {adsEnabled ? (
-          <Script
-            id="adsense-init"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-            strategy="lazyOnload"
-          />
+        <AdSenseLoader enabled={adConfig.enabled} clientId={adConfig.clientId} />
+        {siteSettings.maintenanceMessage ? (
+          <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-sm text-amber-900">
+            {siteSettings.maintenanceMessage}
+          </div>
         ) : null}
         <Header locale={locale} dict={dict} logoUrl={logoUrl} />
-        <AdsLayout>{children}</AdsLayout>
+        <AdsLayout adConfig={adConfig}>{children}</AdsLayout>
         <Footer locale={locale} dict={dict} />
         <ConsentBanner
           message={dict.common.consentMessage}

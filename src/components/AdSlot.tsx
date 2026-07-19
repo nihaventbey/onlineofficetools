@@ -2,10 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { ADSENSE_CLIENT, isAdSlotConfigured } from "@/lib/adsense";
+import { isAdSlotEnabled, type AdPlacementKey, type AdSenseConfig } from "@/lib/adsense";
 
 type AdSlotProps = {
-  slot: string;
+  placement: AdPlacementKey;
+  config: AdSenseConfig;
+  /** Override the slot id from `config.slots[placement]` (e.g. a per-tool inline slot). */
+  slot?: string;
   format?: "auto" | "horizontal" | "vertical" | "rectangle";
   className?: string;
 };
@@ -17,13 +20,16 @@ declare global {
 }
 
 export default function AdSlot({
-  slot,
+  placement,
+  config,
+  slot: slotOverride,
   format = "auto",
   className = "",
 }: AdSlotProps) {
   const pathname = usePathname();
   const pushed = useRef(false);
-  const enabled = isAdSlotConfigured(slot);
+  const slot = slotOverride ?? config.slots[placement];
+  const enabled = isAdSlotEnabled(config, placement, slotOverride);
 
   useEffect(() => {
     pushed.current = false;
@@ -50,7 +56,7 @@ export default function AdSlot({
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={ADSENSE_CLIENT}
+        data-ad-client={config.clientId}
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive="true"

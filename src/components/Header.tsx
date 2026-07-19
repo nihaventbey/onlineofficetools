@@ -60,7 +60,7 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
               <img
                 src={logoUrl}
                 alt={dict.common.siteName}
-                className="h-8 w-auto shrink-0 sm:h-9"
+                className="h-8 max-w-40 shrink-0 object-contain sm:h-9"
               />
             ) : null}
             <span className="min-w-0">

@@ -863,5 +863,20 @@
       "fallbackNote": "Canvas 2× upscale will be used instead.",
       "fallbackUsed": "Canvas 2× fallback was used because the AI model was unavailable."
     }
+  },
+  "toolPage": {
+    "howToTitle": "How to use {tool}",
+    "howToStep1": "Open {tool} and paste text or drop your file.",
+    "howToStep2": "Adjust options if needed, then run the tool in your browser.",
+    "howToStep3": "Copy or download the result. Nothing is uploaded to our servers.",
+    "faqTitle": "Frequently asked questions",
+    "faq1q": "Is {tool} free?",
+    "faq1a": "Yes. {tool} is free to use in your browser with no account required.",
+    "faq2q": "Are my files uploaded?",
+    "faq2a": "No. Processing happens on your device. Your files stay private.",
+    "faq3q": "Which formats are supported?",
+    "faq3a": "Supported formats for this tool: {formats}.",
+    "faq4q": "Do I need to install anything?",
+    "faq4a": "No installation. Open {tool} in a modern browser and start."
   }
 }

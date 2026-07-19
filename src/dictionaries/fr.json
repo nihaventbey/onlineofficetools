@@ -863,5 +863,20 @@
       "fallbackNote": "L’agrandissement Canvas 2× sera utilisé à la place.",
       "fallbackUsed": "Canvas 2× a été utilisé car le modèle IA était indisponible."
     }
+  },
+  "toolPage": {
+    "howToTitle": "Comment utiliser {tool}",
+    "howToStep1": "Ouvrez {tool} et collez du texte ou déposez votre fichier.",
+    "howToStep2": "Ajustez les options si besoin, puis lancez l’outil dans votre navigateur.",
+    "howToStep3": "Copiez ou téléchargez le résultat. Rien n’est envoyé sur nos serveurs.",
+    "faqTitle": "Questions fréquentes",
+    "faq1q": "{tool} est-il gratuit ?",
+    "faq1a": "Oui. {tool} est gratuit dans votre navigateur, sans compte.",
+    "faq2q": "Mes fichiers sont-ils téléversés ?",
+    "faq2a": "Non. Le traitement se fait sur votre appareil. Vos fichiers restent privés.",
+    "faq3q": "Quels formats sont pris en charge ?",
+    "faq3a": "Formats pris en charge pour cet outil : {formats}.",
+    "faq4q": "Dois-je installer quelque chose ?",
+    "faq4a": "Non. Ouvrez {tool} dans un navigateur moderne et commencez."
   }
 }

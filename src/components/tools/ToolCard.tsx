@@ -54,7 +54,7 @@ export default function ToolCard({
   badgeLabels,
 }: ToolCardProps) {
   const meta = getToolBySlug(slug);
-  const icon = meta?.icon ?? "•";
+  const icon = meta?.emoji ?? meta?.icon ?? "•";
   const styles = categoryStyles[meta?.category ?? "text"];
   const accepts = meta?.accepts?.slice(0, 3).join(", ");
 
@@ -82,9 +82,10 @@ export default function ToolCard({
           />
         ) : (
           <span
-            className={`flex shrink-0 items-center justify-center rounded-xl text-sm font-bold ${styles.bg} ${styles.text} ${
-              compact ? "h-11 w-11" : "mb-3 h-12 w-12"
+            className={`flex shrink-0 items-center justify-center rounded-xl ${styles.bg} ${
+              compact ? "h-11 w-11 text-xl" : "mb-3 h-12 w-12 text-2xl"
             }`}
+            aria-hidden
           >
             {icon}
           </span>

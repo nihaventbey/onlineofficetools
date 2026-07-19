@@ -15,8 +15,7 @@ type AdminShellProps = {
 
 function isAdminUser(user: User | null): boolean {
   if (!user) return false;
-  const role = user.app_metadata?.role;
-  return role === "admin";
+  return user.app_metadata?.role === "admin";
 }
 
 export default function AdminShell({ children }: AdminShellProps) {
@@ -56,9 +55,7 @@ export default function AdminShell({ children }: AdminShellProps) {
 
   useEffect(() => {
     if (checking || isLogin) return;
-
     if (!configured) return;
-
     if (!session || !isAdminUser(session.user)) {
       router.replace("/admin/login");
     }
@@ -77,8 +74,8 @@ export default function AdminShell({ children }: AdminShellProps) {
 
   if (checking) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-zinc-500">
-        Checking session…
+      <div className="flex min-h-screen items-center justify-center text-sm text-slate-500">
+        Oturum kontrol ediliyor…
       </div>
     );
   }
@@ -87,11 +84,11 @@ export default function AdminShell({ children }: AdminShellProps) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16">
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-900">
-          <h1 className="text-lg font-semibold">Supabase is not configured</h1>
+          <h1 className="text-lg font-semibold">Supabase yapılandırılmamış</h1>
           <p className="mt-2 text-sm">
-            Copy <code>.env.example</code> to <code>.env.local</code> and set{" "}
-            <code>NEXT_PUBLIC_SUPABASE_URL</code> and{" "}
-            <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>.
+            <code>.env.local</code> dosyasında{" "}
+            <code>NEXT_PUBLIC_SUPABASE_URL</code> ve{" "}
+            <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> tanımlayın.
           </p>
         </div>
       </div>
@@ -100,28 +97,30 @@ export default function AdminShell({ children }: AdminShellProps) {
 
   if (!session || !isAdminUser(session.user)) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-zinc-500">
-        Redirecting to login…
+      <div className="flex min-h-screen items-center justify-center text-sm text-slate-500">
+        Giriş sayfasına yönlendiriliyor…
       </div>
     );
   }
 
   const links = [
-    { href: "/admin", label: "Dashboard" },
-    { href: "/admin/tools", label: "Tools" },
-    { href: "/admin/media", label: "Media" },
-    { href: "/admin/settings", label: "Settings" },
+    { href: "/admin", label: "Panel" },
+    { href: "/admin/tools", label: "Araçlar" },
+    { href: "/admin/media", label: "Medya" },
+    { href: "/admin/ads", label: "Reklamlar" },
+    { href: "/admin/settings", label: "Ayarlar" },
+    { href: "/admin/account", label: "Hesabım" },
   ];
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
-          <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-semibold">
+    <div className="min-h-screen bg-slate-100">
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <Link href="/admin" className="font-semibold text-slate-900">
               CMS Admin
             </Link>
-            <nav className="flex gap-3 text-sm">
+            <nav className="flex flex-wrap gap-3 text-sm">
               {links.map((link) => {
                 const active =
                   link.href === "/admin"
@@ -133,8 +132,8 @@ export default function AdminShell({ children }: AdminShellProps) {
                     href={link.href}
                     className={
                       active
-                        ? "font-medium text-violet-600"
-                        : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-300"
+                        ? "font-medium text-blue-600"
+                        : "text-slate-600 hover:text-slate-900"
                     }
                   >
                     {link.label}
@@ -146,13 +145,13 @@ export default function AdminShell({ children }: AdminShellProps) {
           <button
             type="button"
             onClick={handleSignOut}
-            className="rounded-lg border border-zinc-200 px-3 py-1.5 text-sm dark:border-zinc-700"
+            className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
           >
-            Sign out
+            Çıkış
           </button>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
     </div>
   );
 }

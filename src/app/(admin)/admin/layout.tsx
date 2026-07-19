@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import AdminShell from "@/components/admin/AdminShell";
+import { getAdminUser } from "@/lib/supabase/requireAdminUser";
 import "../../globals.css";
 
 const geistSans = Geist({
@@ -18,11 +21,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Defense in depth: the proxy already blocks unauthenticated/non-admin
+  // access to everything under `/admin` except `/admin/login`, but this
+  // server-side check protects the panel even if the proxy is ever
+  // bypassed or misconfigured.
+  const pathname = (await headers()).get("x-pathname");
+  if (pathname !== "/admin/login") {
+    const user = await getAdminUser();
+    if (!user) {
+      redirect("/admin/login");
+    }
+  }
+
   return (
     <html
       lang="en"

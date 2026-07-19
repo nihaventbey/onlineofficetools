@@ -2,26 +2,29 @@
 
 import { usePathname } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
-import { ADSENSE_SLOTS, isAdSenseConfigured } from "@/lib/adsense";
+import type { AdSenseConfig } from "@/lib/adsense";
 
 const LEGAL_SEGMENTS = new Set(["privacy", "terms", "about", "contact"]);
 
-export default function AdsLayout({ children }: { children: React.ReactNode }) {
+type AdsLayoutProps = {
+  children: React.ReactNode;
+  adConfig: AdSenseConfig;
+};
+
+export default function AdsLayout({ children, adConfig }: AdsLayoutProps) {
   const pathname = usePathname();
   const segment = pathname.split("/")[2] ?? "";
   const isLegal = LEGAL_SEGMENTS.has(segment);
-  const adsOn = isAdSenseConfigured();
-  const showSidebar = adsOn && !isLegal;
+  const adsOn = adConfig.enabled && !isLegal;
+  const showTop = adsOn && adConfig.placements.top;
+  const showBottom = adsOn && adConfig.placements.bottom;
+  const showSidebar = adsOn && adConfig.placements.sidebar;
 
   return (
     <>
-      {!isLegal && adsOn ? (
+      {showTop ? (
         <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-          <AdSlot
-            slot={ADSENSE_SLOTS.horizontalTop}
-            format="horizontal"
-            className="mb-4"
-          />
+          <AdSlot placement="top" config={adConfig} format="horizontal" className="mb-4" />
         </div>
       ) : null}
 
@@ -37,7 +40,8 @@ export default function AdsLayout({ children }: { children: React.ReactNode }) {
           <aside className="hidden lg:block">
             <div className="sticky top-24">
               <AdSlot
-                slot={ADSENSE_SLOTS.verticalSidebar}
+                placement="sidebar"
+                config={adConfig}
                 format="vertical"
                 className="ad-slot-vertical"
               />
@@ -46,13 +50,9 @@ export default function AdsLayout({ children }: { children: React.ReactNode }) {
         ) : null}
       </div>
 
-      {!isLegal && adsOn ? (
+      {showBottom ? (
         <div className="mx-auto w-full max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
-          <AdSlot
-            slot={ADSENSE_SLOTS.horizontalBottom}
-            format="horizontal"
-            className="mt-2"
-          />
+          <AdSlot placement="bottom" config={adConfig} format="horizontal" className="mt-2" />
         </div>
       ) : null}
     </>

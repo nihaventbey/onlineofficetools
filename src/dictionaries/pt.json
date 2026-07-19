@@ -863,5 +863,20 @@
       "fallbackNote": "A ampliação Canvas 2× será usada no lugar.",
       "fallbackUsed": "O Canvas 2× foi usado porque o modelo de IA estava indisponível."
     }
+  },
+  "toolPage": {
+    "howToTitle": "Como usar {tool}",
+    "howToStep1": "Abra {tool} e cole o texto ou solte o arquivo.",
+    "howToStep2": "Ajuste as opções se precisar e execute a ferramenta no navegador.",
+    "howToStep3": "Copie ou baixe o resultado. Nada é enviado aos nossos servidores.",
+    "faqTitle": "Perguntas frequentes",
+    "faq1q": "{tool} é gratuito?",
+    "faq1a": "Sim. {tool} é gratuito no navegador e não exige conta.",
+    "faq2q": "Meus arquivos são enviados?",
+    "faq2a": "Não. O processamento ocorre no seu dispositivo. Seus arquivos ficam privados.",
+    "faq3q": "Quais formatos são suportados?",
+    "faq3a": "Formatos suportados nesta ferramenta: {formats}.",
+    "faq4q": "Preciso instalar algo?",
+    "faq4a": "Não. Abra {tool} em um navegador moderno e comece."
   }
 }

@@ -863,5 +863,20 @@
       "fallbackNote": "Bunun yerine Canvas 2× büyütme kullanılacak.",
       "fallbackUsed": "AI modeli kullanılamadığı için Canvas 2× yöntemi kullanıldı."
     }
+  },
+  "toolPage": {
+    "howToTitle": "{tool} nasıl kullanılır?",
+    "howToStep1": "{tool} sayfasını açın; metni yapıştırın veya dosyanızı bırakın.",
+    "howToStep2": "Gerekirse seçenekleri ayarlayın, ardından aracı tarayıcınızda çalıştırın.",
+    "howToStep3": "Sonucu kopyalayın veya indirin. Sunucularımıza hiçbir şey yüklenmez.",
+    "faqTitle": "Sık sorulan sorular",
+    "faq1q": "{tool} ücretsiz mi?",
+    "faq1a": "Evet. {tool} hesabı olmadan, tarayıcınızda ücretsiz kullanılabilir.",
+    "faq2q": "Dosyalarım yükleniyor mu?",
+    "faq2a": "Hayır. İşlem cihazınızda yapılır; dosyalarınız gizli kalır.",
+    "faq3q": "Hangi biçimler destekleniyor?",
+    "faq3a": "Bu araç için desteklenen biçimler: {formats}.",
+    "faq4q": "Bir şey yüklemem gerekir mi?",
+    "faq4a": "Hayır. Modern bir tarayıcıda {tool} sayfasını açıp kullanmaya başlayın."
   }
 }

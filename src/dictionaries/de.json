@@ -863,5 +863,20 @@
       "fallbackNote": "Stattdessen wird Canvas 2× verwendet.",
       "fallbackUsed": "Canvas 2× wurde verwendet, da das KI-Modell nicht verfügbar war."
     }
+  },
+  "toolPage": {
+    "howToTitle": "So verwenden Sie {tool}",
+    "howToStep1": "Öffnen Sie {tool} und fügen Sie Text ein oder legen Sie Ihre Datei ab.",
+    "howToStep2": "Passen Sie bei Bedarf Optionen an und starten Sie das Tool im Browser.",
+    "howToStep3": "Kopieren oder laden Sie das Ergebnis herunter. Nichts wird hochgeladen.",
+    "faqTitle": "Häufig gestellte Fragen",
+    "faq1q": "Ist {tool} kostenlos?",
+    "faq1a": "Ja. {tool} ist im Browser kostenlos und ohne Konto nutzbar.",
+    "faq2q": "Werden meine Dateien hochgeladen?",
+    "faq2a": "Nein. Die Verarbeitung erfolgt auf Ihrem Gerät. Ihre Dateien bleiben privat.",
+    "faq3q": "Welche Formate werden unterstützt?",
+    "faq3a": "Unterstützte Formate für dieses Tool: {formats}.",
+    "faq4q": "Muss ich etwas installieren?",
+    "faq4a": "Nein. Öffnen Sie {tool} in einem modernen Browser und starten Sie."
   }
 }

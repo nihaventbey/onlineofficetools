@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  CONSENT_CHANGE_EVENT,
+  CONSENT_STORAGE_KEY,
+  type ConsentChangeDetail,
+} from "@/lib/adsense";
 
-const KEY = "oot-ads-consent";
+const KEY = CONSENT_STORAGE_KEY;
 
 type Props = {
   message: string;
@@ -32,6 +37,11 @@ export default function ConsentBanner({
       /* ignore */
     }
     setVisible(false);
+    window.dispatchEvent(
+      new CustomEvent<ConsentChangeDetail>(CONSENT_CHANGE_EVENT, {
+        detail: { accepted: value === "accepted" },
+      }),
+    );
   }
 
   if (!visible) return null;

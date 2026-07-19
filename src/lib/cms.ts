@@ -2,7 +2,12 @@ import { createClient } from "@supabase/supabase-js";
 import { getDictionary, type Dictionary, type Locale } from "@/lib/i18n";
 import type { Database, PublishedTool, ToolTranslationRow } from "@/lib/supabase/types";
 import { getToolBySlug, isRegisteredSlug, toolRegistry } from "@/lib/tools/registry";
-import type { ToolCategory } from "@/lib/tools/categories";
+import { isToolCategory, type ToolCategory } from "@/lib/tools/categories";
+import {
+  ADSENSE_SETTING_KEYS,
+  resolveAdSenseConfig,
+  type AdSenseConfig,
+} from "@/lib/adsense";
 
 export type CmsToolCard = {
   slug: string;
@@ -13,6 +18,8 @@ export type CmsToolCard = {
   category: ToolCategory;
 };
 
+export type CmsToolFaq = { q: string; a: string };
+
 export type CmsToolPage = {
   slug: string;
   title: string;
@@ -22,7 +29,30 @@ export type CmsToolPage = {
   content: string | null;
   coverUrl: string | null;
   category: ToolCategory;
+  faqs: CmsToolFaq[];
+  howtoSteps: string[];
 };
+
+function parseFaqs(value: unknown): CmsToolFaq[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(
+    (item): item is CmsToolFaq =>
+      typeof item === "object" &&
+      item !== null &&
+      typeof (item as CmsToolFaq).q === "string" &&
+      typeof (item as CmsToolFaq).a === "string" &&
+      Boolean((item as CmsToolFaq).q.trim()) &&
+      Boolean((item as CmsToolFaq).a.trim()),
+  );
+}
+
+function parseHowtoSteps(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((step) => step.trim())
+    .filter(Boolean);
+}
 
 const MEDIA_BUCKET = "cms-media";
 
@@ -222,28 +252,39 @@ async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {
   });
 }
 
-function withRegistryCategory(
-  slug: string,
-  category: string | null,
-): ToolCategory {
-  const reg = getToolBySlug(slug);
-  if (reg) return reg.category;
-  if (
-    category === "developer" ||
-    category === "security" ||
-    category === "text" ||
-    category === "image" ||
-    category === "calculator" ||
-    category === "pdf" ||
-    category === "documents" ||
-    category === "spreadsheets" ||
-    category === "presentations"
-  ) {
-    return category;
-  }
-  return "text";
+/** CMS category wins when it is a recognized category; otherwise fall back to the registry. */
+function resolveCategory(cmsCategory: string | null, slug: string): ToolCategory {
+  if (cmsCategory && isToolCategory(cmsCategory)) return cmsCategory;
+  return getToolBySlug(slug)?.category ?? "text";
 }
 
+async function offlineTool(slug: string, locale: Locale): Promise<CmsToolPage | null> {
+  const card = (await fallbackTools(locale)).find((c) => c.slug === slug);
+  if (!card) return null;
+  return {
+    slug: card.slug,
+    title: card.title,
+    description: card.description,
+    seoTitle: card.title,
+    seoDescription: card.description,
+    content: null,
+    coverUrl: null,
+    category: card.category,
+    faqs: [],
+    howtoSteps: [],
+  };
+}
+
+/**
+ * Published tool cards for listing pages.
+ *
+ * When Supabase is reachable, this is the source of truth: only tools that
+ * exist in the CMS with status "published" AND are present in the local
+ * tool registry (allowlist) are returned — unpublished/missing tools never
+ * leak through a fallback overlay. When Supabase is not configured or the
+ * query fails, we fall back to the local registry/dictionaries (offline
+ * mode) so the site keeps working without a CMS.
+ */
 export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> {
   const supabase = getBuildClient();
   if (!supabase) return fallbackTools(locale);
@@ -264,38 +305,37 @@ export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> 
   );
 
   const dict = await getDictionary(locale);
-  const bySlug = new Map(
-    tools.map((tool) => {
-      const exact = (tool.translations ?? []).find((t) => t.locale === locale);
-      const labels = dictLabels(tool.slug, dict);
-      const en = pickTranslation(tool.translations ?? [], locale);
-      return [
-        tool.slug,
-        {
-          slug: tool.slug,
-          title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
-          description:
-            exact?.short_description ??
-            labels?.description ??
-            en?.short_description ??
-            "",
-          coverUrl: publicMediaUrl(tool.cover_path),
-          sortOrder: tool.sort_order,
-          category: withRegistryCategory(tool.slug, tool.category),
-        } satisfies CmsToolCard,
-      ] as const;
-    }),
-  );
 
-  // Always expose every registered tool; CMS overlays metadata when present.
-  const local = await fallbackTools(locale);
-  return local.map((card, index) => {
-    const cms = bySlug.get(card.slug);
-    if (!cms) return { ...card, sortOrder: 1000 + index };
-    return cms;
+  const cards = tools.map((tool) => {
+    const exact = (tool.translations ?? []).find((t) => t.locale === locale);
+    const labels = dictLabels(tool.slug, dict);
+    const en = pickTranslation(tool.translations ?? [], locale);
+    return {
+      slug: tool.slug,
+      title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
+      description:
+        exact?.short_description ??
+        labels?.description ??
+        en?.short_description ??
+        "",
+      coverUrl: publicMediaUrl(tool.cover_path),
+      sortOrder: tool.sort_order,
+      category: resolveCategory(tool.category, tool.slug),
+    } satisfies CmsToolCard;
+  });
+
+  return cards.sort((a, b) => {
+    if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+    return a.title.localeCompare(b.title);
   });
 }
 
+/**
+ * A single published tool page. When Supabase is reachable and the tool is
+ * a draft or missing, this returns null (no silent fallback to offline
+ * copy) — publishing status is authoritative. Only unreachable/failing
+ * Supabase falls back to the bundled registry/dictionary copy.
+ */
 export async function getPublishedTool(
   slug: string,
   locale: Locale,
@@ -303,41 +343,22 @@ export async function getPublishedTool(
   if (!isRegisteredSlug(slug)) return null;
 
   const supabase = getBuildClient();
-  if (!supabase) {
-    const card = (await fallbackTools(locale)).find((c) => c.slug === slug);
-    if (!card) return null;
-    return {
-      slug: card.slug,
-      title: card.title,
-      description: card.description,
-      seoTitle: card.title,
-      seoDescription: card.description,
-      content: null,
-      coverUrl: null,
-      category: card.category,
-    };
-  }
+  if (!supabase) return offlineTool(slug, locale);
 
   const { data, error } = await supabase
     .from("tools")
     .select("*, translations:tool_translations(*)")
-    .eq("status", "published")
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error || !data) {
-    const card = (await fallbackTools(locale)).find((c) => c.slug === slug);
-    if (!card) return null;
-    return {
-      slug: card.slug,
-      title: card.title,
-      description: card.description,
-      seoTitle: card.title,
-      seoDescription: card.description,
-      content: null,
-      coverUrl: null,
-      category: card.category,
-    };
+  if (error) {
+    console.warn("[cms] Falling back to local tool:", error.message);
+    return offlineTool(slug, locale);
+  }
+
+  if (!data || (data as unknown as PublishedTool).status !== "published") {
+    // Supabase is reachable and authoritative: drafts/missing tools are not published.
+    return null;
   }
 
   const tool = data as unknown as PublishedTool;
@@ -365,39 +386,221 @@ export async function getPublishedTool(
       "",
     content: exact?.content ?? null,
     coverUrl: publicMediaUrl(tool.cover_path),
-    category: withRegistryCategory(tool.slug, tool.category),
+    category: resolveCategory(tool.category, tool.slug),
+    faqs: parseFaqs(exact?.faqs ?? en?.faqs),
+    howtoSteps: parseHowtoSteps(exact?.howto_steps ?? en?.howto_steps),
   };
 }
 
 export const LOGO_SETTING_KEY = "logo_path";
+export const SITE_NAME_SETTING_KEY = "site_name";
+export const SITE_TAGLINE_SETTING_KEY = "site_tagline";
+export const MAINTENANCE_MESSAGE_SETTING_KEY = "maintenance_message";
 
-/** Public URL of the uploaded site logo, or null when none is set. */
-export async function getSiteLogoUrl(): Promise<string | null> {
+export type SiteSettings = {
+  siteName: string;
+  siteTagline: string;
+  logoPath: string | null;
+  maintenanceMessage: string;
+};
+
+function settingValue(
+  rows: { key: string; translations?: { value: string; locale: string }[] }[],
+  key: string,
+): string {
+  const row = rows.find((item) => item.key === key);
+  const translations = row?.translations ?? [];
+  return (
+    translations.find((t) => t.locale === "en")?.value ??
+    translations[0]?.value ??
+    ""
+  );
+}
+
+/** Typed public site settings (allowlisted keys only). */
+export async function getSiteSettings(): Promise<SiteSettings> {
   const supabase = getBuildClient();
-  if (!supabase) return null;
+  if (!supabase) {
+    return {
+      siteName: "",
+      siteTagline: "",
+      logoPath: null,
+      maintenanceMessage: "",
+    };
+  }
 
   const { data, error } = await supabase
     .from("site_settings")
     .select("key, translations:site_setting_translations(value, locale)")
-    .eq("key", LOGO_SETTING_KEY)
-    .maybeSingle();
+    .in("key", [
+      SITE_NAME_SETTING_KEY,
+      SITE_TAGLINE_SETTING_KEY,
+      LOGO_SETTING_KEY,
+      MAINTENANCE_MESSAGE_SETTING_KEY,
+    ]);
 
-  if (error || !data) return null;
+  if (error || !data) {
+    return {
+      siteName: "",
+      siteTagline: "",
+      logoPath: null,
+      maintenanceMessage: "",
+    };
+  }
 
-  const translations =
-    (data as unknown as { translations?: { value: string; locale: string }[] })
-      .translations ?? [];
-  const value =
-    translations.find((t) => t.locale === "en")?.value ??
-    translations[0]?.value ??
-    null;
+  const rows = data as unknown as {
+    key: string;
+    translations?: { value: string; locale: string }[];
+  }[];
 
-  return publicMediaUrl(value);
+  const logoPath = settingValue(rows, LOGO_SETTING_KEY) || null;
+
+  return {
+    siteName: settingValue(rows, SITE_NAME_SETTING_KEY),
+    siteTagline: settingValue(rows, SITE_TAGLINE_SETTING_KEY),
+    logoPath,
+    maintenanceMessage: settingValue(rows, MAINTENANCE_MESSAGE_SETTING_KEY),
+  };
 }
 
+/**
+ * Load a tool for signed draft preview. Does not require published status.
+ * Uses the service-role client so draft rows bypass public RLS. Caller must
+ * already have verified a preview token (or an admin session).
+ */
+export async function getToolForPreview(
+  slug: string,
+  locale: Locale,
+): Promise<CmsToolPage | null> {
+  if (!isRegisteredSlug(slug)) return null;
+
+  const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
+  const supabase = createSupabaseServiceClient() ?? getBuildClient();
+  if (!supabase) return offlineTool(slug, locale);
+
+  const { data, error } = await supabase
+    .from("tools")
+    .select("*, translations:tool_translations(*)")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error || !data) {
+    return offlineTool(slug, locale);
+  }
+
+  const tool = data as unknown as PublishedTool;
+  const exact = (tool.translations ?? []).find((t) => t.locale === locale);
+  const en = pickTranslation(tool.translations ?? [], locale);
+  const dict = await getDictionary(locale);
+  const labels = dictLabels(tool.slug, dict);
+  const tr = exact ?? en;
+  if (!tr && !labels) return null;
+
+  return {
+    slug: tool.slug,
+    title: exact?.title ?? labels?.title ?? en?.title ?? tool.slug,
+    description:
+      exact?.short_description ?? labels?.description ?? en?.short_description ?? "",
+    seoTitle:
+      exact?.seo_title || exact?.title || labels?.seoTitle || en?.seo_title || en?.title || tool.slug,
+    seoDescription:
+      exact?.seo_description ||
+      exact?.short_description ||
+      labels?.seoDescription ||
+      en?.seo_description ||
+      en?.short_description ||
+      "",
+    content: exact?.content ?? null,
+    coverUrl: publicMediaUrl(tool.cover_path),
+    category: resolveCategory(tool.category, tool.slug),
+    faqs: parseFaqs(exact?.faqs ?? en?.faqs),
+    howtoSteps: parseHowtoSteps(exact?.howto_steps ?? en?.howto_steps),
+  };
+}
+
+/** Public URL of the uploaded site logo, or null when none is set. */
+export async function getSiteLogoUrl(): Promise<string | null> {
+  const settings = await getSiteSettings();
+  return publicMediaUrl(settings.logoPath);
+}
+
+/**
+ * Slugs eligible for sitemap/static-params generation. Only published CMS
+ * slugs (intersected with the registry allowlist) when the DB is reachable;
+ * every registered slug otherwise (offline mode).
+ */
 export async function getPublishedSlugs(): Promise<string[]> {
+  const supabase = getBuildClient();
+  if (!supabase) return toolRegistry.map((t) => t.slug);
+
+  const { data, error } = await supabase
+    .from("tools")
+    .select("slug")
+    .eq("status", "published");
+
+  if (error || !data) {
+    console.warn("[cms] Falling back to registry slugs:", error?.message);
+    return toolRegistry.map((t) => t.slug);
+  }
+
   // Tool executables live in the registry; CMS cannot invent unknown slugs.
-  return toolRegistry.map((t) => t.slug);
+  return (data as { slug: string }[])
+    .map((row) => row.slug)
+    .filter(isRegisteredSlug);
+}
+
+/**
+ * Resolved AdSense config for the current request: CMS `site_settings`
+ * values (when Supabase is reachable) merged over env/hardcoded defaults.
+ */
+export async function getAdSenseConfig(): Promise<AdSenseConfig> {
+  const supabase = getBuildClient();
+  if (!supabase) return resolveAdSenseConfig();
+
+  const keys = Object.values(ADSENSE_SETTING_KEYS);
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("key, translations:site_setting_translations(value, locale)")
+    .in("key", keys);
+
+  if (error || !data) {
+    console.warn("[cms] Falling back to default AdSense config:", error?.message);
+    return resolveAdSenseConfig();
+  }
+
+  const rows = data as unknown as {
+    key: string;
+    translations?: { value: string; locale: string }[];
+  }[];
+
+  const valueOf = (key: string): string | null => {
+    const translations = rows.find((r) => r.key === key)?.translations ?? [];
+    return (
+      translations.find((t) => t.locale === "en")?.value ??
+      translations[0]?.value ??
+      null
+    );
+  };
+
+  const toBool = (value: string | null, fallback: boolean): boolean =>
+    value === null ? fallback : value === "true";
+
+  return resolveAdSenseConfig({
+    enabled: toBool(valueOf(ADSENSE_SETTING_KEYS.enabled), true),
+    clientId: valueOf(ADSENSE_SETTING_KEYS.clientId),
+    slots: {
+      top: valueOf(ADSENSE_SETTING_KEYS.slotTop),
+      sidebar: valueOf(ADSENSE_SETTING_KEYS.slotSidebar),
+      bottom: valueOf(ADSENSE_SETTING_KEYS.slotBottom),
+      toolInline: valueOf(ADSENSE_SETTING_KEYS.slotToolInline),
+    },
+    placements: {
+      top: toBool(valueOf(ADSENSE_SETTING_KEYS.placementTop), true),
+      sidebar: toBool(valueOf(ADSENSE_SETTING_KEYS.placementSidebar), true),
+      bottom: toBool(valueOf(ADSENSE_SETTING_KEYS.placementBottom), true),
+      toolInline: toBool(valueOf(ADSENSE_SETTING_KEYS.placementToolInline), true),
+    },
+  });
 }
 
 export { MEDIA_BUCKET, publicMediaUrl };

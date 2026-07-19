@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { toolRegistry } from "@/lib/tools/registry";
 
@@ -13,6 +14,11 @@ type Props = {
 export default function CommandPalette({ locale, dict }: Props) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -52,9 +58,10 @@ export default function CommandPalette({ locale, dict }: Props) {
         <span>⌘K</span>
         <span className="hidden xl:inline">{dict.common.search}</span>
       </button>
-      {open ? (
+      {open && mounted
+        ? createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-slate-900/40 p-4 pt-[12vh]"
+          className="fixed inset-0 z-[100] flex items-start justify-center bg-slate-900/40 p-4 pt-[12vh]"
           onClick={() => setOpen(false)}
         >
           <div
@@ -76,6 +83,9 @@ export default function CommandPalette({ locale, dict }: Props) {
                     onClick={() => setOpen(false)}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-slate-50"
                   >
+                    <span className="text-lg" aria-hidden>
+                      {tool.emoji ?? "🛠️"}
+                    </span>
                     <span className="font-medium text-slate-900">
                       {dict.tools[tool.dictKey].title}
                     </span>
@@ -92,8 +102,10 @@ export default function CommandPalette({ locale, dict }: Props) {
               ) : null}
             </ul>
           </div>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+        : null}
     </>
   );
 }

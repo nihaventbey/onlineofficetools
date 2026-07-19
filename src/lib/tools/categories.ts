@@ -12,10 +12,23 @@ export const toolCategories = [
 
 export type ToolCategory = (typeof toolCategories)[number];
 
-/** Soft pastel styles per category (Sejda-like). */
+/** Soft pastel styles per category (Sejda-like) + hero tokens. */
 export const categoryStyles: Record<
   ToolCategory,
-  { bg: string; text: string; ring: string; soft: string; border: string }
+  {
+    bg: string;
+    text: string;
+    ring: string;
+    soft: string;
+    border: string;
+    heroGradient: string;
+    heroAccent: string;
+    heroBlob: string;
+    /** Hex colors for OG ImageResponse (no Tailwind). */
+    ogFrom: string;
+    ogTo: string;
+    ogAccent: string;
+  }
 > = {
   text: {
     bg: "bg-blue-50",
@@ -23,6 +36,12 @@ export const categoryStyles: Record<
     ring: "hover:border-blue-300",
     soft: "bg-blue-50/70",
     border: "border-blue-100",
+    heroGradient: "bg-gradient-to-br from-blue-100 via-blue-50/50 to-white",
+    heroAccent: "text-blue-600",
+    heroBlob: "bg-blue-200/40",
+    ogFrom: "#dbeafe",
+    ogTo: "#ffffff",
+    ogAccent: "#2563eb",
   },
   documents: {
     bg: "bg-sky-50",
@@ -30,6 +49,12 @@ export const categoryStyles: Record<
     ring: "hover:border-sky-300",
     soft: "bg-sky-50/70",
     border: "border-sky-100",
+    heroGradient: "bg-gradient-to-br from-sky-100 via-sky-50/50 to-white",
+    heroAccent: "text-sky-600",
+    heroBlob: "bg-sky-200/40",
+    ogFrom: "#e0f2fe",
+    ogTo: "#ffffff",
+    ogAccent: "#0284c7",
   },
   spreadsheets: {
     bg: "bg-emerald-50",
@@ -37,6 +62,12 @@ export const categoryStyles: Record<
     ring: "hover:border-emerald-300",
     soft: "bg-emerald-50/70",
     border: "border-emerald-100",
+    heroGradient: "bg-gradient-to-br from-emerald-100 via-emerald-50/50 to-white",
+    heroAccent: "text-emerald-600",
+    heroBlob: "bg-emerald-200/40",
+    ogFrom: "#d1fae5",
+    ogTo: "#ffffff",
+    ogAccent: "#059669",
   },
   presentations: {
     bg: "bg-amber-50",
@@ -44,6 +75,12 @@ export const categoryStyles: Record<
     ring: "hover:border-amber-300",
     soft: "bg-amber-50/70",
     border: "border-amber-100",
+    heroGradient: "bg-gradient-to-br from-amber-100 via-amber-50/50 to-white",
+    heroAccent: "text-amber-600",
+    heroBlob: "bg-amber-200/40",
+    ogFrom: "#fef3c7",
+    ogTo: "#ffffff",
+    ogAccent: "#d97706",
   },
   pdf: {
     bg: "bg-rose-50",
@@ -51,6 +88,12 @@ export const categoryStyles: Record<
     ring: "hover:border-rose-300",
     soft: "bg-rose-50/70",
     border: "border-rose-100",
+    heroGradient: "bg-gradient-to-br from-rose-100 via-rose-50/50 to-white",
+    heroAccent: "text-rose-600",
+    heroBlob: "bg-rose-200/40",
+    ogFrom: "#ffe4e6",
+    ogTo: "#ffffff",
+    ogAccent: "#e11d48",
   },
   image: {
     bg: "bg-orange-50",
@@ -58,6 +101,12 @@ export const categoryStyles: Record<
     ring: "hover:border-orange-300",
     soft: "bg-orange-50/70",
     border: "border-orange-100",
+    heroGradient: "bg-gradient-to-br from-orange-100 via-orange-50/50 to-white",
+    heroAccent: "text-orange-600",
+    heroBlob: "bg-orange-200/40",
+    ogFrom: "#ffedd5",
+    ogTo: "#ffffff",
+    ogAccent: "#ea580c",
   },
   developer: {
     bg: "bg-indigo-50",
@@ -65,6 +114,12 @@ export const categoryStyles: Record<
     ring: "hover:border-indigo-300",
     soft: "bg-indigo-50/70",
     border: "border-indigo-100",
+    heroGradient: "bg-gradient-to-br from-indigo-100 via-indigo-50/50 to-white",
+    heroAccent: "text-indigo-600",
+    heroBlob: "bg-indigo-200/40",
+    ogFrom: "#e0e7ff",
+    ogTo: "#ffffff",
+    ogAccent: "#4f46e5",
   },
   security: {
     bg: "bg-teal-50",
@@ -72,6 +127,12 @@ export const categoryStyles: Record<
     ring: "hover:border-teal-300",
     soft: "bg-teal-50/70",
     border: "border-teal-100",
+    heroGradient: "bg-gradient-to-br from-teal-100 via-teal-50/50 to-white",
+    heroAccent: "text-teal-600",
+    heroBlob: "bg-teal-200/40",
+    ogFrom: "#ccfbf1",
+    ogTo: "#ffffff",
+    ogAccent: "#0d9488",
   },
   calculator: {
     bg: "bg-cyan-50",
@@ -79,6 +140,12 @@ export const categoryStyles: Record<
     ring: "hover:border-cyan-300",
     soft: "bg-cyan-50/70",
     border: "border-cyan-100",
+    heroGradient: "bg-gradient-to-br from-cyan-100 via-cyan-50/50 to-white",
+    heroAccent: "text-cyan-600",
+    heroBlob: "bg-cyan-200/40",
+    ogFrom: "#cffafe",
+    ogTo: "#ffffff",
+    ogAccent: "#0891b2",
   },
 };
 

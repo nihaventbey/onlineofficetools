@@ -863,5 +863,20 @@
       "fallbackNote": "Verrà usato l’ingrandimento Canvas 2×.",
       "fallbackUsed": "È stato usato Canvas 2× perché il modello IA non era disponibile."
     }
+  },
+  "toolPage": {
+    "howToTitle": "Come usare {tool}",
+    "howToStep1": "Apri {tool} e incolla il testo o trascina il file.",
+    "howToStep2": "Regola le opzioni se serve, poi avvia lo strumento nel browser.",
+    "howToStep3": "Copia o scarica il risultato. Nulla viene caricato sui nostri server.",
+    "faqTitle": "Domande frequenti",
+    "faq1q": "{tool} è gratis?",
+    "faq1a": "Sì. {tool} è gratuito nel browser e non richiede un account.",
+    "faq2q": "I miei file vengono caricati?",
+    "faq2a": "No. L’elaborazione avviene sul tuo dispositivo. I file restano privati.",
+    "faq3q": "Quali formati sono supportati?",
+    "faq3a": "Formati supportati per questo strumento: {formats}.",
+    "faq4q": "Devo installare qualcosa?",
+    "faq4a": "No. Apri {tool} in un browser moderno e inizia."
   }
 }

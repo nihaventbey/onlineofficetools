@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import ToolFeedback from "@/components/tools/ToolFeedback";
-import { getPublishedSlugs, getPublishedTool, getPublishedTools } from "@/lib/cms";
+import { buildFaqHowToJsonLd } from "@/components/tools/ToolFaqHowTo";
+import {
+  getAdSenseConfig,
+  getPublishedSlugs,
+  getPublishedTool,
+  getPublishedTools,
+} from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { getToolBySlug } from "@/lib/tools/registry";
@@ -71,16 +77,27 @@ export default async function ToolPage({ params }: PageProps) {
   const cross = all.filter((t) => t.slug !== slug && t.category !== tool.category);
   const related = [...same.slice(0, 2), ...cross.slice(0, 1)];
 
+  const nextStepTools = (reg.nextSteps ?? [])
+    .map((s) => all.find((t) => t.slug === s))
+    .filter((t): t is NonNullable<typeof t> => Boolean(t))
+    .slice(0, 2);
+
+  const pageTitle = tool.title || labels.title;
+  const pageDescription = tool.description || labels.description;
+  const pageUrl = absoluteUrl(`/${locale}/tools/${slug}`);
+  const formats = (reg.accepts ?? []).join(", ") || "—";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: tool.title || labels.title,
-    description: tool.description || labels.description,
-    url: absoluteUrl(`/${locale}/tools/${slug}`),
+    name: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     inLanguage: locale,
+    featureList: reg.keywords,
   };
 
   const breadcrumbLd = {
@@ -102,11 +119,22 @@ export default async function ToolPage({ params }: PageProps) {
       {
         "@type": "ListItem",
         position: 3,
-        name: tool.title || labels.title,
-        item: absoluteUrl(`/${locale}/tools/${slug}`),
+        name: pageTitle,
+        item: pageUrl,
       },
     ],
   };
+
+  const { howToLd, faqLd } = buildFaqHowToJsonLd({
+    dict,
+    title: pageTitle,
+    formats,
+    url: pageUrl,
+    cmsFaqs: tool.faqs,
+    cmsHowtoSteps: tool.howtoSteps,
+  });
+
+  const adConfig = await getAdSenseConfig();
 
   return (
     <>
@@ -118,15 +146,28 @@ export default async function ToolPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <ToolPageShell
         locale={locale}
         dict={dict}
-        title={tool.title || labels.title}
-        description={tool.description || labels.description}
+        title={pageTitle}
+        description={pageDescription}
         category={tool.category}
         categoryLabel={dict.categories[tool.category]}
         related={related}
+        nextStepTools={nextStepTools}
         slug={slug}
+        accepts={reg.accepts}
+        cmsFaqs={tool.faqs}
+        cmsHowtoSteps={tool.howtoSteps}
+        adConfig={adConfig}
       >
         <Component labels={labels} />
         <ToolFeedback dict={dict} slug={slug} />

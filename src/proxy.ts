@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, isLocale, locales, type Locale } from "@/lib/i18n";
+import { updateSupabaseSession } from "@/lib/supabase/middleware";
 
 /**
  * Maps visitor country (Vercel geo header) to a site locale.
@@ -68,8 +69,45 @@ function detectLocale(request: NextRequest): Locale {
   );
 }
 
-export default function proxy(request: NextRequest) {
+const ADMIN_LOGIN_PATH = "/admin/login";
+
+async function handleAdminRoute(
+  request: NextRequest,
+): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
+
+  // Forward the current pathname to Server Components (e.g. the admin
+  // layout guard) so they can tell the login page apart from the rest of
+  // the admin panel without re-parsing the URL.
+  request.headers.set("x-pathname", pathname);
+
+  // Refresh the Supabase session cookies on every admin request so the
+  // access token doesn't silently expire mid-session.
+  const { response, user } = await updateSupabaseSession(request);
+
+  if (pathname === ADMIN_LOGIN_PATH) {
+    return response;
+  }
+
+  const role = user?.app_metadata?.role;
+  if (!user || role !== "admin") {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = ADMIN_LOGIN_PATH;
+    loginUrl.search = "";
+    return NextResponse.redirect(loginUrl, 307);
+  }
+
+  return response;
+}
+
+export default function proxy(
+  request: NextRequest,
+): NextResponse | Promise<NextResponse> {
+  const { pathname } = request.nextUrl;
+
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    return handleAdminRoute(request);
+  }
 
   const firstSegment = pathname.split("/")[1] ?? "";
   if (isLocale(firstSegment)) {
@@ -87,7 +125,9 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Skip static assets, Next internals, the admin panel, and SEO files.
-    "/((?!_next|admin|api|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
+    // Run on the admin panel (session refresh + auth guard) and on the
+    // public site for locale redirects. Skip Next internals, the API,
+    // and static/SEO files everywhere.
+    "/((?!_next|api|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };
