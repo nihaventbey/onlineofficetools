@@ -2,6 +2,19 @@
 -- Apply via: supabase db push / Dashboard SQL Editor
 -- Do not run migrate from the agent — user applies this.
 
+-- Allow new categories on tools.category
+alter table public.tools drop constraint if exists tools_category_check;
+alter table public.tools
+  add constraint tools_category_check
+  check (
+    category is null
+    or category in (
+      'text', 'documents', 'spreadsheets', 'presentations',
+      'pdf', 'image', 'archive', 'video',
+      'developer', 'security', 'calculator'
+    )
+  );
+
 insert into public.tools (slug, category, status, sort_order)
 values
   ('zip-create', 'archive', 'published', 600),
