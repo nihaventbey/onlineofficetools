@@ -1,12 +1,14 @@
 import { ImageResponse } from "next/og";
 import { getPublishedSlugs, getPublishedTool } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
+import { getOgBrandName, OG_SIZE, resolveOgLogoSrc } from "@/lib/og";
 import { categoryStyles } from "@/lib/tools/categories";
 import { getToolBySlug } from "@/lib/tools/registry";
 
 export const alt = "Online Office Tools";
-export const size = { width: 1200, height: 630 };
+export const size = OG_SIZE;
 export const contentType = "image/png";
+export const revalidate = 60;
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
@@ -29,6 +31,10 @@ export default async function ToolOgImage({ params }: Props) {
   const styles = categoryStyles[category];
   const emoji = reg?.emoji ?? "🛠️";
   const categoryLabel = dict.categories[category];
+  const [logoSrc, brandName] = await Promise.all([
+    resolveOgLogoSrc(),
+    getOgBrandName(locale),
+  ]);
 
   return new ImageResponse(
     (
@@ -44,37 +50,60 @@ export default async function ToolOgImage({ params }: Props) {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div
+              style={{
+                width: 96,
+                height: 96,
+                borderRadius: 24,
+                background: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 56,
+                boxShadow: "0 8px 24px rgba(15,23,42,0.08)",
+              }}
+            >
+              {emoji}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                padding: "8px 16px",
+                borderRadius: 999,
+                background: "white",
+                color: styles.ogAccent,
+                fontSize: 22,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
+              {categoryLabel}
+            </div>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={logoSrc}
+            width={88}
+            height={88}
+            alt=""
             style={{
-              width: 96,
-              height: 96,
-              borderRadius: 24,
+              objectFit: "contain",
+              borderRadius: 18,
               background: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 56,
+              padding: 10,
               boxShadow: "0 8px 24px rgba(15,23,42,0.08)",
             }}
-          >
-            {emoji}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              padding: "8px 16px",
-              borderRadius: 999,
-              background: "white",
-              color: styles.ogAccent,
-              fontSize: 22,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-            }}
-          >
-            {categoryLabel}
-          </div>
+          />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -104,7 +133,7 @@ export default async function ToolOgImage({ params }: Props) {
           }}
         >
           <span style={{ fontWeight: 700, color: styles.ogAccent }}>
-            onlineofficetools.com
+            {brandName}
           </span>
           <span>{dict.common.trustOnDevice}</span>
         </div>

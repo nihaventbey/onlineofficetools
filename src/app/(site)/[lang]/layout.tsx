@@ -88,13 +88,20 @@ export async function generateMetadata({
       siteName,
       title: dict.home.title,
       description,
-      images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630 }],
+      images: [
+        {
+          url: absoluteUrl(`/${lang}/opengraph-image`),
+          width: 1200,
+          height: 630,
+          alt: siteName,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.home.title,
       description,
-      images: [absoluteUrl("/og-default.png")],
+      images: [absoluteUrl(`/${lang}/opengraph-image`)],
     },
     manifest: "/manifest.webmanifest",
   };
