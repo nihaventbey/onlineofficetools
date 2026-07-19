@@ -83,7 +83,7 @@ export default function Header({
               <img
                 src={logoUrl}
                 alt={brandName}
-                className="h-[30px] w-auto max-w-[7.5rem] object-contain object-left sm:h-[38px] sm:max-w-[9.5rem]"
+                className="h-9 w-auto max-w-[10rem] object-contain object-left sm:h-11 sm:max-w-[13rem]"
               />
             ) : (
               <span className="min-w-0">

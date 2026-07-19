@@ -118,7 +118,7 @@ export default function MobileNavDrawer({
               <img
                 src={logoUrl}
                 alt=""
-                className="h-7 max-w-[7.5rem] object-contain object-left"
+                className="h-8 max-w-[9rem] object-contain object-left"
               />
             ) : null}
             <p
