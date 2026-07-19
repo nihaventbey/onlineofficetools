@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import AdSenseLoader from "@/components/AdSenseLoader";
@@ -6,7 +6,11 @@ import AdsLayout from "@/components/AdsLayout";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { getAdSenseConfig, getSiteLogoUrl, getSiteSettings } from "@/lib/cms";
+import {
+  getAdSenseConfig,
+  getSiteSettings,
+  publicMediaUrl,
+} from "@/lib/cms";
 import {
   getDictionary,
   isLocale,
@@ -29,6 +33,9 @@ const geistMono = Geist_Mono({
 export const dynamicParams = false;
 // CMS branding (logo) and settings should refresh reasonably quickly.
 export const revalidate = 60;
+export const viewport: Viewport = {
+  themeColor: "#2563eb",
+};
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -48,32 +55,46 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
 
   const dict = await getDictionary(lang);
+  const siteSettings = await getSiteSettings(lang);
+  const faviconUrl = publicMediaUrl(siteSettings.faviconPath);
   const languages = languageAlternates("/");
+  const siteName = siteSettings.siteName || dict.common.siteName;
+  const description = dict.home.description;
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
       default: dict.home.title,
-      template: `%s | ${dict.common.siteName}`,
+      template: `%s | ${siteName}`,
     },
-    description: dict.home.description,
+    description,
     alternates: {
       canonical: absoluteUrl(`/${lang}`),
       languages,
+    },
+    icons: faviconUrl
+      ? { icon: [{ url: faviconUrl }] }
+      : {
+          icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+          apple: [{ url: "/icon-192.png", sizes: "180x180", type: "image/png" }],
+        },
+    robots: {
+      index: true,
+      follow: true,
     },
     openGraph: {
       type: "website",
       locale: lang,
       url: absoluteUrl(`/${lang}`),
-      siteName: dict.common.siteName,
+      siteName,
       title: dict.home.title,
-      description: dict.home.description,
+      description,
       images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.home.title,
-      description: dict.home.description,
+      description,
       images: [absoluteUrl("/og-default.png")],
     },
     manifest: "/manifest.webmanifest",
@@ -86,11 +107,11 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
 
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const [logoUrl, adConfig, siteSettings] = await Promise.all([
-    getSiteLogoUrl(),
+  const [adConfig, siteSettings] = await Promise.all([
     getAdSenseConfig(),
-    getSiteSettings(),
+    getSiteSettings(locale),
   ]);
+  const logoUrl = publicMediaUrl(siteSettings.logoPath);
 
   return (
     <html
@@ -105,7 +126,9 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
           </div>
         ) : null}
         <Header locale={locale} dict={dict} logoUrl={logoUrl} />
-        <AdsLayout adConfig={adConfig}>{children}</AdsLayout>
+        <AdsLayout adConfig={adConfig} adLabel={dict.common.advertisement}>
+          {children}
+        </AdsLayout>
         <Footer locale={locale} dict={dict} />
         <ConsentBanner
           message={dict.common.consentMessage}

@@ -19,6 +19,8 @@ type ToolWithTranslations = ToolRow & {
   tool_translations: ToolTranslationRow[] | null;
 };
 
+type ContentBlock = { type: string; text: string };
+
 type TranslationForm = {
   title: string;
   short_description: string;
@@ -27,7 +29,7 @@ type TranslationForm = {
   content: string;
   faqs: ToolFaq[];
   howto_steps: string[];
-  content_blocks: Json;
+  content_blocks: ContentBlock[];
 };
 
 type ToolEditorProps = {
@@ -45,21 +47,33 @@ const emptyTranslation = (): TranslationForm => ({
   content_blocks: [],
 });
 
+function isPlainObject(value: Json): value is { [key: string]: Json | undefined } {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function parseFaqs(value: Json): ToolFaq[] {
   if (!Array.isArray(value)) return [];
-  return value.filter(
-    (item): item is ToolFaq =>
-      typeof item === "object" &&
-      item !== null &&
-      typeof item.q === "string" &&
-      typeof item.a === "string",
-  );
+  return value.filter((item): item is ToolFaq => {
+    if (!isPlainObject(item)) return false;
+    return typeof item.q === "string" && typeof item.a === "string";
+  });
 }
 
 function parseSteps(value: Json): string[] {
   return Array.isArray(value)
     ? value.filter((item): item is string => typeof item === "string")
     : [];
+}
+
+function parseContentBlocks(value: Json): ContentBlock[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    if (!isPlainObject(item)) return { type: "paragraph", text: "" };
+    return {
+      type: typeof item.type === "string" ? item.type : "paragraph",
+      text: typeof item.text === "string" ? item.text : "",
+    };
+  });
 }
 
 const emptyTranslations = (): Record<Locale, TranslationForm> =>
@@ -126,7 +140,7 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
             content: row.content ?? "",
             faqs: parseFaqs(row.faqs),
             howto_steps: parseSteps(row.howto_steps),
-            content_blocks: row.content_blocks,
+            content_blocks: parseContentBlocks(row.content_blocks),
           };
         }
       }
@@ -182,7 +196,7 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
               .map(({ q, a }) => ({ q: q.trim(), a: a.trim() }))
               .filter(({ q, a }) => q && a),
             howto_steps: tr.howto_steps.map((step) => step.trim()).filter(Boolean),
-            content_blocks: tr.content_blocks,
+            content_blocks: tr.content_blocks as Json,
           };
         }),
     } satisfies Json;
@@ -563,9 +577,7 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
                 type="button"
                 onClick={() =>
                   setTranslations((prev) => {
-                    const blocks = Array.isArray(prev[activeLocale].content_blocks)
-                      ? [...(prev[activeLocale].content_blocks as Json[])]
-                      : [];
+                    const blocks = [...prev[activeLocale].content_blocks];
                     blocks.push({ type: "paragraph", text: "" });
                     return {
                       ...prev,
@@ -581,18 +593,13 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
                 + Paragraf ekle
               </button>
             </div>
-            {(Array.isArray(current.content_blocks)
-              ? (current.content_blocks as { type?: string; text?: string }[])
-              : []
-            ).map((block, index) => (
+            {current.content_blocks.map((block, index) => (
               <div key={index} className="space-y-2 rounded-xl border border-zinc-100 p-3">
                 <textarea
-                  value={typeof block.text === "string" ? block.text : ""}
+                  value={block.text}
                   onChange={(event) =>
                     setTranslations((prev) => {
-                      const blocks = Array.isArray(prev[activeLocale].content_blocks)
-                        ? [...(prev[activeLocale].content_blocks as Json[])]
-                        : [];
+                      const blocks = [...prev[activeLocale].content_blocks];
                       blocks[index] = {
                         type: "paragraph",
                         text: event.target.value,
@@ -614,14 +621,13 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
                   type="button"
                   onClick={() =>
                     setTranslations((prev) => {
-                      const blocks = Array.isArray(prev[activeLocale].content_blocks)
-                        ? [...(prev[activeLocale].content_blocks as Json[])]
-                        : [];
                       return {
                         ...prev,
                         [activeLocale]: {
                           ...prev[activeLocale],
-                          content_blocks: blocks.filter((_, i) => i !== index),
+                          content_blocks: prev[activeLocale].content_blocks.filter(
+                            (_, i) => i !== index,
+                          ),
                         },
                       };
                     })

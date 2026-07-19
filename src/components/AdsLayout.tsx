@@ -9,9 +9,10 @@ const LEGAL_SEGMENTS = new Set(["privacy", "terms", "about", "contact"]);
 type AdsLayoutProps = {
   children: React.ReactNode;
   adConfig: AdSenseConfig;
+  adLabel?: string;
 };
 
-export default function AdsLayout({ children, adConfig }: AdsLayoutProps) {
+export default function AdsLayout({ children, adConfig, adLabel }: AdsLayoutProps) {
   const pathname = usePathname();
   const segment = pathname.split("/")[2] ?? "";
   const isLegal = LEGAL_SEGMENTS.has(segment);
@@ -24,7 +25,13 @@ export default function AdsLayout({ children, adConfig }: AdsLayoutProps) {
     <>
       {showTop ? (
         <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
-          <AdSlot placement="top" config={adConfig} format="horizontal" className="mb-4" />
+          <AdSlot
+            placement="top"
+            config={adConfig}
+            format="horizontal"
+            className="mb-4"
+            label={adLabel}
+          />
         </div>
       ) : null}
 
@@ -44,6 +51,7 @@ export default function AdsLayout({ children, adConfig }: AdsLayoutProps) {
                 config={adConfig}
                 format="vertical"
                 className="ad-slot-vertical"
+                label={adLabel}
               />
             </div>
           </aside>
@@ -52,7 +60,13 @@ export default function AdsLayout({ children, adConfig }: AdsLayoutProps) {
 
       {showBottom ? (
         <div className="mx-auto w-full max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
-          <AdSlot placement="bottom" config={adConfig} format="horizontal" className="mt-2" />
+          <AdSlot
+            placement="bottom"
+            config={adConfig}
+            format="horizontal"
+            className="mt-2"
+            label={adLabel}
+          />
         </div>
       ) : null}
     </>

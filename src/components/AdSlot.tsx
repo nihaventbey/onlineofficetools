@@ -11,6 +11,7 @@ type AdSlotProps = {
   slot?: string;
   format?: "auto" | "horizontal" | "vertical" | "rectangle";
   className?: string;
+  label?: string;
 };
 
 declare global {
@@ -25,6 +26,7 @@ export default function AdSlot({
   slot: slotOverride,
   format = "auto",
   className = "",
+  label = "Advertisement",
 }: AdSlotProps) {
   const pathname = usePathname();
   const pushed = useRef(false);
@@ -51,7 +53,7 @@ export default function AdSlot({
     <div
       key={`${pathname}-${slot}`}
       className={`ad-slot overflow-hidden ${className}`}
-      aria-label="Advertisement"
+      aria-label={label}
     >
       <ins
         className="adsbygoogle"

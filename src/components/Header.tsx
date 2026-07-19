@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import CommandPalette from "@/components/CommandPalette";
+import QuickAccessMenu from "@/components/tools/QuickAccessMenu";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { categoryStyles, toolCategories } from "@/lib/tools/categories";
 import { toolRegistry, toolsByCategory } from "@/lib/tools/registry";
@@ -153,6 +154,7 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          <QuickAccessMenu locale={locale} dict={dict} />
           <CommandPalette locale={locale} dict={dict} />
           <LanguageSwitcher
             currentLocale={locale}
@@ -176,6 +178,9 @@ export default function Header({ locale, dict, logoUrl }: HeaderProps) {
 
       {mobileOpen ? (
         <div className="max-h-[70vh] overflow-y-auto border-t border-slate-200 bg-white px-4 py-4 xl:hidden">
+          <div className="mb-3">
+            <QuickAccessMenu locale={locale} dict={dict} compact />
+          </div>
           <nav className="flex flex-col gap-1 text-sm font-medium">
             <Link
               href={`/${locale}`}

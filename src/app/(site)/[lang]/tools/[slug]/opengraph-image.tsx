@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getPublishedSlugs } from "@/lib/cms";
+import { getPublishedSlugs, getPublishedTool } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { categoryStyles } from "@/lib/tools/categories";
 import { getToolBySlug } from "@/lib/tools/registry";
@@ -20,9 +20,12 @@ export default async function ToolOgImage({ params }: Props) {
   const locale = (isLocale(lang) ? lang : "en") as Locale;
   const reg = getToolBySlug(slug);
   const dict = await getDictionary(locale);
+  const cms = await getPublishedTool(slug, locale);
   const labels = reg ? dict.tools[reg.dictKey] : null;
-  const title = labels?.title ?? slug;
-  const category = reg?.category ?? "text";
+  const title = cms?.title || labels?.title || slug;
+  const description =
+    cms?.description || labels?.description || dict.common.siteTagline;
+  const category = cms?.category ?? reg?.category ?? "text";
   const styles = categoryStyles[category];
   const emoji = reg?.emoji ?? "🛠️";
   const categoryLabel = dict.categories[category];
@@ -87,7 +90,7 @@ export default async function ToolOgImage({ params }: Props) {
             {title}
           </div>
           <div style={{ fontSize: 28, color: "#475569", maxWidth: 900 }}>
-            {labels?.description ?? dict.common.siteTagline}
+            {description}
           </div>
         </div>
 

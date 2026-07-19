@@ -49,23 +49,23 @@ export default async function HomePage({ params }: PageProps) {
   };
 
   return (
-    <div className="space-y-14 pb-12">
+    <div className="space-y-10 pb-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
       />
-      <section className="relative overflow-hidden rounded-[2rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-6 py-12 shadow-sm sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+      <section className="relative overflow-hidden rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-5 py-8 shadow-sm sm:px-10 sm:py-10 lg:px-12 lg:py-12">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl"
+          className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-400/20 blur-3xl"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-28 -left-16 h-80 w-80 rounded-full bg-sky-300/25 blur-3xl"
+          className="pointer-events-none absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-sky-300/25 blur-3xl"
         />
 
-        <div className="relative mx-auto max-w-4xl text-center">
-          <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+        <div className="relative mx-auto max-w-3xl text-center">
+          <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow-sm ring-1 ring-blue-100">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
               {dict.common.siteTagline}
@@ -75,63 +75,56 @@ export default async function HomePage({ params }: PageProps) {
             </span>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl lg:leading-[1.08]">
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl lg:leading-[1.1]">
             {dict.home.heroTitle}{" "}
             <span className="bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">
               {dict.home.heroHighlight}
             </span>
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
             {dict.home.heroSubtitle}
           </p>
 
-          <div className="mx-auto mt-8 flex max-w-xl flex-wrap items-center justify-center gap-3">
+          <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-center justify-center gap-3">
             <Link
               href={`/${locale}#tools`}
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-blue-600 px-6 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-500"
+              className="inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-500"
             >
               {dict.common.exploreCta}
             </Link>
-            <Link
-              href={`/${locale}/categories/documents`}
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 px-6 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-blue-200 hover:bg-white"
-            >
-              {dict.categories.documents} →
-            </Link>
           </div>
 
-          <ul className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            {[
-              dict.common.trustPrivate,
-              dict.common.trustFast,
-              dict.common.trustFree,
-            ].map((item) => (
+          <ul className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            {[dict.common.trustPrivate, dict.common.trustFree].map((item) => (
               <li
                 key={item}
-                className="rounded-full bg-white/80 px-3.5 py-1.5 text-xs font-medium text-slate-700 shadow-sm ring-1 ring-slate-200/80 sm:text-sm"
+                className="rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-slate-700 shadow-sm ring-1 ring-slate-200/80"
               >
                 {item}
               </li>
             ))}
           </ul>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            {toolCategories.map((cat) => {
-              const style = categoryStyles[cat];
-              return (
-                <Link
-                  key={cat}
-                  href={`/${locale}/categories/${cat}`}
-                  className={`inline-flex min-h-10 items-center gap-1.5 rounded-full px-3.5 text-xs font-semibold transition hover:scale-[1.02] ${style.bg} ${style.text}`}
-                >
-                  {dict.categories[cat]}
-                </Link>
-              );
-            })}
-          </div>
         </div>
       </section>
+
+      <nav
+        aria-label={dict.common.categories}
+        className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+      >
+        {toolCategories.map((cat) => {
+          const style = categoryStyles[cat];
+          return (
+            <Link
+              key={cat}
+              href={`/${locale}/categories/${cat}`}
+              className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3 text-xs font-semibold transition hover:scale-[1.02] ${style.bg} ${style.text}`}
+            >
+              {dict.categories[cat]}
+            </Link>
+          );
+        })}
+      </nav>
 
       <RecentTools locale={locale} dict={dict} />
 

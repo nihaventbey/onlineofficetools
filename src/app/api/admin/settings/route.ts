@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { getAdminUser } from "@/lib/supabase/requireAdminUser";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import {
+  FAVICON_SETTING_KEY,
   LOGO_SETTING_KEY,
   MAINTENANCE_MESSAGE_SETTING_KEY,
   SITE_NAME_SETTING_KEY,
@@ -11,9 +12,15 @@ import {
 
 const ALLOWED_KEYS = new Set([
   LOGO_SETTING_KEY,
+  FAVICON_SETTING_KEY,
   SITE_NAME_SETTING_KEY,
   SITE_TAGLINE_SETTING_KEY,
   MAINTENANCE_MESSAGE_SETTING_KEY,
+]);
+
+const BRANDING_PREFIX_BY_KEY = new Map([
+  [LOGO_SETTING_KEY, "branding/logo-"],
+  [FAVICON_SETTING_KEY, "branding/favicon-"],
 ]);
 
 /**
@@ -51,6 +58,17 @@ export async function POST(request: Request) {
     body.value === null || body.value === undefined
       ? null
       : String(body.value).trim() || null;
+  const requiredPrefix = BRANDING_PREFIX_BY_KEY.get(key);
+  if (
+    requiredPrefix &&
+    value !== null &&
+    (!value.startsWith(requiredPrefix) || value.includes(".."))
+  ) {
+    return NextResponse.json(
+      { error: "Invalid branding asset path" },
+      { status: 400 },
+    );
+  }
 
   const { data: existing, error: selectError } = await service
     .from("site_settings")

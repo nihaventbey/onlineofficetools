@@ -11,6 +11,8 @@ import { getToolMeta } from "@/lib/tools/metadata";
 import AdSlot from "@/components/AdSlot";
 import ToolCard from "@/components/tools/ToolCard";
 import ToolFaqHowTo from "@/components/tools/ToolFaqHowTo";
+import ToolShareButtons from "@/components/tools/ToolShareButtons";
+import { absoluteUrl } from "@/lib/site";
 
 type ToolPageShellProps = {
   locale: Locale;
@@ -26,6 +28,7 @@ type ToolPageShellProps = {
   cmsFaqs?: CmsToolFaq[] | null;
   cmsHowtoSteps?: string[] | null;
   adConfig?: AdSenseConfig | null;
+  showShare?: boolean;
   children: React.ReactNode;
 };
 
@@ -43,6 +46,7 @@ export default function ToolPageShell({
   cmsFaqs,
   cmsHowtoSteps,
   adConfig,
+  showShare = true,
   children,
 }: ToolPageShellProps) {
   const styles = categoryStyles[category];
@@ -129,6 +133,15 @@ export default function ToolPageShell({
                 {dict.common.trustPrivate}
               </span>
             </div>
+
+            {showShare ? (
+              <ToolShareButtons
+                dict={dict}
+                url={absoluteUrl(`/${locale}/tools/${slug}`)}
+                title={title}
+                description={description}
+              />
+            ) : null}
           </div>
         </div>
       </header>
@@ -141,6 +154,7 @@ export default function ToolPageShell({
           config={adConfig}
           format="rectangle"
           className="my-2"
+          label={dict.common.advertisement}
         />
       ) : null}
 

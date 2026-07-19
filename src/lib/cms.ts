@@ -393,6 +393,7 @@ export async function getPublishedTool(
 }
 
 export const LOGO_SETTING_KEY = "logo_path";
+export const FAVICON_SETTING_KEY = "favicon_path";
 export const SITE_NAME_SETTING_KEY = "site_name";
 export const SITE_TAGLINE_SETTING_KEY = "site_tagline";
 export const MAINTENANCE_MESSAGE_SETTING_KEY = "maintenance_message";
@@ -401,16 +402,19 @@ export type SiteSettings = {
   siteName: string;
   siteTagline: string;
   logoPath: string | null;
+  faviconPath: string | null;
   maintenanceMessage: string;
 };
 
 function settingValue(
   rows: { key: string; translations?: { value: string; locale: string }[] }[],
   key: string,
+  locale: Locale = "en",
 ): string {
   const row = rows.find((item) => item.key === key);
   const translations = row?.translations ?? [];
   return (
+    translations.find((t) => t.locale === locale)?.value ??
     translations.find((t) => t.locale === "en")?.value ??
     translations[0]?.value ??
     ""
@@ -418,13 +422,16 @@ function settingValue(
 }
 
 /** Typed public site settings (allowlisted keys only). */
-export async function getSiteSettings(): Promise<SiteSettings> {
+export async function getSiteSettings(
+  locale: Locale = "en",
+): Promise<SiteSettings> {
   const supabase = getBuildClient();
   if (!supabase) {
     return {
       siteName: "",
       siteTagline: "",
       logoPath: null,
+      faviconPath: null,
       maintenanceMessage: "",
     };
   }
@@ -436,6 +443,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       SITE_NAME_SETTING_KEY,
       SITE_TAGLINE_SETTING_KEY,
       LOGO_SETTING_KEY,
+      FAVICON_SETTING_KEY,
       MAINTENANCE_MESSAGE_SETTING_KEY,
     ]);
 
@@ -444,6 +452,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       siteName: "",
       siteTagline: "",
       logoPath: null,
+      faviconPath: null,
       maintenanceMessage: "",
     };
   }
@@ -453,13 +462,19 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     translations?: { value: string; locale: string }[];
   }[];
 
-  const logoPath = settingValue(rows, LOGO_SETTING_KEY) || null;
+  const logoPath = settingValue(rows, LOGO_SETTING_KEY, locale) || null;
+  const faviconPath = settingValue(rows, FAVICON_SETTING_KEY, locale) || null;
 
   return {
-    siteName: settingValue(rows, SITE_NAME_SETTING_KEY),
-    siteTagline: settingValue(rows, SITE_TAGLINE_SETTING_KEY),
+    siteName: settingValue(rows, SITE_NAME_SETTING_KEY, locale),
+    siteTagline: settingValue(rows, SITE_TAGLINE_SETTING_KEY, locale),
     logoPath,
-    maintenanceMessage: settingValue(rows, MAINTENANCE_MESSAGE_SETTING_KEY),
+    faviconPath,
+    maintenanceMessage: settingValue(
+      rows,
+      MAINTENANCE_MESSAGE_SETTING_KEY,
+      locale,
+    ),
   };
 }
 
@@ -522,6 +537,12 @@ export async function getToolForPreview(
 export async function getSiteLogoUrl(): Promise<string | null> {
   const settings = await getSiteSettings();
   return publicMediaUrl(settings.logoPath);
+}
+
+/** Public URL of the uploaded favicon, or null when none is set. */
+export async function getSiteFaviconUrl(): Promise<string | null> {
+  const settings = await getSiteSettings();
+  return publicMediaUrl(settings.faviconPath);
 }
 
 /**

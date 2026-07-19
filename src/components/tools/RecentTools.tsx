@@ -22,53 +22,66 @@ export default function RecentTools({ locale, dict }: Props) {
     .filter(Boolean)
     .slice(0, 6);
 
-  if (!favItems.length && !recentItems.length) return null;
+  const empty = !favItems.length && !recentItems.length;
 
   return (
-    <div className="space-y-6">
-      {favItems.length ? (
-        <section>
-          <h2 className="mb-3 text-lg font-semibold text-slate-900">
-            {dict.common.favoriteTools}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {favItems.map((tool) => {
-              if (!tool) return null;
-              const style = categoryStyles[tool.category];
-              return (
-                <Link
-                  key={tool.slug}
-                  href={`/${locale}/tools/${tool.slug}`}
-                  className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-3 text-sm font-medium ${style.bg} ${style.text}`}
-                >
-                  {dict.tools[tool.dictKey].title}
-                </Link>
-              );
-            })}
+    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <h2 className="text-base font-semibold text-slate-900">
+        {dict.common.yourTools}
+      </h2>
+      {empty ? (
+        <p className="mt-2 text-sm text-slate-500">{dict.common.yourToolsHint}</p>
+      ) : (
+        <div className="mt-3 space-y-4">
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              {dict.common.favoriteTools}
+            </h3>
+            {favItems.length ? (
+              <div className="flex flex-wrap gap-2">
+                {favItems.map((tool) => {
+                  if (!tool) return null;
+                  const style = categoryStyles[tool.category];
+                  return (
+                    <Link
+                      key={tool.slug}
+                      href={`/${locale}/tools/${tool.slug}`}
+                      className={`inline-flex min-h-9 items-center gap-2 rounded-xl px-3 text-sm font-medium ${style.bg} ${style.text}`}
+                    >
+                      {dict.tools[tool.dictKey].title}
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">{dict.common.favoritesEmpty}</p>
+            )}
           </div>
-        </section>
-      ) : null}
-      {recentItems.length ? (
-        <section>
-          <h2 className="mb-3 text-lg font-semibold text-slate-900">
-            {dict.common.recentTools}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {recentItems.map((tool) => {
-              if (!tool) return null;
-              return (
-                <Link
-                  key={tool.slug}
-                  href={`/${locale}/tools/${tool.slug}`}
-                  className="inline-flex min-h-10 items-center rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 hover:border-blue-300"
-                >
-                  {dict.tools[tool.dictKey].title}
-                </Link>
-              );
-            })}
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              {dict.common.recentTools}
+            </h3>
+            {recentItems.length ? (
+              <div className="flex flex-wrap gap-2">
+                {recentItems.map((tool) => {
+                  if (!tool) return null;
+                  return (
+                    <Link
+                      key={tool.slug}
+                      href={`/${locale}/tools/${tool.slug}`}
+                      className="inline-flex min-h-9 items-center rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 hover:border-blue-300"
+                    >
+                      {dict.tools[tool.dictKey].title}
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">{dict.common.recentEmpty}</p>
+            )}
           </div>
-        </section>
-      ) : null}
-    </div>
+        </div>
+      )}
+    </section>
   );
 }

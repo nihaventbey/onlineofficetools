@@ -112,6 +112,27 @@ export type Dictionary = {
     consentMessage: string;
     consentAccept: string;
     consentDecline: string;
+    quickAccess: string;
+    yourTools: string;
+    favoritesEmpty: string;
+    recentEmpty: string;
+    yourToolsHint: string;
+    shareLabel: string;
+    shareCopied: string;
+    shareCopyLink: string;
+    shareNative: string;
+    shareOnX: string;
+    shareOnFacebook: string;
+    shareOnLinkedIn: string;
+    shareOnWhatsApp: string;
+    shareViaEmail: string;
+    shareMenu: string;
+    advertisement: string;
+    notFoundTitle: string;
+    notFoundBody: string;
+    notFoundCta: string;
+    draftPreviewBanner: string;
+    draftPreviewTitle: string;
   };
   toolPage: {
     howToTitle: string;

@@ -13,10 +13,19 @@ type PageProps = {
   searchParams: Promise<{ token?: string }>;
 };
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: false },
-  title: "Draft preview",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const locale = (isLocale(lang) ? lang : "en") as Locale;
+  const dict = await getDictionary(locale);
+  return {
+    robots: { index: false, follow: false },
+    title: dict.common.draftPreviewTitle,
+  };
+}
 
 export default async function ToolPreviewPage({ params, searchParams }: PageProps) {
   const { lang, slug } = await params;
@@ -48,8 +57,7 @@ export default async function ToolPreviewPage({ params, searchParams }: PageProp
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-        Taslak önizleme — bu sayfa arama motorlarına kapalıdır ve yalnızca
-        imzalı bağlantı veya admin oturumu ile açılır.
+        {dict.common.draftPreviewBanner}
       </div>
       <ToolPageShell
         locale={locale}
@@ -64,6 +72,7 @@ export default async function ToolPreviewPage({ params, searchParams }: PageProp
         accepts={reg.accepts}
         cmsFaqs={tool.faqs}
         cmsHowtoSteps={tool.howtoSteps}
+        showShare={false}
       >
         <Component labels={labels} />
         {tool.content ? (

@@ -49,9 +49,25 @@ export async function generateMetadata({
       languages: languageAlternates(`/tools/${slug}`),
     },
     openGraph: {
+      type: "website",
+      locale,
+      url: absoluteUrl(`/${locale}/tools/${slug}`),
+      siteName: dict.common.siteName,
       title,
       description,
-      url: absoluteUrl(`/${locale}/tools/${slug}`),
+      images: [
+        {
+          url: absoluteUrl(`/${locale}/tools/${slug}/opengraph-image`),
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [absoluteUrl(`/${locale}/tools/${slug}/opengraph-image`)],
     },
   };
 }

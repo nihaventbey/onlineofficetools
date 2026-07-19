@@ -3,6 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
+  FAVICON_SETTING_KEY,
   LOGO_SETTING_KEY,
   MAINTENANCE_MESSAGE_SETTING_KEY,
   MEDIA_BUCKET,
@@ -16,6 +17,20 @@ type TextSettings = {
   siteTagline: string;
   maintenanceMessage: string;
 };
+
+const LOGO_MIME_TYPES = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+  "image/gif",
+  "image/svg+xml",
+]);
+const FAVICON_MIME_TYPES = new Set([
+  "image/png",
+  "image/svg+xml",
+  "image/x-icon",
+  "image/vnd.microsoft.icon",
+]);
 
 async function upsertSettingValue(
   key: string,
@@ -39,6 +54,7 @@ async function upsertSettingValue(
 
 export default function AdminSettingsPage() {
   const [logoPath, setLogoPath] = useState<string | null>(null);
+  const [faviconPath, setFaviconPath] = useState<string | null>(null);
   const [textSettings, setTextSettings] = useState<TextSettings>({
     siteName: "",
     siteTagline: "",
@@ -59,6 +75,7 @@ export default function AdminSettingsPage() {
       .select("key, translations:site_setting_translations(value, locale)")
       .in("key", [
         LOGO_SETTING_KEY,
+        FAVICON_SETTING_KEY,
         SITE_NAME_SETTING_KEY,
         SITE_TAGLINE_SETTING_KEY,
         MAINTENANCE_MESSAGE_SETTING_KEY,
@@ -87,6 +104,7 @@ export default function AdminSettingsPage() {
     }
 
     setLogoPath(valueOf(LOGO_SETTING_KEY) || null);
+    setFaviconPath(valueOf(FAVICON_SETTING_KEY) || null);
     setTextSettings({
       siteName: valueOf(SITE_NAME_SETTING_KEY),
       siteTagline: valueOf(SITE_TAGLINE_SETTING_KEY),
@@ -98,15 +116,19 @@ export default function AdminSettingsPage() {
     void loadSettings();
   }, [loadSettings]);
 
-  async function saveLogoPath(path: string | null): Promise<boolean> {
+  async function saveBrandPath(
+    key: string,
+    path: string | null,
+    setter: (value: string | null) => void,
+  ): Promise<boolean> {
     setError(null);
     setSaved(false);
-    const err = await upsertSettingValue(LOGO_SETTING_KEY, path);
+    const err = await upsertSettingValue(key, path);
     if (err) {
       setError(err);
       return false;
     }
-    setLogoPath(path);
+    setter(path);
     setSaved(true);
     return true;
   }
@@ -131,10 +153,13 @@ export default function AdminSettingsPage() {
     setSaved(true);
   }
 
-  async function onUpload(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  async function uploadBrandAsset(options: {
+    file: File;
+    folder: "logo" | "favicon";
+    previousPath: string | null;
+    settingKey: string;
+    setter: (value: string | null) => void;
+  }) {
     const supabase = getSupabaseBrowserClient();
     if (!supabase) {
       setError("Supabase yapılandırılmamış.");
@@ -144,16 +169,31 @@ export default function AdminSettingsPage() {
     setBusy(true);
     setError(null);
 
-    const previousPath = logoPath;
-    const ext = file.name.split(".").pop()?.toLowerCase() ?? "png";
-    const path = `branding/logo-${Date.now()}.${ext}`;
+    const ext = options.file.name.split(".").pop()?.toLowerCase() ?? "png";
+    const contentType =
+      options.file.type || (ext === "ico" ? "image/x-icon" : "");
+    const allowedTypes =
+      options.folder === "logo" ? LOGO_MIME_TYPES : FAVICON_MIME_TYPES;
+    const maxBytes = options.folder === "logo" ? 5_000_000 : 1_000_000;
+
+    if (!allowedTypes.has(contentType) || options.file.size > maxBytes) {
+      setBusy(false);
+      setError(
+        options.folder === "logo"
+          ? "Logo PNG, JPEG, WEBP, GIF veya SVG ve en fazla 5 MB olmalıdır."
+          : "Favicon PNG, SVG veya ICO ve en fazla 1 MB olmalıdır.",
+      );
+      return;
+    }
+
+    const path = `branding/${options.folder}-${Date.now()}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
       .from(MEDIA_BUCKET)
-      .upload(path, file, {
+      .upload(path, options.file, {
         cacheControl: "3600",
         upsert: false,
-        contentType: file.type || undefined,
+        contentType,
       });
 
     if (uploadError) {
@@ -162,47 +202,74 @@ export default function AdminSettingsPage() {
       return;
     }
 
-    // Persist path + revalidate layouts before deleting the previous object
-    // so cached HTML never points at a removed file.
-    const ok = await saveLogoPath(path);
+    const ok = await saveBrandPath(options.settingKey, path, options.setter);
     if (!ok) {
       await supabase.storage.from(MEDIA_BUCKET).remove([path]);
       setBusy(false);
-      event.target.value = "";
       return;
     }
 
-    if (previousPath && previousPath !== path) {
-      await supabase.storage.from(MEDIA_BUCKET).remove([previousPath]);
+    if (options.previousPath && options.previousPath !== path) {
+      await supabase.storage.from(MEDIA_BUCKET).remove([options.previousPath]);
     }
 
     setBusy(false);
+  }
+
+  async function onLogoUpload(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await uploadBrandAsset({
+      file,
+      folder: "logo",
+      previousPath: logoPath,
+      settingKey: LOGO_SETTING_KEY,
+      setter: setLogoPath,
+    });
     event.target.value = "";
   }
 
-  async function onRemove() {
-    if (!logoPath) return;
+  async function onFaviconUpload(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await uploadBrandAsset({
+      file,
+      folder: "favicon",
+      previousPath: faviconPath,
+      settingKey: FAVICON_SETTING_KEY,
+      setter: setFaviconPath,
+    });
+    event.target.value = "";
+  }
+
+  async function removeBrandAsset(
+    path: string | null,
+    settingKey: string,
+    setter: (value: string | null) => void,
+  ) {
+    if (!path) return;
     const supabase = getSupabaseBrowserClient();
     if (!supabase) return;
 
     setBusy(true);
     setError(null);
-    const pathToRemove = logoPath;
-    const ok = await saveLogoPath(null);
+    const ok = await saveBrandPath(settingKey, null, setter);
     if (ok) {
-      await supabase.storage.from(MEDIA_BUCKET).remove([pathToRemove]);
+      await supabase.storage.from(MEDIA_BUCKET).remove([path]);
     }
     setBusy(false);
   }
 
   const logoUrl = publicMediaUrl(logoPath);
+  const faviconUrl = publicMediaUrl(faviconPath);
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Ayarlar</h1>
         <p className="mt-1 text-sm text-zinc-500">
-          Site adı, marka ve bakım duyurusu. Hassas anahtarlar buraya yazılmaz.
+          Site adı, marka, favicon ve bakım duyurusu. Hassas anahtarlar buraya
+          yazılmaz.
         </p>
       </div>
 
@@ -276,53 +343,117 @@ export default function AdminSettingsPage() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
-        <h2 className="text-lg font-medium">Logo</h2>
-        <p className="mt-1 text-sm text-zinc-500">
-          PNG, JPEG, WEBP, GIF veya SVG. Yaklaşık 32–72 px yükseklik önerilir.
-        </p>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+          <h2 className="text-lg font-medium">Logo</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            PNG, JPEG, WEBP, GIF veya SVG. Yaklaşık 32–72 px yükseklik önerilir.
+          </p>
+          {loading ? (
+            <p className="mt-4 text-sm text-zinc-500">Yükleniyor…</p>
+          ) : (
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <div className="flex h-20 min-w-40 items-center justify-center rounded-xl border border-dashed border-zinc-300 bg-zinc-50 px-4">
+                {logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={logoUrl}
+                    alt="Site logosu"
+                    className="h-9 max-w-40 object-contain"
+                  />
+                ) : (
+                  <span className="text-sm text-zinc-400">Logo yok</span>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <label className="cursor-pointer rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
+                  {busy ? "İşleniyor…" : logoUrl ? "Logoyu değiştir" : "Logo yükle"}
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                    className="hidden"
+                    onChange={onLogoUpload}
+                    disabled={busy}
+                  />
+                </label>
+                {logoUrl ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      void removeBrandAsset(
+                        logoPath,
+                        LOGO_SETTING_KEY,
+                        setLogoPath,
+                      )
+                    }
+                    disabled={busy}
+                    className="rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                  >
+                    Kaldır
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          )}
+        </section>
 
-        {loading ? (
-          <p className="mt-4 text-sm text-zinc-500">Yükleniyor…</p>
-        ) : (
-          <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div className="flex h-20 min-w-40 items-center justify-center rounded-xl border border-dashed border-zinc-300 bg-zinc-50 px-4">
-              {logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={logoUrl}
-                  alt="Site logosu"
-                  className="h-9 max-w-40 object-contain"
-                />
-              ) : (
-                <span className="text-sm text-zinc-400">Logo yok</span>
-              )}
+        <section className="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+          <h2 className="text-lg font-medium">Favicon</h2>
+          <p className="mt-1 text-sm text-zinc-500">
+            PNG, SVG veya ICO. 32×32 veya 48×48 önerilir.
+          </p>
+          {loading ? (
+            <p className="mt-4 text-sm text-zinc-500">Yükleniyor…</p>
+          ) : (
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-dashed border-zinc-300 bg-zinc-50">
+                {faviconUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={faviconUrl}
+                    alt="Favicon"
+                    className="h-10 w-10 object-contain"
+                  />
+                ) : (
+                  <span className="text-xs text-zinc-400">Yok</span>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <label className="cursor-pointer rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
+                  {busy
+                    ? "İşleniyor…"
+                    : faviconUrl
+                      ? "Favicon değiştir"
+                      : "Favicon yükle"}
+                  <input
+                    type="file"
+                    accept="image/png,image/svg+xml,image/x-icon,image/vnd.microsoft.icon,.ico"
+                    className="hidden"
+                    onChange={onFaviconUpload}
+                    disabled={busy}
+                  />
+                </label>
+                {faviconUrl ? (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      void removeBrandAsset(
+                        faviconPath,
+                        FAVICON_SETTING_KEY,
+                        setFaviconPath,
+                      )
+                    }
+                    disabled={busy}
+                    className="rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                  >
+                    Kaldır
+                  </button>
+                ) : null}
+              </div>
             </div>
-            <div className="flex gap-2">
-              <label className="cursor-pointer rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
-                {busy ? "İşleniyor…" : logoUrl ? "Logoyu değiştir" : "Logo yükle"}
-                <input
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
-                  className="hidden"
-                  onChange={onUpload}
-                  disabled={busy}
-                />
-              </label>
-              {logoUrl ? (
-                <button
-                  type="button"
-                  onClick={() => void onRemove()}
-                  disabled={busy}
-                  className="rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
-                >
-                  Kaldır
-                </button>
-              ) : null}
-            </div>
-          </div>
-        )}
-      </section>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

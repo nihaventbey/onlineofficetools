@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 const KEY = "oot-recent-tools";
 const FAV_KEY = "oot-favorite-tools";
 const MAX = 8;
+export const RECENT_TOOLS_SYNC_EVENT = "oot-recent-tools-sync";
 
 function readList(key: string): string[] {
   if (typeof window === "undefined") return [];
@@ -23,19 +24,45 @@ function readList(key: string): string[] {
 function writeList(key: string, list: string[]) {
   try {
     localStorage.setItem(key, JSON.stringify(list));
+    window.dispatchEvent(new Event(RECENT_TOOLS_SYNC_EVENT));
   } catch {
     /* quota */
   }
+}
+
+function readState() {
+  return {
+    recent: readList(KEY),
+    favorites: readList(FAV_KEY),
+  };
 }
 
 export function useRecentTools() {
   const [recent, setRecent] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  useEffect(() => {
-    setRecent(readList(KEY));
-    setFavorites(readList(FAV_KEY));
+  const refresh = useCallback(() => {
+    const next = readState();
+    setRecent(next.recent);
+    setFavorites(next.favorites);
   }, []);
+
+  useEffect(() => {
+    refresh();
+
+    function onStorage(event: StorageEvent) {
+      if (event.key === KEY || event.key === FAV_KEY || event.key === null) {
+        refresh();
+      }
+    }
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener(RECENT_TOOLS_SYNC_EVENT, refresh);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(RECENT_TOOLS_SYNC_EVENT, refresh);
+    };
+  }, [refresh]);
 
   const pushRecent = useCallback((slug: string) => {
     setRecent((prev) => {
