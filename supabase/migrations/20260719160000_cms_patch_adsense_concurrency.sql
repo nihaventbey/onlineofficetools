@@ -185,6 +185,8 @@ set allowed_mime_types = array[
   'image/jpeg',
   'image/webp',
   'image/gif',
-  'image/svg+xml'
+  'image/svg+xml',
+  'image/x-icon',
+  'image/vnd.microsoft.icon'
 ]
 where id = 'cms-media';

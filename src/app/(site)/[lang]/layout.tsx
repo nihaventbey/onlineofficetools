@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
-import AdSenseLoader from "@/components/AdSenseLoader";
 import AdsLayout from "@/components/AdsLayout";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
@@ -118,8 +117,16 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {adConfig.enabled ? (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adConfig.clientId}`}
+            crossOrigin="anonymous"
+          />
+        ) : null}
+      </head>
       <body className="flex min-h-full flex-col bg-slate-50 text-slate-900">
-        <AdSenseLoader enabled={adConfig.enabled} clientId={adConfig.clientId} />
         {siteSettings.maintenanceMessage ? (
           <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-sm text-amber-900">
             {siteSettings.maintenanceMessage}
