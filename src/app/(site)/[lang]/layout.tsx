@@ -111,6 +111,10 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
     getSiteSettings(locale),
   ]);
   const logoUrl = publicMediaUrl(siteSettings.logoPath);
+  // Always emit the publisher script when the client ID is valid so Google can
+  // verify the site, even if ad placements are temporarily disabled in CMS.
+  const adsenseClientId = adConfig.clientId;
+  const showAdSenseScript = /^ca-pub-\d{10,}$/.test(adsenseClientId);
 
   return (
     <html
@@ -118,10 +122,10 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {adConfig.enabled ? (
+        {showAdSenseScript ? (
           <script
             async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adConfig.clientId}`}
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
             crossOrigin="anonymous"
           />
         ) : null}
