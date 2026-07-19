@@ -48,6 +48,8 @@ export async function generateMetadata({
       canonical: absoluteUrl(`/${locale}/tools/${slug}`),
       languages: languageAlternates(`/tools/${slug}`),
     },
+    // og:image / twitter:image come from the opengraph-image.tsx file
+    // convention (Next injects the correct hashed URLs automatically).
     openGraph: {
       type: "website",
       locale,
@@ -55,19 +57,11 @@ export async function generateMetadata({
       siteName: dict.common.siteName,
       title,
       description,
-      images: [
-        {
-          url: absoluteUrl(`/${locale}/tools/${slug}/opengraph-image`),
-          width: 1200,
-          height: 630,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [absoluteUrl(`/${locale}/tools/${slug}/opengraph-image`)],
     },
   };
 }
