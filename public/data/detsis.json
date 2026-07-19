@@ -1,12 +1,86 @@
 {
-  "version": "incomplete",
-  "updatedAt": "2026-07-19T21:07:42.297Z",
-  "source": "https://www.detsis.gov.tr/",
+  "version": "seed-hierarchy",
+  "updatedAt": "2026-07-20T00:00:00.000Z",
+  "source": "bundled-seed",
   "incomplete": true,
   "entries": [
     {
-      "id": "00000000",
-      "name": "Örnek — senkron sonrası gerçek kurum listesi gelir"
+      "id": "00001000",
+      "name": "Cumhurbaşkanlığı",
+      "kind": "cumhurbaskanligi"
+    },
+    {
+      "id": "00001001",
+      "name": "Cumhurbaşkanlığı İdari İşler Başkanlığı",
+      "parentId": "00001000",
+      "kind": "cumhurbaskanligi"
+    },
+    {
+      "id": "10010000",
+      "name": "Sanayi ve Teknoloji Bakanlığı",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "10010001",
+      "name": "Sanayi ve Teknoloji Bakanlığı Personel Genel Müdürlüğü",
+      "parentId": "10010000",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "10010002",
+      "name": "Sanayi ve Teknoloji Bakanlığı Teftiş Kurulu Başkanlığı",
+      "parentId": "10010000",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "10020000",
+      "name": "Hazine ve Maliye Bakanlığı",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "10020001",
+      "name": "Hazine ve Maliye Bakanlığı Muhasebat Genel Müdürlüğü",
+      "parentId": "10020000",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "20010000",
+      "name": "Türk Standartları Enstitüsü Başkanlığı",
+      "parentId": "10010000",
+      "kind": "bagli"
+    },
+    {
+      "id": "20020000",
+      "name": "Türkiye Bilimsel ve Teknolojik Araştırma Kurumu",
+      "parentId": "10010000",
+      "kind": "bagli"
+    },
+    {
+      "id": "30010000",
+      "name": "Ankara Valiliği",
+      "kind": "tasra"
+    },
+    {
+      "id": "30010001",
+      "name": "Ankara Valiliği İl Sanayi ve Teknoloji Müdürlüğü",
+      "parentId": "30010000",
+      "kind": "tasra"
+    },
+    {
+      "id": "40010000",
+      "name": "Türkiye Büyük Millet Meclisi",
+      "kind": "diger"
+    },
+    {
+      "id": "50010000",
+      "name": "Çevre, Şehircilik ve İklim Değişikliği Bakanlığı",
+      "kind": "bakanlik"
+    },
+    {
+      "id": "50010001",
+      "name": "Toplu Konut İdaresi Başkanlığı",
+      "parentId": "50010000",
+      "kind": "bagli"
     }
   ]
 }

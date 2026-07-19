@@ -11,12 +11,38 @@ import path from "node:path";
 
 const OUT = path.resolve("public/data/detsis.json");
 
-/** @typedef {{ id: string; name: string; parentId?: string }} Entry */
+/** @typedef {{ id: string; name: string; parentId?: string; kind?: string }} Entry */
+
+/** Prefer existing hierarchical seed if sync fails. */
+function loadExistingSeed() {
+  try {
+    if (fs.existsSync(OUT)) {
+      const prev = JSON.parse(fs.readFileSync(OUT, "utf8"));
+      if (Array.isArray(prev.entries) && prev.entries.length > 3) {
+        return prev.entries;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return [
+    { id: "00001000", name: "Cumhurbaşkanlığı", kind: "cumhurbaskanligi" },
+    {
+      id: "10010000",
+      name: "Sanayi ve Teknoloji Bakanlığı",
+      kind: "bakanlik",
+    },
+    {
+      id: "20010000",
+      name: "Türk Standartları Enstitüsü Başkanlığı",
+      parentId: "10010000",
+      kind: "bagli",
+    },
+  ];
+}
 
 /** @type {Entry[]} */
-const SEED = [
-  { id: "00000000", name: "Örnek — senkron sonrası gerçek kurum listesi gelir" },
-];
+const SEED = loadExistingSeed();
 
 /**
  * @param {string} url
@@ -63,9 +89,11 @@ function normalizeEntries(raw) {
         ).trim();
         if (id.length !== 8 || !name) return null;
         const parent = o.parentId ?? o.ParentId ?? o.ustId;
+        const kind = o.kind ?? o.Kind ?? o.tip;
         /** @type {Entry} */
         const entry = { id, name };
-        if (parent != null && String(parent)) entry.parentId = String(parent);
+        if (parent != null && String(parent)) entry.parentId = String(parent).replace(/\D/g, "");
+        if (kind != null && String(kind)) entry.kind = String(kind);
         return entry;
       })
       .filter(Boolean);

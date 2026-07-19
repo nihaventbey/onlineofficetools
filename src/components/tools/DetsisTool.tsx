@@ -150,7 +150,11 @@ export default function DetsisTool({ labels }: Props) {
                 {labels.noResults}
               </li>
             ) : (
-              results.map((e) => (
+              results.map((e) => {
+                const parent = e.parentId
+                  ? data?.entries.find((x) => x.id === e.parentId)
+                  : undefined;
+                return (
                 <li
                   key={e.id}
                   className="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5"
@@ -158,6 +162,12 @@ export default function DetsisTool({ labels }: Props) {
                   <div>
                     <p className="font-mono text-sm font-semibold">{e.id}</p>
                     <p className="text-sm text-slate-700">{e.name}</p>
+                    {e.parentId ? (
+                      <p className="text-xs text-slate-400">
+                        Üst: {e.parentId}
+                        {parent ? ` — ${parent.name}` : ""}
+                      </p>
+                    ) : null}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -177,7 +187,8 @@ export default function DetsisTool({ labels }: Props) {
                     </a>
                   </div>
                 </li>
-              ))
+                );
+              })
             )}
           </ul>
         </>

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "sync:sdp": "node scripts/sync-sdp.mjs",
-    "sync:detsis": "node scripts/sync-detsis.mjs"
+    "sync:detsis": "node scripts/sync-detsis.mjs",
+    "test:arz-rica": "node --experimental-strip-types scripts/test-arz-relation.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.7.0",

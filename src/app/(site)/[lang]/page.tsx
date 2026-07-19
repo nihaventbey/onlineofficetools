@@ -138,8 +138,8 @@ export default async function HomePage({ params }: PageProps) {
                 Belgenet hazırlık araçları
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Arz/rica, SDP, DETSİS ve Belgenet&apos;e yapıştırılacak HTML — dosyalar
-                cihazınızda kalır.
+                Gönderen ve muhatap kurumuna göre arz/rica, SDP, DETSİS ve
+                Belgenet HTML — yönetmelik kılavuzuna göre öneri.
               </p>
             </div>
             <Link
