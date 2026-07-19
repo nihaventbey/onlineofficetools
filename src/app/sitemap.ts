@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { getPublishedSlugs } from "@/lib/cms";
 import { locales } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
-import { toolCategories } from "@/lib/tools/categories";
+import { visibleCategories } from "@/lib/tools/categories";
+import { isToolAvailableInLocale } from "@/lib/tools/registry";
 
 const LEGAL = ["privacy", "terms", "about", "contact"] as const;
 
@@ -28,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    for (const category of toolCategories) {
+    for (const category of visibleCategories(locale)) {
       entries.push({
         url: absoluteUrl(`/${locale}/categories/${category}`),
         lastModified: now,
@@ -38,6 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const slug of slugs) {
+      if (!isToolAvailableInLocale(slug, locale)) continue;
       entries.push({
         url: absoluteUrl(`/${locale}/tools/${slug}`),
         lastModified: now,

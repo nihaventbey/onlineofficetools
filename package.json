@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:sdp": "node scripts/sync-sdp.mjs",
+    "sync:detsis": "node scripts/sync-detsis.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.7.0",

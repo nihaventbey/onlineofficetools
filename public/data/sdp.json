@@ -1,0 +1,112 @@
+{
+  "version": "fallback-sample",
+  "updatedAt": "2026-07-19T21:07:41.435Z",
+  "source": "https://www.devletarsivleri.gov.tr/Sayfalar/Sayfa.aspx?h=EC4EE38996FE1DD2D040D483800B793116ED6F1FD94ED1E517B581F5E16F395B&icerik=20",
+  "entries": [
+    {
+      "code": "000",
+      "name": "GENEL İŞLER",
+      "retention": "—"
+    },
+    {
+      "code": "010",
+      "name": "Teşkilat, Görev ve Yetkiler",
+      "retention": "Sürekli"
+    },
+    {
+      "code": "020",
+      "name": "Yönetim ve İdare",
+      "retention": "—"
+    },
+    {
+      "code": "030",
+      "name": "İnsan Kaynakları",
+      "retention": "—"
+    },
+    {
+      "code": "040",
+      "name": "Mali İşler",
+      "retention": "—"
+    },
+    {
+      "code": "050",
+      "name": "Bilgi İşlem",
+      "retention": "—"
+    },
+    {
+      "code": "060",
+      "name": "Basın ve Halkla İlişkiler",
+      "retention": "—"
+    },
+    {
+      "code": "070",
+      "name": "İç Denetim",
+      "retention": "—"
+    },
+    {
+      "code": "080",
+      "name": "Strateji Geliştirme",
+      "retention": "—"
+    },
+    {
+      "code": "090",
+      "name": "Diğer Genel İşler",
+      "retention": "—"
+    },
+    {
+      "code": "600",
+      "name": "ARAŞTIRMA VE PLANLAMA İŞLERİ",
+      "retention": "—"
+    },
+    {
+      "code": "610",
+      "name": "Araştırma, Geliştirme",
+      "retention": "—"
+    },
+    {
+      "code": "620",
+      "name": "Planlama",
+      "retention": "—"
+    },
+    {
+      "code": "630",
+      "name": "İstatistik",
+      "retention": "—"
+    },
+    {
+      "code": "640",
+      "name": "Hukuk İşleri",
+      "retention": "—"
+    },
+    {
+      "code": "650",
+      "name": "Dış İlişkiler",
+      "retention": "—"
+    },
+    {
+      "code": "700",
+      "name": "EĞİTİM VE ÖĞRETİM",
+      "retention": "—"
+    },
+    {
+      "code": "710",
+      "name": "Öğrenci İşleri",
+      "retention": "—"
+    },
+    {
+      "code": "720",
+      "name": "Öğretim",
+      "retention": "—"
+    },
+    {
+      "code": "800",
+      "name": "SAĞLIK",
+      "retention": "—"
+    },
+    {
+      "code": "900",
+      "name": "DİĞER İŞLER",
+      "retention": "—"
+    }
+  ]
+}

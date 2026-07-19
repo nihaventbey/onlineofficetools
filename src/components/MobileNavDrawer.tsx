@@ -15,7 +15,7 @@ import CommandPalette from "@/components/CommandPalette";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import QuickAccessMenu from "@/components/tools/QuickAccessMenu";
 import type { Dictionary, Locale } from "@/lib/i18n";
-import { categoryStyles, toolCategories } from "@/lib/tools/categories";
+import { categoryStyles, visibleCategories } from "@/lib/tools/categories";
 import { toolRegistry, toolsByCategory } from "@/lib/tools/registry";
 
 type Props = {
@@ -180,7 +180,7 @@ export default function MobileNavDrawer({
               {dict.common.home}
             </Link>
 
-            {toolCategories.map((cat) => {
+            {visibleCategories(locale).map((cat) => {
               const tools = toolsByCategory(cat);
               if (!tools.length) return null;
               const expanded = mobileCat === cat;

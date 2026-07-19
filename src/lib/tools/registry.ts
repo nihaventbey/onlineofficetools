@@ -9,6 +9,7 @@ export {
   toolSlugs,
   getToolMeta as getToolBySlug,
   isRegisteredSlug,
+  isToolAvailableInLocale,
   toolsByCategory,
   featuredTools,
 } from "@/lib/tools/metadata";

@@ -7,12 +7,26 @@ export const toolCategories = [
   "image",
   "archive",
   "video",
+  "ebys",
   "developer",
   "security",
   "calculator",
 ] as const;
 
 export type ToolCategory = (typeof toolCategories)[number];
+
+/** Categories that only appear for specific locales (others see all). */
+const localeOnlyCategories: Partial<Record<ToolCategory, readonly string[]>> = {
+  ebys: ["tr"],
+};
+
+export function visibleCategories(locale: string): ToolCategory[] {
+  return toolCategories.filter((cat) => {
+    const allowed = localeOnlyCategories[cat];
+    if (!allowed) return true;
+    return (allowed as readonly string[]).includes(locale);
+  });
+}
 
 /** Soft pastel styles per category (Sejda-like) + hero tokens. */
 export const categoryStyles: Record<
@@ -135,6 +149,19 @@ export const categoryStyles: Record<
     ogFrom: "#ede9fe",
     ogTo: "#ffffff",
     ogAccent: "#7c3aed",
+  },
+  ebys: {
+    bg: "bg-slate-100",
+    text: "text-slate-800",
+    ring: "hover:border-amber-300",
+    soft: "bg-amber-50/70",
+    border: "border-slate-200",
+    heroGradient: "bg-gradient-to-br from-slate-100 via-amber-50/40 to-white",
+    heroAccent: "text-amber-700",
+    heroBlob: "bg-amber-200/40",
+    ogFrom: "#f1f5f9",
+    ogTo: "#ffffff",
+    ogAccent: "#b45309",
   },
   developer: {
     bg: "bg-indigo-50",

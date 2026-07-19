@@ -7,7 +7,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import MobileNavDrawer from "@/components/MobileNavDrawer";
 import QuickAccessMenu from "@/components/tools/QuickAccessMenu";
 import type { Dictionary, Locale } from "@/lib/i18n";
-import { categoryStyles, toolCategories } from "@/lib/tools/categories";
+import { categoryStyles, visibleCategories } from "@/lib/tools/categories";
 import { toolsByCategory } from "@/lib/tools/registry";
 
 type HeaderProps = {
@@ -39,6 +39,7 @@ export default function Header({
   const [megaOpen, setMegaOpen] = useState(false);
   const megaRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const categories = visibleCategories(locale);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -125,7 +126,7 @@ export default function Header({
                   className="absolute left-0 top-full z-50 mt-2 w-[min(94vw,64rem)] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
                 >
                   <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {toolCategories.map((cat) => {
+                    {categories.map((cat) => {
                       const tools = toolsByCategory(cat);
                       if (!tools.length) return null;
                       const style = categoryStyles[cat];

@@ -1,5 +1,6 @@
 import type { ToolCategory } from "@/lib/tools/categories";
 import type { ToolDictKey } from "@/lib/tools/types";
+import type { Locale } from "@/lib/i18n";
 
 export type ToolBadge = "new" | "popular" | "beta" | null;
 
@@ -16,6 +17,11 @@ export type ToolMeta = {
   outputs?: string[];
   /** Logical next tools for internal linking. */
   nextSteps?: string[];
+  /**
+   * When set, the tool is only available for these locales (hard gate).
+   * Omit to allow every locale.
+   */
+  locales?: Locale[];
 };
 
 /** Lightweight catalog — safe to import from Header / cards (no tool components). */
@@ -77,6 +83,12 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-to-gif", "video-metadata"] },
   { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-frame-extractor"] },
 
+  // EBYS / Belgenet (Turkish only)
+  { slug: "arz-rica", category: "ebys", dictKey: "arzRica", icon: "AR", emoji: "✍️", keywords: ["arz", "rica", "resmi", "yazışma", "belgenet"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["belgenet-html", "sdp-arama"] },
+  { slug: "sdp-arama", category: "ebys", dictKey: "sdpSearch", icon: "SDP", emoji: "📂", keywords: ["sdp", "ssdp", "dosya", "planı", "belgenet"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["detsis", "arz-rica"] },
+  { slug: "detsis", category: "ebys", dictKey: "detsis", icon: "DT", emoji: "🏛️", keywords: ["detsis", "kurum", "kaysis", "belgenet"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["sdp-arama", "belgenet-html"] },
+  { slug: "belgenet-html", category: "ebys", dictKey: "belgenetHtml", icon: "BN", emoji: "📄", keywords: ["belgenet", "html", "üst yazı", "yapıştır", "sayfa"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["arz-rica", "html-editor"] },
+
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },
   { slug: "base64", category: "developer", dictKey: "base64", icon: "64", emoji: "🔐", keywords: ["base64"], badge: null, featured: false, nextSteps: ["url-encoder", "json-formatter"] },
@@ -101,6 +113,14 @@ export function getToolMeta(slug: string): ToolMeta | undefined {
 
 export function isRegisteredSlug(slug: string): boolean {
   return toolSlugs.includes(slug);
+}
+
+/** True when the tool may be listed / opened for this locale. */
+export function isToolAvailableInLocale(slug: string, locale: Locale): boolean {
+  const meta = getToolMeta(slug);
+  if (!meta) return false;
+  if (!meta.locales || meta.locales.length === 0) return true;
+  return meta.locales.includes(locale);
 }
 
 export function toolsByCategory(category: ToolCategory): ToolMeta[] {

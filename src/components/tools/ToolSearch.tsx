@@ -6,7 +6,7 @@ import type { CmsToolCard } from "@/lib/cms";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import {
   categoryStyles,
-  toolCategories,
+  visibleCategories,
   type ToolCategory,
 } from "@/lib/tools/categories";
 
@@ -28,6 +28,7 @@ export default function ToolSearch({
 }: ToolSearchProps) {
   const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState<ToolCategory | "all">("all");
+  const categories = visibleCategories(locale);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -69,7 +70,7 @@ export default function ToolSearch({
           >
             {dict.common.allTools}
           </button>
-          {toolCategories.map((cat) => {
+          {categories.map((cat) => {
             const style = categoryStyles[cat];
             const active = category === cat;
             return (

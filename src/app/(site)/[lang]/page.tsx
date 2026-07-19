@@ -6,7 +6,7 @@ import RecentTools from "@/components/tools/RecentTools";
 import { getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
-import { categoryStyles, toolCategories } from "@/lib/tools/categories";
+import { categoryStyles, visibleCategories } from "@/lib/tools/categories";
 import { featuredTools } from "@/lib/tools/registry";
 
 type PageProps = {
@@ -34,6 +34,8 @@ export default async function HomePage({ params }: PageProps) {
     "{count}",
     String(tools.length),
   );
+  const categories = visibleCategories(locale);
+  const ebysTools = tools.filter((t) => t.category === "ebys");
 
   const websiteLd = {
     "@context": "https://schema.org",
@@ -112,7 +114,7 @@ export default async function HomePage({ params }: PageProps) {
         aria-label={dict.common.categories}
         className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
       >
-        {toolCategories.map((cat) => {
+        {categories.map((cat) => {
           const style = categoryStyles[cat];
           return (
             <Link
@@ -127,6 +129,29 @@ export default async function HomePage({ params }: PageProps) {
       </nav>
 
       <RecentTools locale={locale} dict={dict} />
+
+      {locale === "tr" && ebysTools.length ? (
+        <section id="belgenet" className="scroll-mt-24 space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-2xl font-semibold text-slate-900">
+                Belgenet hazırlık araçları
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Arz/rica, SDP, DETSİS ve Belgenet&apos;e yapıştırılacak HTML — dosyalar
+                cihazınızda kalır.
+              </p>
+            </div>
+            <Link
+              href={`/${locale}/categories/ebys`}
+              className="text-sm font-semibold text-amber-700"
+            >
+              {dict.common.openTool} →
+            </Link>
+          </div>
+          <ToolGrid locale={locale} tools={ebysTools} dict={dict} />
+        </section>
+      ) : null}
 
       <section id="tools" className="scroll-mt-24 space-y-4">
         <div>
@@ -145,7 +170,7 @@ export default async function HomePage({ params }: PageProps) {
         <ToolGrid locale={locale} tools={popular} dict={dict} compact />
       </section>
 
-      {toolCategories.map((cat) => {
+      {categories.map((cat) => {
         const group = tools.filter((t) => t.category === cat);
         if (!group.length) return null;
         const style = categoryStyles[cat];

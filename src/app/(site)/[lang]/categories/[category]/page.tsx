@@ -8,7 +8,7 @@ import { absoluteUrl, languageAlternates } from "@/lib/site";
 import {
   categoryStyles,
   isToolCategory,
-  toolCategories,
+  visibleCategories,
   type ToolCategory,
 } from "@/lib/tools/categories";
 import { featuredTools, toolsByCategory } from "@/lib/tools/registry";
@@ -19,7 +19,7 @@ type PageProps = {
 
 export function generateStaticParams() {
   return locales.flatMap((lang) =>
-    toolCategories.map((category) => ({ lang, category })),
+    visibleCategories(lang).map((category) => ({ lang, category })),
   );
 }
 
@@ -49,6 +49,9 @@ export default async function CategoryPage({ params }: PageProps) {
   if (!isLocale(lang) || !isToolCategory(category)) notFound();
 
   const locale = lang as Locale;
+  const cats = visibleCategories(locale);
+  if (!cats.includes(category as ToolCategory)) notFound();
+
   const cat = category as ToolCategory;
   const dict = await getDictionary(locale);
   const tools = await getPublishedTools(locale);
@@ -81,7 +84,7 @@ export default async function CategoryPage({ params }: PageProps) {
         </p>
         <p className={`mt-4 text-sm font-semibold ${style.text}`}>{countLabel}</p>
         <div className="mt-6 flex flex-wrap gap-2">
-          {toolCategories.map((c) => (
+          {cats.map((c) => (
             <Link
               key={c}
               href={`/${locale}/categories/${c}`}

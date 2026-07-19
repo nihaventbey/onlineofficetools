@@ -12,7 +12,7 @@ import {
 import { createPortal } from "react-dom";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { useRecentTools } from "@/lib/state/useRecentTools";
-import { getToolBySlug, toolRegistry } from "@/lib/tools/registry";
+import { getToolBySlug, isToolAvailableInLocale, toolRegistry } from "@/lib/tools/registry";
 
 type Props = {
   locale: Locale;
@@ -94,9 +94,12 @@ export default function CommandPalette({
   }
 
   const results = useMemo(() => {
+    const available = toolRegistry.filter((t) =>
+      isToolAvailableInLocale(t.slug, locale),
+    );
     const query = q.trim().toLowerCase();
     if (query) {
-      return toolRegistry
+      return available
         .filter((t) => {
           const labels = dict.tools[t.dictKey];
           return (
@@ -113,17 +116,18 @@ export default function CommandPalette({
     for (const slug of [...favorites, ...recent]) {
       const tool = getToolBySlug(slug);
       if (!tool || seen.has(tool.slug)) continue;
+      if (!isToolAvailableInLocale(tool.slug, locale)) continue;
       seen.add(tool.slug);
       prioritized.push(tool);
     }
-    for (const tool of toolRegistry) {
+    for (const tool of available) {
       if (seen.has(tool.slug)) continue;
       seen.add(tool.slug);
       prioritized.push(tool);
       if (prioritized.length >= 12) break;
     }
     return prioritized.slice(0, 12);
-  }, [q, dict, favorites, recent]);
+  }, [q, dict, favorites, recent, locale]);
 
   function close() {
     setOpen(false);

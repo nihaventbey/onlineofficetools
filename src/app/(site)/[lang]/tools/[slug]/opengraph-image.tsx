@@ -14,7 +14,15 @@ type Props = { params: Promise<{ lang: string; slug: string }> };
 
 export async function generateStaticParams() {
   const slugs = await getPublishedSlugs();
-  return locales.flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
+  return locales.flatMap((lang) =>
+    slugs
+      .filter((slug) => {
+        const meta = getToolBySlug(slug);
+        if (!meta?.locales?.length) return true;
+        return meta.locales.includes(lang);
+      })
+      .map((slug) => ({ lang, slug })),
+  );
 }
 
 export default async function ToolOgImage({ params }: Props) {

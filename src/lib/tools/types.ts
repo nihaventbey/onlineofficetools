@@ -49,6 +49,10 @@ export const toolDictKeys = [
   "videoToGif",
   "videoTrim",
   "videoInfo",
+  "arzRica",
+  "sdpSearch",
+  "detsis",
+  "belgenetHtml",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];

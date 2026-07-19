@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { useRecentTools } from "@/lib/state/useRecentTools";
-import { getToolBySlug } from "@/lib/tools/registry";
+import { getToolBySlug, isToolAvailableInLocale } from "@/lib/tools/registry";
 
 type Props = {
   locale: Locale;
@@ -79,11 +79,17 @@ export default function QuickAccessMenu({
 
   const favItems = favorites
     .map((slug) => getToolBySlug(slug))
-    .filter(Boolean)
+    .filter(
+      (tool): tool is NonNullable<typeof tool> =>
+        Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
+    )
     .slice(0, 6);
   const recentItems = recent
     .map((slug) => getToolBySlug(slug))
-    .filter(Boolean)
+    .filter(
+      (tool): tool is NonNullable<typeof tool> =>
+        Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
+    )
     .slice(0, 6);
   const count = favorites.length + recent.length;
   const items = tab === "favorites" ? favItems : recentItems;

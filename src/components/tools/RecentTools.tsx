@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { useRecentTools } from "@/lib/state/useRecentTools";
-import { getToolBySlug } from "@/lib/tools/registry";
+import { getToolBySlug, isToolAvailableInLocale } from "@/lib/tools/registry";
 import { categoryStyles } from "@/lib/tools/categories";
 
 type Props = {
@@ -15,11 +15,17 @@ export default function RecentTools({ locale, dict }: Props) {
   const { recent, favorites } = useRecentTools();
   const favItems = favorites
     .map((slug) => getToolBySlug(slug))
-    .filter(Boolean)
+    .filter(
+      (tool): tool is NonNullable<typeof tool> =>
+        Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
+    )
     .slice(0, 6);
   const recentItems = recent
     .map((slug) => getToolBySlug(slug))
-    .filter(Boolean)
+    .filter(
+      (tool): tool is NonNullable<typeof tool> =>
+        Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
+    )
     .slice(0, 6);
 
   const empty = !favItems.length && !recentItems.length;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/lib/i18n";
-import { toolCategories } from "@/lib/tools/categories";
+import { visibleCategories } from "@/lib/tools/categories";
 
 type FooterProps = {
   locale: Locale;
@@ -9,6 +9,7 @@ type FooterProps = {
 
 export default function Footer({ locale, dict }: FooterProps) {
   const year = new Date().getFullYear();
+  const categories = visibleCategories(locale);
 
   return (
     <footer className="mt-auto border-t border-slate-200 bg-white">
@@ -27,7 +28,7 @@ export default function Footer({ locale, dict }: FooterProps) {
             {dict.common.categories}
           </p>
           <ul className="space-y-2 text-sm">
-            {toolCategories.map((cat) => (
+            {categories.map((cat) => (
               <li key={cat}>
                 <Link
                   href={`/${locale}/categories/${cat}`}

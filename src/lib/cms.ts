@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { getDictionary, type Dictionary, type Locale } from "@/lib/i18n";
 import type { Database, PublishedTool, ToolTranslationRow } from "@/lib/supabase/types";
-import { getToolBySlug, isRegisteredSlug, toolRegistry } from "@/lib/tools/registry";
+import { getToolBySlug, isRegisteredSlug, isToolAvailableInLocale, toolRegistry } from "@/lib/tools/registry";
 import { isToolCategory, type ToolCategory } from "@/lib/tools/categories";
 import {
   ADSENSE_SETTING_KEYS,
@@ -274,24 +274,26 @@ const FALLBACK_COPY: Record<
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {
   const dict = await getDictionary(locale);
-  return toolRegistry.map((tool, index) => {
-    const labels = dictLabels(tool.slug, dict);
-    const meta = FALLBACK_COPY[tool.slug];
-    return {
-      slug: tool.slug,
-      title:
-        labels?.title ??
-        (locale === "tr" ? meta?.tr : meta?.en) ??
-        tool.slug,
-      description:
-        labels?.description ??
-        (locale === "tr" ? meta?.trDesc : meta?.enDesc) ??
-        "",
-      coverUrl: null,
-      sortOrder: index,
-      category: tool.category,
-    };
-  });
+  return toolRegistry
+    .filter((tool) => isToolAvailableInLocale(tool.slug, locale))
+    .map((tool, index) => {
+      const labels = dictLabels(tool.slug, dict);
+      const meta = FALLBACK_COPY[tool.slug];
+      return {
+        slug: tool.slug,
+        title:
+          labels?.title ??
+          (locale === "tr" ? meta?.tr : meta?.en) ??
+          tool.slug,
+        description:
+          labels?.description ??
+          (locale === "tr" ? meta?.trDesc : meta?.enDesc) ??
+          "",
+        coverUrl: null,
+        sortOrder: index,
+        category: tool.category,
+      };
+    });
 }
 
 /** CMS category wins when it is a recognized category; otherwise fall back to the registry. */
@@ -342,8 +344,9 @@ export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> 
     return fallbackTools(locale);
   }
 
-  const tools = (data as unknown as PublishedTool[]).filter((tool) =>
-    isRegisteredSlug(tool.slug),
+  const tools = (data as unknown as PublishedTool[]).filter(
+    (tool) =>
+      isRegisteredSlug(tool.slug) && isToolAvailableInLocale(tool.slug, locale),
   );
 
   const dict = await getDictionary(locale);
@@ -383,6 +386,7 @@ export async function getPublishedTool(
   locale: Locale,
 ): Promise<CmsToolPage | null> {
   if (!isRegisteredSlug(slug)) return null;
+  if (!isToolAvailableInLocale(slug, locale)) return null;
 
   const supabase = getBuildClient();
   if (!supabase) return offlineTool(slug, locale);
@@ -530,6 +534,7 @@ export async function getToolForPreview(
   locale: Locale,
 ): Promise<CmsToolPage | null> {
   if (!isRegisteredSlug(slug)) return null;
+  if (!isToolAvailableInLocale(slug, locale)) return null;
 
   const { createSupabaseServiceClient } = await import("@/lib/supabase/service");
   const supabase = createSupabaseServiceClient() ?? getBuildClient();
