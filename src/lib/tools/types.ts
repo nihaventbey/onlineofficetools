@@ -53,6 +53,7 @@ export const toolDictKeys = [
   "sdpSearch",
   "detsis",
   "belgenetHtml",
+  "belgenetPrep",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];

@@ -84,10 +84,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-frame-extractor"] },
 
   // EBYS / Belgenet (Turkish only)
-  { slug: "arz-rica", category: "ebys", dictKey: "arzRica", icon: "AR", emoji: "✍️", keywords: ["arz", "rica", "resmi", "yazışma", "belgenet", "detsis", "hiyerarşi"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["detsis", "belgenet-html"] },
-  { slug: "sdp-arama", category: "ebys", dictKey: "sdpSearch", icon: "SDP", emoji: "📂", keywords: ["sdp", "ssdp", "dosya", "planı", "belgenet"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["detsis", "arz-rica"] },
-  { slug: "detsis", category: "ebys", dictKey: "detsis", icon: "DT", emoji: "🏛️", keywords: ["detsis", "kurum", "kaysis", "belgenet"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["sdp-arama", "belgenet-html"] },
-  { slug: "belgenet-html", category: "ebys", dictKey: "belgenetHtml", icon: "BN", emoji: "📄", keywords: ["belgenet", "html", "üst yazı", "yapıştır", "sayfa"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["arz-rica", "html-editor"] },
+  { slug: "belgenet-hazirlik", category: "ebys", dictKey: "belgenetPrep", icon: "BN", emoji: "📋", keywords: ["belgenet", "ebys", "sdp", "ssdp", "arz", "rica", "detsis", "resmi", "yazışma", "html"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["html-editor"] },
 
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },

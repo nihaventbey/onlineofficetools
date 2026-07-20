@@ -56,10 +56,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "password-generator": () => import("@/components/tools/PasswordGenerator").then((m) => ({ default: m.default as ToolComponent })),
   "unit-converter": () => import("@/components/tools/UnitConverter").then((m) => ({ default: m.default as ToolComponent })),
   "date-difference": () => import("@/components/tools/DateDifference").then((m) => ({ default: m.default as ToolComponent })),
-  "arz-rica": () => import("@/components/tools/ArzRica").then((m) => ({ default: m.default as ToolComponent })),
-  "sdp-arama": () => import("@/components/tools/SdpSearch").then((m) => ({ default: m.default as ToolComponent })),
-  detsis: () => import("@/components/tools/DetsisTool").then((m) => ({ default: m.default as ToolComponent })),
-  "belgenet-html": () => import("@/components/tools/BelgenetHtml").then((m) => ({ default: m.default as ToolComponent })),
+  "belgenet-hazirlik": () =>
+    import("@/components/tools/BelgenetHazirlik").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
 };
 
 export async function loadToolComponent(

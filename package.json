@@ -9,6 +9,7 @@
     "lint": "eslint",
     "sync:sdp": "node scripts/sync-sdp.mjs",
     "sync:detsis": "node scripts/sync-detsis.mjs",
+    "test:sdp": "node scripts/test-sdp-sync.mjs",
     "test:arz-rica": "node --experimental-strip-types scripts/test-arz-relation.mjs"
   },
   "dependencies": {

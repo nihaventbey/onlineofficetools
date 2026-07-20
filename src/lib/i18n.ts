@@ -619,6 +619,103 @@ export type Dictionary = {
       fitNote: string;
       sanitizeNote: string;
     };
+    belgenetPrep: ToolSharedLabels & {
+      tabYazi: string;
+      tabKurum: string;
+      tabSdp: string;
+      tabOzet: string;
+      workflowHint: string;
+      yazi: {
+        copy: string;
+        copied: string;
+        clear: string;
+        placeholder: string;
+        fontLabel: string;
+        fontTimes: string;
+        fontArial: string;
+        sizeLabel: string;
+        tabVisual: string;
+        tabCode: string;
+        copyHtml: string;
+        fitHeading: string;
+        fitOk: string;
+        fitOverflow: string;
+        fitEstimate: string;
+        fitNote: string;
+        sanitizeNote: string;
+      };
+      kurum: {
+        copy: string;
+        copied: string;
+        clear: string;
+        senderLabel: string;
+        recipientLabel: string;
+        searchPlaceholder: string;
+        noResults: string;
+        addRecipientHint: string;
+        removeRecipient: string;
+        kindIdare: string;
+        kindPrivate: string;
+        kindPerson: string;
+        delegatorToggle: string;
+        delegatorLabel: string;
+        manualOverride: string;
+        manualAuto: string;
+        relLower: string;
+        relUpper: string;
+        relPeer: string;
+        relMixed: string;
+        relUncertain: string;
+        resultHeading: string;
+        relationLabel: string;
+        confidenceLabel: string;
+        confidenceAutomatic: string;
+        confidenceRule: string;
+        confidenceUncertain: string;
+        confidenceManual: string;
+        variantLabel: string;
+        apply: string;
+        disclaimer: string;
+        snapshotWarning: string;
+      };
+      sdp: {
+        copy: string;
+        copied: string;
+        clear: string;
+        searchPlaceholder: string;
+        results: string;
+        noResults: string;
+        copyCode: string;
+        select: string;
+        selected: string;
+        retention: string;
+        archiveGrade: string;
+        note: string;
+        dataVersion: string;
+        loading: string;
+        loadError: string;
+        planAll: string;
+        sectionOnly: string;
+        staleWarning: string;
+        officialSource: string;
+      };
+      ozet: ToolSharedLabels & {
+        checklistHeading: string;
+        checkSender: string;
+        checkRecipient: string;
+        checkClosing: string;
+        checkSdp: string;
+        checkPageFit: string;
+        notSet: string;
+        fitOk: string;
+        fitOverflow: string;
+        subjectLineHeading: string;
+        subjectLineHint: string;
+        copySubject: string;
+        forbiddenWarning: string;
+        disclaimer: string;
+      };
+    };
   };
 };
 
@@ -634,5 +731,10 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
 };
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  return dictionaries[locale]();
+  const dict = await dictionaries[locale]();
+  if (!dict.tools.belgenetPrep) {
+    const tr = await dictionaries.tr();
+    dict.tools.belgenetPrep = tr.tools.belgenetPrep;
+  }
+  return dict;
 }
