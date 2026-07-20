@@ -18,6 +18,9 @@ type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
 };
 
+/** Allow CMS-published tools added after the last build (e.g. belgenet-hazirlik). */
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const slugs = await getPublishedSlugs();
   return locales.flatMap((lang) =>

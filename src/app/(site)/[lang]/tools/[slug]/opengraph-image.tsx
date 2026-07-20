@@ -9,6 +9,7 @@ export const alt = "Online Office Tools";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 export const revalidate = 60;
+export const dynamicParams = true;
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
