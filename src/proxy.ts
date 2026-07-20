@@ -71,6 +71,29 @@ function detectLocale(request: NextRequest): Locale {
 
 const ADMIN_LOGIN_PATH = "/admin/login";
 
+/** Retired EBYS slugs → belgenet-hazirlik tab (TR only). */
+const EBYS_LEGACY_REDIRECTS: Record<string, string> = {
+  "/tools/arz-rica": "/tools/belgenet-hazirlik?tab=kurum",
+  "/tools/sdp-arama": "/tools/belgenet-hazirlik?tab=sdp",
+  "/tools/detsis": "/tools/belgenet-hazirlik?tab=kurum",
+  "/tools/belgenet-html": "/tools/belgenet-hazirlik?tab=yazi",
+};
+
+function ebysLegacyRedirect(
+  request: NextRequest,
+  locale: string,
+): NextResponse | null {
+  if (locale !== "tr") return null;
+  const suffix = request.nextUrl.pathname.slice(`/${locale}`.length);
+  const target = EBYS_LEGACY_REDIRECTS[suffix];
+  if (!target) return null;
+  const [path, query] = target.split("?");
+  const url = request.nextUrl.clone();
+  url.pathname = `/${locale}${path}`;
+  url.search = query ? `?${query}` : "";
+  return NextResponse.redirect(url, 308);
+}
+
 async function handleAdminRoute(
   request: NextRequest,
 ): Promise<NextResponse> {
@@ -111,6 +134,8 @@ export default function proxy(
 
   const firstSegment = pathname.split("/")[1] ?? "";
   if (isLocale(firstSegment)) {
+    const legacy = ebysLegacyRedirect(request, firstSegment);
+    if (legacy) return legacy;
     return NextResponse.next();
   }
 

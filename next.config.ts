@@ -19,23 +19,23 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/:lang/tr/tools/arz-rica",
-        destination: "/:lang/tools/belgenet-hazirlik?tab=kurum",
+        source: "/tr/tools/arz-rica",
+        destination: "/tr/tools/belgenet-hazirlik?tab=kurum",
         permanent: true,
       },
       {
-        source: "/:lang/tr/tools/sdp-arama",
-        destination: "/:lang/tools/belgenet-hazirlik?tab=sdp",
+        source: "/tr/tools/sdp-arama",
+        destination: "/tr/tools/belgenet-hazirlik?tab=sdp",
         permanent: true,
       },
       {
-        source: "/:lang/tr/tools/detsis",
-        destination: "/:lang/tools/belgenet-hazirlik?tab=kurum",
+        source: "/tr/tools/detsis",
+        destination: "/tr/tools/belgenet-hazirlik?tab=kurum",
         permanent: true,
       },
       {
-        source: "/:lang/tr/tools/belgenet-html",
-        destination: "/:lang/tools/belgenet-hazirlik?tab=yazi",
+        source: "/tr/tools/belgenet-html",
+        destination: "/tr/tools/belgenet-hazirlik?tab=yazi",
         permanent: true,
       },
     ];
