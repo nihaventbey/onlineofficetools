@@ -276,6 +276,12 @@ const FALLBACK_COPY: Record<
     enDesc: "Add text or image watermarks to photos and PDFs.",
     trDesc: "Görsellere ve PDF'lere metin veya logo filigranı ekleyin.",
   },
+  "pdf-watermark": {
+    en: "PDF Watermark",
+    tr: "PDF Filigran",
+    enDesc: "Add text or image watermarks to PDFs and images in batch.",
+    trDesc: "PDF ve görsellere toplu metin veya logo filigranı ekleyin.",
+  },
 };
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {

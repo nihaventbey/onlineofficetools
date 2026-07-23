@@ -30,6 +30,7 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "pdf-compress": () => import("@/components/tools/PdfCompress").then((m) => ({ default: m.default as ToolComponent })),
   "images-to-pdf": () => import("@/components/tools/ImagesToPdf").then((m) => ({ default: m.default as ToolComponent })),
   "pdf-to-images": () => import("@/components/tools/PdfToImages").then((m) => ({ default: m.default as ToolComponent })),
+  "pdf-watermark": () => import("@/components/tools/Watermark").then((m) => ({ default: m.default as ToolComponent })),
   "image-resize": () => import("@/components/tools/ImageResize").then((m) => ({ default: m.default as ToolComponent })),
   "image-compress": () => import("@/components/tools/ImageCompress").then((m) => ({ default: m.default as ToolComponent })),
   "image-crop": () => import("@/components/tools/ImageCrop").then((m) => ({ default: m.default as ToolComponent })),

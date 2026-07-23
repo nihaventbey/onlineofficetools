@@ -1155,18 +1155,18 @@
     },
     "watermark": {
       "title": "Filigrane",
-      "description": "Ajoutez un filigrane texte ou image aux photos et PDF — opacité, inclinaison, échelle et position.",
+      "description": "Ajoutez un filigrane texte ou logo aux images et PDF — un fichier ou un lot.",
       "metaTitle": "Filigrane Images & PDF — Outil en ligne gratuit",
-      "metaDescription": "Ajoutez un filigrane texte ou logo dans votre navigateur. Rien n'est téléversé.",
-      "dropHint": "Déposez une image ou un PDF, ou cliquez pour sélectionner",
-      "selectHint": "PNG, JPG, WEBP, PDF — jusqu'à 25 Mo",
+      "metaDescription": "Filigrane pour plusieurs images et PDF dans le navigateur. Rien n'est téléversé.",
+      "dropHint": "Déposez des images et/ou PDF, ou cliquez pour sélectionner (un ou plusieurs)",
+      "selectHint": "PNG, JPG, WEBP, PDF — jusqu'à 25 Mo par fichier, max. 30 fichiers",
       "remove": "Supprimer",
       "download": "Appliquer et télécharger",
       "processing": "Application du filigrane…",
       "invalidFile": "Veuillez sélectionner une image ou un PDF.",
       "tooLarge": "Le fichier dépasse la limite de 25 Mo.",
       "error": "Impossible d'appliquer le filigrane.",
-      "limitHint": "Les fichiers restent sur votre appareil. Images et PDF jusqu'à 25 Mo.",
+      "limitHint": "Les fichiers restent sur votre appareil. Images et PDF mélangés. 25 Mo par fichier, 30 fichiers max.",
       "copy": "Copier",
       "copied": "Copié !",
       "clear": "Effacer",
@@ -1204,7 +1204,11 @@
       "pos_mr": "Milieu droit",
       "pos_bl": "Bas gauche",
       "pos_bc": "Bas centre",
-      "pos_br": "Bas droit"
+      "pos_br": "Bas droit",
+      "downloadZip": "Appliquer et télécharger le ZIP",
+      "fileCount": "{count} fichiers ({images} images, {pdfs} PDF)",
+      "tooManyFiles": "Vous pouvez ajouter jusqu'à 30 fichiers à la fois.",
+      "processingFile": "Traitement {current}/{total} : {name}"
     }
   },
   "toolPage": {

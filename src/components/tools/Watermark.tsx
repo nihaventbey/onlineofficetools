@@ -8,7 +8,6 @@ import {
   formatBytes,
   isImageFile,
   MAX_IMAGE_BYTES,
-  revokeUrl,
 } from "@/lib/files/utils";
 import { isPdfFile } from "@/lib/pdf/utils";
 import { validatePdfSize, FileDropZone } from "@/components/tools/pdf/PdfUi";
@@ -32,6 +31,14 @@ type Props = { labels: Dictionary["tools"]["watermark"] };
 type Draft = Omit<WatermarkOptions, "mode"> & {
   mode: WatermarkOptions["mode"];
 };
+
+type SourceItem = {
+  id: string;
+  file: File;
+  kind: "image" | "pdf";
+};
+
+const MAX_BATCH = 30;
 
 const FONTS: WmFontId[] = [
   "arial",
@@ -60,70 +67,111 @@ function extOf(name: string, fallback: string) {
   return m ? m[1].toLowerCase() : fallback;
 }
 
+function watermarkedName(file: File, kind: "image" | "pdf") {
+  if (kind === "pdf") {
+    return `${file.name.replace(/\.pdf$/i, "")}-watermarked.pdf`;
+  }
+  const base = file.name.replace(/\.\w+$/, "");
+  return `${base}-watermarked.${extOf(file.name, "jpg")}`;
+}
+
+function makeId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
 export default function Watermark({ labels }: Props) {
   const [draft, setDraft, clearDraft] = useToolDraft<Draft>("watermark", {
     ...DEFAULT_WATERMARK,
     text: labels.defaultText,
   });
-  const [file, setFile] = useState<File | null>(null);
-  const [fileKind, setFileKind] = useState<"image" | "pdf" | null>(null);
+  const [items, setItems] = useState<SourceItem[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [stampFile, setStampFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [statusText, setStatusText] = useState("");
   const [error, setError] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const sourceBmpRef = useRef<ImageBitmap | null>(null);
   const stampBmpRef = useRef<ImageBitmap | null>(null);
   const [previewTick, setPreviewTick] = useState(0);
 
+  const active = items.find((i) => i.id === activeId) ?? items[0] ?? null;
+
   useEffect(() => {
     return () => {
-      revokeUrl(previewUrl);
       sourceBmpRef.current?.close();
       stampBmpRef.current?.close();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function onSourceFiles(incoming: File[]) {
-    const f = incoming[0];
-    if (!f) return;
-    setError("");
-    if (isPdfFile(f)) {
-      if (validatePdfSize(f) !== "ok") {
-        setError(labels.tooLarge);
-        return;
-      }
+  // Load preview bitmap when active image changes
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
       sourceBmpRef.current?.close();
       sourceBmpRef.current = null;
-      setFile(f);
-      setFileKind("pdf");
-      revokeUrl(previewUrl);
-      setPreviewUrl(null);
-      setPreviewTick((n) => n + 1);
+      if (!active || active.kind !== "image") {
+        setPreviewTick((n) => n + 1);
+        return;
+      }
+      try {
+        const bmp = await createImageBitmap(active.file);
+        if (cancelled) {
+          bmp.close();
+          return;
+        }
+        sourceBmpRef.current = bmp;
+        setPreviewTick((n) => n + 1);
+      } catch {
+        if (!cancelled) setPreviewTick((n) => n + 1);
+      }
+    }
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, [active?.id, active?.file, active?.kind]);
+
+  function classifyFile(file: File): SourceItem | { error: string } {
+    if (isPdfFile(file)) {
+      if (validatePdfSize(file) !== "ok") return { error: labels.tooLarge };
+      return { id: makeId(), file, kind: "pdf" };
+    }
+    if (isImageFile(file)) {
+      if (file.size > MAX_IMAGE_BYTES) return { error: labels.tooLarge };
+      return { id: makeId(), file, kind: "image" };
+    }
+    return { error: labels.invalidFile };
+  }
+
+  function onSourceFiles(incoming: File[]) {
+    if (!incoming.length) return;
+    setError("");
+    const next: SourceItem[] = [];
+    let lastError = "";
+    for (const file of incoming) {
+      if (items.length + next.length >= MAX_BATCH) {
+        lastError = labels.tooManyFiles;
+        break;
+      }
+      const result = classifyFile(file);
+      if ("error" in result) {
+        lastError = result.error;
+        continue;
+      }
+      next.push(result);
+    }
+    if (!next.length) {
+      setError(lastError || labels.invalidFile);
       return;
     }
-    if (!isImageFile(f)) {
-      setError(labels.invalidFile);
-      return;
-    }
-    if (f.size > MAX_IMAGE_BYTES) {
-      setError(labels.tooLarge);
-      return;
-    }
-    try {
-      const bmp = await createImageBitmap(f);
-      sourceBmpRef.current?.close();
-      sourceBmpRef.current = bmp;
-      setFile(f);
-      setFileKind("image");
-      revokeUrl(previewUrl);
-      setPreviewUrl(URL.createObjectURL(f));
-      setPreviewTick((n) => n + 1);
-    } catch {
-      setError(labels.error);
-    }
+    setItems((prev) => {
+      const merged = [...prev, ...next].slice(0, MAX_BATCH);
+      return merged;
+    });
+    setActiveId((prev) => prev ?? next[0]!.id);
+    if (lastError) setError(lastError);
   }
 
   async function onStampFiles(incoming: File[]) {
@@ -147,6 +195,17 @@ export default function Watermark({ labels }: Props) {
     } catch {
       setError(labels.invalidStamp);
     }
+  }
+
+  function removeItem(id: string) {
+    setItems((prev) => {
+      const next = prev.filter((i) => i.id !== id);
+      setActiveId((cur) => {
+        if (cur !== id) return cur;
+        return next[0]?.id ?? null;
+      });
+      return next;
+    });
   }
 
   const options: WatermarkOptions = useMemo(
@@ -178,7 +237,8 @@ export default function Watermark({ labels }: Props) {
     let srcW = 595;
     let srcH = 842;
     const bmp = sourceBmpRef.current;
-    if (fileKind === "image" && bmp) {
+    const kind = active?.kind ?? null;
+    if (kind === "image" && bmp) {
       srcW = bmp.width;
       srcH = bmp.height;
     }
@@ -189,7 +249,6 @@ export default function Watermark({ labels }: Props) {
     canvas.width = w;
     canvas.height = h;
 
-    // Checkerboard backdrop
     const size = 12;
     for (let y = 0; y < h; y += size) {
       for (let x = 0; x < w; x += size) {
@@ -199,9 +258,9 @@ export default function Watermark({ labels }: Props) {
       }
     }
 
-    if (fileKind === "image" && bmp) {
+    if (kind === "image" && bmp) {
       ctx.drawImage(bmp, 0, 0, w, h);
-    } else if (fileKind === "pdf") {
+    } else if (kind === "pdf") {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, w, h);
       ctx.strokeStyle = "#cbd5e1";
@@ -209,7 +268,10 @@ export default function Watermark({ labels }: Props) {
       ctx.fillStyle = "#94a3b8";
       ctx.font = "12px system-ui, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(labels.pdfPreviewHint, w / 2, h / 2);
+      ctx.fillText(labels.pdfPreviewHint, w / 2, h / 2 - 8);
+      if (active) {
+        ctx.fillText(active.file.name, w / 2, h / 2 + 12);
+      }
     } else {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, w, h);
@@ -237,10 +299,30 @@ export default function Watermark({ labels }: Props) {
     } catch {
       // Preview failures are non-fatal
     }
-  }, [options, fileKind, previewTick, labels.defaultText, labels.pdfPreviewHint, labels.previewEmpty]);
+  }, [
+    options,
+    active,
+    previewTick,
+    labels.defaultText,
+    labels.pdfPreviewHint,
+    labels.previewEmpty,
+  ]);
+
+  async function processOne(item: SourceItem): Promise<{ name: string; blob: Blob }> {
+    if (item.kind === "image") {
+      const blob = await watermarkImageFile(item.file, options, stampFile);
+      return { name: watermarkedName(item.file, "image"), blob };
+    }
+    const bytes = await watermarkPdf(item.file, options, stampFile);
+    const copy = new Uint8Array(bytes);
+    return {
+      name: watermarkedName(item.file, "pdf"),
+      blob: new Blob([copy], { type: "application/pdf" }),
+    };
+  }
 
   async function run() {
-    if (!file || !fileKind) return;
+    if (!items.length) return;
     if (draft.mode === "text" && !draft.text.trim()) {
       setError(labels.emptyText);
       return;
@@ -250,30 +332,59 @@ export default function Watermark({ labels }: Props) {
       return;
     }
     setBusy(true);
-    setProgress(20);
+    setProgress(0);
     setError("");
+    setStatusText("");
     try {
-      if (fileKind === "image") {
-        setProgress(50);
-        const blob = await watermarkImageFile(file, options, stampFile);
-        setProgress(100);
-        const base = file.name.replace(/\.\w+$/, "");
-        downloadBlob(blob, `${base}-watermarked.${extOf(file.name, "jpg")}`);
-      } else {
-        setProgress(40);
-        const bytes = await watermarkPdf(file, options, stampFile);
-        setProgress(100);
-        const copy = new Uint8Array(bytes);
-        downloadBlob(
-          new Blob([copy], { type: "application/pdf" }),
-          `${file.name.replace(/\.pdf$/i, "")}-watermarked.pdf`,
+      const outputs: { name: string; blob: Blob }[] = [];
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]!;
+        setStatusText(
+          labels.processingFile
+            .replace("{current}", String(i + 1))
+            .replace("{total}", String(items.length))
+            .replace("{name}", item.file.name),
         );
+        setProgress(Math.round(((i + 0.3) / items.length) * 100));
+        try {
+          outputs.push(await processOne(item));
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : "";
+          if (msg === "ENCRYPTED") {
+            setError(`${item.file.name}: ${labels.encrypted}`);
+          } else if (msg === "NO_STAMP") {
+            setError(labels.needStamp);
+          } else {
+            setError(`${item.file.name}: ${labels.error}`);
+          }
+          return;
+        }
+        setProgress(Math.round(((i + 1) / items.length) * 100));
       }
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "";
-      if (msg === "ENCRYPTED") setError(labels.encrypted);
-      else if (msg === "NO_STAMP") setError(labels.needStamp);
-      else setError(labels.error);
+
+      if (outputs.length === 1) {
+        downloadBlob(outputs[0]!.blob, outputs[0]!.name);
+      } else {
+        const JSZip = (await import("jszip")).default;
+        const zip = new JSZip();
+        const used = new Map<string, number>();
+        for (const out of outputs) {
+          let name = out.name;
+          const count = used.get(name) ?? 0;
+          if (count > 0) {
+            const dot = name.lastIndexOf(".");
+            name =
+              dot > 0
+                ? `${name.slice(0, dot)}-${count}${name.slice(dot)}`
+                : `${name}-${count}`;
+          }
+          used.set(out.name, count + 1);
+          zip.file(name, out.blob);
+        }
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        downloadBlob(zipBlob, "watermarked.zip");
+      }
+      setStatusText("");
     } finally {
       setBusy(false);
     }
@@ -281,17 +392,16 @@ export default function Watermark({ labels }: Props) {
 
   function resetAll() {
     clearDraft();
-    setFile(null);
-    setFileKind(null);
+    setItems([]);
+    setActiveId(null);
     setStampFile(null);
     sourceBmpRef.current?.close();
     sourceBmpRef.current = null;
     stampBmpRef.current?.close();
     stampBmpRef.current = null;
-    revokeUrl(previewUrl);
-    setPreviewUrl(null);
     setError("");
     setProgress(0);
+    setStatusText("");
     setPreviewTick((n) => n + 1);
   }
 
@@ -299,41 +409,95 @@ export default function Watermark({ labels }: Props) {
     setDraft({ ...draft, position, tile: false });
   }
 
+  const imageCount = items.filter((i) => i.kind === "image").length;
+  const pdfCount = items.filter((i) => i.kind === "pdf").length;
+
   return (
     <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <p className="text-sm text-slate-500">{labels.limitHint}</p>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        {/* Preview */}
+        {/* Preview + files */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h3 className="text-sm font-semibold text-slate-800">{labels.preview}</h3>
-            {file ? (
-              <span className="truncate text-xs text-slate-500">
-                {file.name} · {formatBytes(file.size)}
-                {fileKind === "pdf" ? ` · ${labels.kindPdf}` : ` · ${labels.kindImage}`}
+            {items.length > 0 ? (
+              <span className="text-xs text-slate-500">
+                {labels.fileCount
+                  .replace("{count}", String(items.length))
+                  .replace("{images}", String(imageCount))
+                  .replace("{pdfs}", String(pdfCount))}
               </span>
             ) : null}
           </div>
-          <div className="flex min-h-[280px] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-slate-100 p-3">
+          <div className="flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-slate-100 p-3">
             <canvas
               ref={previewCanvasRef}
-              className="max-h-[480px] max-w-full rounded-lg shadow-sm"
+              className="max-h-[440px] max-w-full rounded-lg shadow-sm"
               aria-label={labels.preview}
             />
           </div>
+
           <FileDropZone
             accept="image/*,application/pdf,.pdf,.png,.jpg,.jpeg,.webp"
+            multiple
             dropHint={labels.dropHint}
             selectHint={labels.selectHint}
-            onFiles={(f) => void onSourceFiles(f)}
+            onFiles={(f) => onSourceFiles(f)}
             disabled={busy}
           />
+
+          {items.length > 0 ? (
+            <ul className="max-h-52 space-y-1.5 overflow-y-auto rounded-xl border border-slate-100 bg-slate-50/60 p-2">
+              {items.map((item) => {
+                const selected = (active?.id ?? null) === item.id;
+                return (
+                  <li key={item.id}>
+                    <div
+                      className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition ${
+                        selected
+                          ? "bg-blue-600 text-white"
+                          : "bg-white text-slate-800 hover:bg-slate-100"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        className="min-w-0 flex-1 truncate text-left"
+                        onClick={() => setActiveId(item.id)}
+                        disabled={busy}
+                      >
+                        <span className="mr-2 inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-80">
+                          {item.kind === "pdf" ? labels.kindPdf : labels.kindImage}
+                        </span>
+                        {item.file.name}
+                        <span
+                          className={`ml-2 text-xs ${selected ? "text-blue-100" : "text-slate-500"}`}
+                        >
+                          {formatBytes(item.file.size)}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        disabled={busy}
+                        className={`shrink-0 rounded-md px-2 py-1 text-xs font-medium ${
+                          selected
+                            ? "bg-white/15 hover:bg-white/25"
+                            : "border border-slate-200 hover:bg-slate-50"
+                        }`}
+                      >
+                        {labels.remove}
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
         </div>
 
         {/* Controls */}
         <div className="space-y-4">
-          {/* Mode */}
           <div>
             <p className="mb-2 text-sm font-semibold text-slate-800">{labels.mode}</p>
             <div className="grid grid-cols-2 gap-2">
@@ -419,7 +583,6 @@ export default function Watermark({ labels }: Props) {
             </div>
           )}
 
-          {/* Position */}
           <div>
             <div className="mb-2 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold text-slate-800">{labels.position}</p>
@@ -433,7 +596,7 @@ export default function Watermark({ labels }: Props) {
               </label>
             </div>
             <div
-              className={`grid grid-cols-3 gap-1.5 ${draft.tile ? "opacity-40 pointer-events-none" : ""}`}
+              className={`grid grid-cols-3 gap-1.5 ${draft.tile ? "pointer-events-none opacity-40" : ""}`}
               role="group"
               aria-label={labels.position}
             >
@@ -471,7 +634,6 @@ export default function Watermark({ labels }: Props) {
             ) : null}
           </div>
 
-          {/* Sliders */}
           <div className="space-y-3 rounded-xl border border-slate-100 bg-slate-50/80 p-3">
             <label className="block text-sm text-slate-700">
               {labels.opacity}: {Math.round(draft.opacity * 100)}%
@@ -518,11 +680,16 @@ export default function Watermark({ labels }: Props) {
           </div>
 
           {busy && progress > 0 ? (
-            <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-              <div
-                className="h-full rounded-full bg-blue-600 transition-all"
-                style={{ width: `${progress}%` }}
-              />
+            <div className="space-y-1">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  className="h-full rounded-full bg-blue-600 transition-all"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              {statusText ? (
+                <p className="truncate text-xs text-slate-500">{statusText}</p>
+              ) : null}
             </div>
           ) : null}
 
@@ -532,10 +699,16 @@ export default function Watermark({ labels }: Props) {
             <button
               type="button"
               onClick={() => void run()}
-              disabled={!file || busy || (draft.mode === "image" && !stampFile)}
+              disabled={
+                !items.length || busy || (draft.mode === "image" && !stampFile)
+              }
               className="min-h-11 flex-1 rounded-xl bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-40 sm:flex-none"
             >
-              {busy ? labels.processing : labels.download}
+              {busy
+                ? labels.processing
+                : items.length > 1
+                  ? labels.downloadZip
+                  : labels.download}
             </button>
             <button
               type="button"

@@ -1262,18 +1262,18 @@
     },
     "watermark": {
       "title": "Filigran (Watermark)",
-      "description": "Görsellere ve PDF'lere metin veya logo filigranı ekleyin — opaklık, eğim, ölçek ve konum.",
+      "description": "Görsellere ve PDF'lere metin veya logo filigranı ekleyin — tek dosya veya toplu.",
       "metaTitle": "Filigran — Görsel ve PDF Watermark Aracı",
-      "metaDescription": "Tarayıcınızda görsellere ve PDF'lere metin veya logo filigranı ekleyin. Opaklık, eğim, ölçek ve konum ayarlayın. Hiçbir şey yüklenmez.",
-      "dropHint": "Görsel veya PDF sürükleyin ya da seçmek için tıklayın",
-      "selectHint": "PNG, JPG, WEBP, PDF — en fazla 25 MB",
+      "metaDescription": "Tarayıcınızda birden fazla görsel ve PDF'e filigran ekleyin. Opaklık, eğim, ölçek, yazı tipi. Hiçbir şey yüklenmez.",
+      "dropHint": "Görsel ve/veya PDF sürükleyin ya da seçin (tek veya çoklu)",
+      "selectHint": "PNG, JPG, WEBP, PDF — dosya başı 25 MB, en fazla 30 dosya",
       "remove": "Kaldır",
       "download": "Uygula ve indir",
       "processing": "Filigran uygulanıyor…",
       "invalidFile": "Lütfen bir görsel veya PDF seçin.",
       "tooLarge": "Dosya 25 MB sınırını aşıyor.",
       "error": "Filigran uygulanamadı.",
-      "limitHint": "Dosyalar cihazınızda kalır. Görsel ve PDF en fazla 25 MB.",
+      "limitHint": "Dosyalar cihazınızda kalır. Görsel ve PDF karışık yüklenebilir. Dosya başı 25 MB, en fazla 30 dosya.",
       "copy": "Kopyala",
       "copied": "Kopyalandı!",
       "clear": "Temizle",
@@ -1311,7 +1311,11 @@
       "pos_mr": "Sağ orta",
       "pos_bl": "Sol alt",
       "pos_bc": "Alt orta",
-      "pos_br": "Sağ alt"
+      "pos_br": "Sağ alt",
+      "downloadZip": "Uygula ve ZIP indir",
+      "fileCount": "{count} dosya ({images} görsel, {pdfs} PDF)",
+      "tooManyFiles": "Bir seferde en fazla 30 dosya ekleyebilirsiniz.",
+      "processingFile": "İşleniyor {current}/{total}: {name}"
     }
   },
   "toolPage": {

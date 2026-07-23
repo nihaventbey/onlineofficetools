@@ -1155,18 +1155,18 @@
     },
     "watermark": {
       "title": "Watermark",
-      "description": "Add text or image watermarks to photos and PDFs — opacity, tilt, scale, and position.",
+      "description": "Add text or logo watermarks to images and PDFs — one file or a batch.",
       "metaTitle": "Watermark Images & PDFs — Free Online Tool",
-      "metaDescription": "Add text or logo watermarks to images and PDFs in your browser. Adjust opacity, rotation, scale, and position. Nothing is uploaded.",
-      "dropHint": "Drop an image or PDF here, or click to select",
-      "selectHint": "PNG, JPG, WEBP, PDF — up to 25 MB",
+      "metaDescription": "Watermark multiple images and PDFs in your browser. Opacity, tilt, scale, fonts. Nothing is uploaded.",
+      "dropHint": "Drop images and/or PDFs here, or click to select (single or multiple)",
+      "selectHint": "PNG, JPG, WEBP, PDF — up to 25 MB each, max 30 files",
       "remove": "Remove",
       "download": "Apply & download",
       "processing": "Applying watermark…",
       "invalidFile": "Please select an image or PDF file.",
       "tooLarge": "File exceeds the 25 MB limit.",
       "error": "Could not apply the watermark.",
-      "limitHint": "Files stay on your device. Images and PDFs up to 25 MB.",
+      "limitHint": "Files stay on your device. Mix images and PDFs. Up to 25 MB each, 30 files.",
       "copy": "Copy",
       "copied": "Copied!",
       "clear": "Clear",
@@ -1204,7 +1204,11 @@
       "pos_mr": "Middle right",
       "pos_bl": "Bottom left",
       "pos_bc": "Bottom center",
-      "pos_br": "Bottom right"
+      "pos_br": "Bottom right",
+      "downloadZip": "Apply & download ZIP",
+      "fileCount": "{count} files ({images} images, {pdfs} PDFs)",
+      "tooManyFiles": "You can add up to 30 files at a time.",
+      "processingFile": "Processing {current}/{total}: {name}"
     }
   },
   "toolPage": {

@@ -520,6 +520,10 @@ export type Dictionary = {
       pdfPreviewHint: string;
       kindImage: string;
       kindPdf: string;
+      fileCount: string;
+      tooManyFiles: string;
+      processingFile: string;
+      downloadZip: string;
       pos_tl: string;
       pos_tc: string;
       pos_tr: string;

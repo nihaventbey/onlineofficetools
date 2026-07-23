@@ -1155,18 +1155,18 @@
     },
     "watermark": {
       "title": "Marca d'água",
-      "description": "Adicione marcas d'água de texto ou imagem a fotos e PDFs — opacidade, inclinação, escala e posição.",
+      "description": "Adicione marcas d'água de texto ou logo a imagens e PDFs — um ou vários arquivos.",
       "metaTitle": "Marca d'água para imagens e PDFs — Ferramenta online grátis",
-      "metaDescription": "Adicione marcas d'água de texto ou logo no navegador. Nada é enviado.",
-      "dropHint": "Solte uma imagem ou PDF aqui, ou clique para selecionar",
-      "selectHint": "PNG, JPG, WEBP, PDF — até 25 MB",
+      "metaDescription": "Marca d'água para várias imagens e PDFs no navegador. Nada é enviado.",
+      "dropHint": "Solte imagens e/ou PDFs, ou clique para selecionar (um ou vários)",
+      "selectHint": "PNG, JPG, WEBP, PDF — até 25 MB por arquivo, máx. 30 arquivos",
       "remove": "Remover",
       "download": "Aplicar e baixar",
       "processing": "Aplicando marca d'água…",
       "invalidFile": "Selecione uma imagem ou um PDF.",
       "tooLarge": "O arquivo excede o limite de 25 MB.",
       "error": "Não foi possível aplicar a marca d'água.",
-      "limitHint": "Os arquivos ficam no seu dispositivo. Imagens e PDFs até 25 MB.",
+      "limitHint": "Os arquivos ficam no seu dispositivo. Imagens e PDFs mistos. 25 MB por arquivo, 30 arquivos.",
       "copy": "Copiar",
       "copied": "Copiado!",
       "clear": "Limpar",
@@ -1204,7 +1204,11 @@
       "pos_mr": "Meio direita",
       "pos_bl": "Inferior esquerda",
       "pos_bc": "Inferior centro",
-      "pos_br": "Inferior direita"
+      "pos_br": "Inferior direita",
+      "downloadZip": "Aplicar e baixar ZIP",
+      "fileCount": "{count} arquivos ({images} imagens, {pdfs} PDFs)",
+      "tooManyFiles": "Você pode adicionar até 30 arquivos de uma vez.",
+      "processingFile": "Processando {current}/{total}: {name}"
     }
   },
   "toolPage": {
