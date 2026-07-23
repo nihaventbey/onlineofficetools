@@ -63,7 +63,10 @@
     "notFoundBody": "The page you requested does not exist or is no longer available.",
     "notFoundCta": "Back to home",
     "draftPreviewBanner": "Draft preview — this page is hidden from search engines and only opens with a signed link or an admin session.",
-    "draftPreviewTitle": "Draft preview"
+    "draftPreviewTitle": "Draft preview",
+    "clearFavorites": "Clear favorites",
+    "clearRecent": "Clear recent",
+    "clearQuickAccess": "Clear all"
   },
   "home": {
     "title": "Free Online Office Tools",

@@ -9,6 +9,7 @@ import {
   visibleCategories,
   type ToolCategory,
 } from "@/lib/tools/categories";
+import { getToolBySlug } from "@/lib/tools/registry";
 
 type ToolSearchProps = {
   locale: Locale;
@@ -32,16 +33,28 @@ export default function ToolSearch({
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const parts = q ? q.split(/\s+/).filter(Boolean) : [];
     return tools.filter((tool) => {
       if (category !== "all" && tool.category !== category) return false;
       if (!q) return true;
-      return (
-        tool.title.toLowerCase().includes(q) ||
-        tool.description.toLowerCase().includes(q) ||
-        tool.slug.includes(q)
-      );
+      const meta = getToolBySlug(tool.slug);
+      const labels = meta ? dict.tools[meta.dictKey] : null;
+      const haystack = [
+        tool.title,
+        tool.description,
+        tool.slug,
+        tool.category,
+        labels?.title,
+        labels?.description,
+        labels?.metaDescription,
+        ...(meta?.keywords ?? []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return parts.every((part) => haystack.includes(part));
     });
-  }, [tools, query, category]);
+  }, [tools, query, category, dict]);
 
   return (
     <div className="space-y-6">

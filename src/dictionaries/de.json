@@ -63,7 +63,10 @@
     "notFoundBody": "Die angeforderte Seite existiert nicht oder ist nicht mehr verfügbar.",
     "notFoundCta": "Zur Startseite",
     "draftPreviewBanner": "Entwurfsvorschau — diese Seite ist für Suchmaschinen gesperrt und nur mit signiertem Link oder Admin-Sitzung erreichbar.",
-    "draftPreviewTitle": "Entwurfsvorschau"
+    "draftPreviewTitle": "Entwurfsvorschau",
+    "clearFavorites": "Favoriten löschen",
+    "clearRecent": "Zuletzt verwendet löschen",
+    "clearQuickAccess": "Alles löschen"
   },
   "home": {
     "title": "Kostenlose Online-Office-Tools",

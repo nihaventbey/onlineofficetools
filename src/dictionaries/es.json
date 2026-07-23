@@ -63,7 +63,10 @@
     "notFoundBody": "La página solicitada no existe o ya no está disponible.",
     "notFoundCta": "Volver al inicio",
     "draftPreviewBanner": "Vista previa del borrador: esta página está oculta a los buscadores y solo se abre con un enlace firmado o una sesión de administrador.",
-    "draftPreviewTitle": "Vista previa del borrador"
+    "draftPreviewTitle": "Vista previa del borrador",
+    "clearFavorites": "Borrar favoritos",
+    "clearRecent": "Borrar recientes",
+    "clearQuickAccess": "Borrar todo"
   },
   "home": {
     "title": "Herramientas de oficina en línea gratuitas",

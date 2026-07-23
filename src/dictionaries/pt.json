@@ -63,7 +63,10 @@
     "notFoundBody": "A página pedida não existe ou já não está disponível.",
     "notFoundCta": "Voltar ao início",
     "draftPreviewBanner": "Pré-visualização de rascunho — esta página fica oculta dos motores de busca e só abre com ligação assinada ou sessão de administrador.",
-    "draftPreviewTitle": "Pré-visualização de rascunho"
+    "draftPreviewTitle": "Pré-visualização de rascunho",
+    "clearFavorites": "Limpar favoritos",
+    "clearRecent": "Limpar recentes",
+    "clearQuickAccess": "Limpar tudo"
   },
   "home": {
     "title": "Ferramentas de escritório online gratuitas",

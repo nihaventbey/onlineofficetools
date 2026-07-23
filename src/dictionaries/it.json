@@ -63,7 +63,10 @@
     "notFoundBody": "La pagina richiesta non esiste o non è più disponibile.",
     "notFoundCta": "Torna alla home",
     "draftPreviewBanner": "Anteprima bozza: questa pagina è nascosta ai motori di ricerca e si apre solo con un link firmato o una sessione admin.",
-    "draftPreviewTitle": "Anteprima bozza"
+    "draftPreviewTitle": "Anteprima bozza",
+    "clearFavorites": "Cancella preferiti",
+    "clearRecent": "Cancella recenti",
+    "clearQuickAccess": "Cancella tutto"
   },
   "home": {
     "title": "Strumenti da ufficio online gratuiti",

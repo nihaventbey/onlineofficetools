@@ -82,5 +82,30 @@ export function useRecentTools() {
     });
   }, []);
 
-  return { recent, favorites, pushRecent, toggleFavorite };
+  const clearFavorites = useCallback(() => {
+    writeList(FAV_KEY, []);
+    setFavorites([]);
+  }, []);
+
+  const clearRecent = useCallback(() => {
+    writeList(KEY, []);
+    setRecent([]);
+  }, []);
+
+  const clearAll = useCallback(() => {
+    writeList(FAV_KEY, []);
+    writeList(KEY, []);
+    setFavorites([]);
+    setRecent([]);
+  }, []);
+
+  return {
+    recent,
+    favorites,
+    pushRecent,
+    toggleFavorite,
+    clearFavorites,
+    clearRecent,
+    clearAll,
+  };
 }

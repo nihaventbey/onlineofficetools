@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ToolSearch from "@/components/tools/ToolSearch";
 import ToolGrid from "@/components/tools/ToolGrid";
-import RecentTools from "@/components/tools/RecentTools";
 import { getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
@@ -126,8 +125,6 @@ export default async function HomePage({ params }: PageProps) {
           );
         })}
       </nav>
-
-      <RecentTools locale={locale} dict={dict} />
 
       <section id="tools" className="scroll-mt-24 space-y-4">
         <div>

@@ -63,7 +63,10 @@
     "notFoundBody": "İstediğiniz sayfa yok veya artık kullanılmıyor.",
     "notFoundCta": "Ana sayfaya dön",
     "draftPreviewBanner": "Taslak önizleme — bu sayfa arama motorlarına kapalıdır ve yalnızca imzalı bağlantı veya admin oturumu ile açılır.",
-    "draftPreviewTitle": "Taslak önizleme"
+    "draftPreviewTitle": "Taslak önizleme",
+    "clearFavorites": "Favorileri sıfırla",
+    "clearRecent": "Son kullanılanları temizle",
+    "clearQuickAccess": "Tümünü temizle"
   },
   "home": {
     "title": "Ücretsiz Online Ofis Araçları",

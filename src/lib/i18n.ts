@@ -117,6 +117,9 @@ export type Dictionary = {
     favoritesEmpty: string;
     recentEmpty: string;
     yourToolsHint: string;
+    clearFavorites: string;
+    clearRecent: string;
+    clearQuickAccess: string;
     shareLabel: string;
     shareCopied: string;
     shareCopyLink: string;

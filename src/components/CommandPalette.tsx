@@ -102,13 +102,20 @@ export default function CommandPalette({
       return available
         .filter((t) => {
           const labels = dict.tools[t.dictKey];
-          return (
-            t.slug.includes(query) ||
-            labels.title.toLowerCase().includes(query) ||
-            t.keywords.some((k) => k.includes(query))
-          );
+          const haystack = [
+            t.slug,
+            t.category,
+            labels.title,
+            labels.description,
+            labels.metaTitle,
+            labels.metaDescription,
+            ...t.keywords,
+          ]
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(query) || query.split(/\s+/).every((part) => haystack.includes(part));
         })
-        .slice(0, 12);
+        .slice(0, 24);
     }
 
     const seen = new Set<string>();

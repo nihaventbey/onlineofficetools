@@ -72,7 +72,8 @@ export default function QuickAccessMenu({
   variant = "dropdown",
   className = "",
 }: Props) {
-  const { recent, favorites } = useRecentTools();
+  const { recent, favorites, clearFavorites, clearRecent, clearAll } =
+    useRecentTools();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("favorites");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -83,14 +84,14 @@ export default function QuickAccessMenu({
       (tool): tool is NonNullable<typeof tool> =>
         Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
     )
-    .slice(0, 6);
+    .slice(0, 12);
   const recentItems = recent
     .map((slug) => getToolBySlug(slug))
     .filter(
       (tool): tool is NonNullable<typeof tool> =>
         Boolean(tool) && isToolAvailableInLocale(tool!.slug, locale),
     )
-    .slice(0, 6);
+    .slice(0, 12);
   const count = favorites.length + recent.length;
   const items = tab === "favorites" ? favItems : recentItems;
   const emptyLabel =
@@ -114,9 +115,45 @@ export default function QuickAccessMenu({
     };
   }, [variant]);
 
+  function ClearBar() {
+    if (!favorites.length && !recent.length) return null;
+    return (
+      <div className="mb-2 flex flex-wrap items-center justify-end gap-1.5 border-b border-slate-100 pb-2">
+        {favorites.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => clearFavorites()}
+            className="min-h-8 rounded-lg px-2 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-red-600"
+          >
+            {dict.common.clearFavorites}
+          </button>
+        ) : null}
+        {recent.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => clearRecent()}
+            className="min-h-8 rounded-lg px-2 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-red-600"
+          >
+            {dict.common.clearRecent}
+          </button>
+        ) : null}
+        {favorites.length > 0 && recent.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => clearAll()}
+            className="min-h-8 rounded-lg px-2 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-red-600"
+          >
+            {dict.common.clearQuickAccess}
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+
   if (variant === "inline") {
     return (
       <div className={`space-y-3 ${className}`}>
+        <ClearBar />
         <div className="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
           {(
             [
@@ -177,6 +214,7 @@ export default function QuickAccessMenu({
           aria-label={dict.common.quickAccess}
           className="absolute right-0 z-50 mt-2 w-[min(92vw,20rem)] rounded-2xl border border-slate-200 bg-white p-3 shadow-xl"
         >
+          <ClearBar />
           <div className="mb-3 grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
             {(
               [

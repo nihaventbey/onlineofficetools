@@ -63,7 +63,10 @@
     "notFoundBody": "La page demandée n'existe pas ou n'est plus disponible.",
     "notFoundCta": "Retour à l'accueil",
     "draftPreviewBanner": "Aperçu brouillon — cette page est masquée des moteurs de recherche et ne s'ouvre qu'avec un lien signé ou une session admin.",
-    "draftPreviewTitle": "Aperçu brouillon"
+    "draftPreviewTitle": "Aperçu brouillon",
+    "clearFavorites": "Effacer les favoris",
+    "clearRecent": "Effacer les récents",
+    "clearQuickAccess": "Tout effacer"
   },
   "home": {
     "title": "Outils bureautiques en ligne gratuits",
