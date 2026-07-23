@@ -45,6 +45,8 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "video-frame-extractor": () => import("@/components/tools/VideoFrames").then((m) => ({ default: m.default as ToolComponent })),
   "video-to-gif": () => import("@/components/tools/VideoToGif").then((m) => ({ default: m.default as ToolComponent })),
   "video-trim": () => import("@/components/tools/VideoTrim").then((m) => ({ default: m.default as ToolComponent })),
+  "video-watermark": () => import("@/components/tools/VideoWatermark").then((m) => ({ default: m.default as ToolComponent })),
+  "video-crop": () => import("@/components/tools/VideoCrop").then((m) => ({ default: m.default as ToolComponent })),
   "video-metadata": () => import("@/components/tools/VideoInfo").then((m) => ({ default: m.default as ToolComponent })),
   ocr: () => import("@/components/tools/OcrTool").then((m) => ({ default: m.default as ToolComponent })),
   "qr-generator": () => import("@/components/tools/QrGenerator").then((m) => ({ default: m.default as ToolComponent })),
@@ -58,10 +60,6 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "password-generator": () => import("@/components/tools/PasswordGenerator").then((m) => ({ default: m.default as ToolComponent })),
   "unit-converter": () => import("@/components/tools/UnitConverter").then((m) => ({ default: m.default as ToolComponent })),
   "date-difference": () => import("@/components/tools/DateDifference").then((m) => ({ default: m.default as ToolComponent })),
-  "belgenet-hazirlik": () =>
-    import("@/components/tools/BelgenetHazirlik").then((m) => ({
-      default: m.default as ToolComponent,
-    })),
 };
 
 export async function loadToolComponent(

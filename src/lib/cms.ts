@@ -270,6 +270,18 @@ const FALLBACK_COPY: Record<
     enDesc: "View duration, resolution, aspect ratio, and other video details.",
     trDesc: "Süre, çözünürlük, en-boy oranı ve diğer video ayrıntılarını görün.",
   },
+  "video-watermark": {
+    en: "Video Watermark",
+    tr: "Video Filigran",
+    enDesc: "Add text or logo watermarks to videos in your browser.",
+    trDesc: "Videolara metin veya logo filigranı ekleyin.",
+  },
+  "video-crop": {
+    en: "Video Crop",
+    tr: "Video Kırp",
+    enDesc: "Crop videos to free size or common aspect ratios.",
+    trDesc: "Videoları serbest veya hazır en-boy oranına kırpın.",
+  },
   watermark: {
     en: "Watermark",
     tr: "Filigran (Watermark)",

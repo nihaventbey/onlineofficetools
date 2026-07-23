@@ -49,6 +49,8 @@ export const toolDictKeys = [
   "videoFrames",
   "videoToGif",
   "videoTrim",
+  "videoWatermark",
+  "videoCrop",
   "videoInfo",
   "arzRica",
   "sdpSearch",

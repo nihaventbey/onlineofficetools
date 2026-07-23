@@ -466,6 +466,12 @@ export type Dictionary = {
       flipV: string;
       cropWidth: string;
       cropHeight: string;
+      aspect: string;
+      aspect_free: string;
+      aspect_16_9: string;
+      aspect_1_1: string;
+      aspect_9_16: string;
+      aspect_4_3: string;
     };
     imageConvert: ToolFileLabels & {
       format: string;
@@ -571,6 +577,48 @@ export type Dictionary = {
       muteAudio: string;
       safariWarning: string;
       duration: string;
+    };
+    videoWatermark: ToolFileLabels & {
+      safariWarning: string;
+      modeText: string;
+      modeImage: string;
+      textLabel: string;
+      defaultText: string;
+      fontLabel: string;
+      colorLabel: string;
+      stampDropHint: string;
+      stampSelectHint: string;
+      invalidStamp: string;
+      needStamp: string;
+      emptyText: string;
+      position: string;
+      tile: string;
+      opacity: string;
+      rotation: string;
+      scale: string;
+      preview: string;
+      startTime: string;
+      endTime: string;
+      muteAudio: string;
+      tooLong: string;
+    };
+    videoCrop: ToolFileLabels & {
+      safariWarning: string;
+      preview: string;
+      aspect: string;
+      aspect_free: string;
+      aspect_16_9: string;
+      aspect_1_1: string;
+      aspect_9_16: string;
+      aspect_4_3: string;
+      cropX: string;
+      cropY: string;
+      cropWidth: string;
+      cropHeight: string;
+      startTime: string;
+      endTime: string;
+      muteAudio: string;
+      tooLong: string;
     };
     videoInfo: ToolFileLabels & {
       duration: string;

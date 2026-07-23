@@ -22,6 +22,8 @@ const localeOnlyCategories: Partial<Record<ToolCategory, readonly string[]>> = {
 
 export function visibleCategories(locale: string): ToolCategory[] {
   return toolCategories.filter((cat) => {
+    // EBYS / Belgenet deactivated — keep category type for DB compat, hide from UI.
+    if (cat === "ebys") return false;
     const allowed = localeOnlyCategories[cat];
     if (!allowed) return true;
     return (allowed as readonly string[]).includes(locale);

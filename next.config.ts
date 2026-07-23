@@ -20,22 +20,32 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/tr/tools/arz-rica",
-        destination: "/tr/tools/belgenet-hazirlik?tab=kurum",
+        destination: "/tr",
         permanent: true,
       },
       {
         source: "/tr/tools/sdp-arama",
-        destination: "/tr/tools/belgenet-hazirlik?tab=sdp",
+        destination: "/tr",
         permanent: true,
       },
       {
         source: "/tr/tools/detsis",
-        destination: "/tr/tools/belgenet-hazirlik?tab=kurum",
+        destination: "/tr",
         permanent: true,
       },
       {
         source: "/tr/tools/belgenet-html",
-        destination: "/tr/tools/belgenet-hazirlik?tab=yazi",
+        destination: "/tr",
+        permanent: true,
+      },
+      {
+        source: "/tr/tools/belgenet-hazirlik",
+        destination: "/tr",
+        permanent: true,
+      },
+      {
+        source: "/tr/categories/ebys",
+        destination: "/tr",
         permanent: true,
       },
     ];

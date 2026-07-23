@@ -64,12 +64,12 @@ export const toolMetaList: ToolMeta[] = [
   // Image
   { slug: "image-resize", category: "image", dictKey: "imageResize", icon: "↔", emoji: "📐", keywords: ["resize", "scale", "dimensions"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["image-compress", "image-crop"] },
   { slug: "image-compress", category: "image", dictKey: "imageCompress", icon: "↓▣", emoji: "🗜️", keywords: ["compress", "optimize"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["image-resize", "image-convert"] },
-  { slug: "image-crop", category: "image", dictKey: "imageCrop", icon: "✂▣", emoji: "✂️", keywords: ["crop", "rotate", "flip"], badge: "new", featured: false, accepts: ["png", "jpg", "webp"], nextSteps: ["image-resize", "image-enhance"] },
+  { slug: "image-crop", category: "image", dictKey: "imageCrop", icon: "✂▣", emoji: "✂️", keywords: ["crop", "rotate", "flip"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["video-crop", "watermark"] },
   { slug: "image-convert", category: "image", dictKey: "imageConvert", icon: "⇄▣", emoji: "🔃", keywords: ["convert", "jpg", "png", "webp"], badge: "new", featured: false, accepts: ["png", "jpg", "webp", "gif"], nextSteps: ["image-compress", "image-resize"] },
   { slug: "image-metadata", category: "image", dictKey: "imageMetadata", icon: "i", emoji: "ℹ️", keywords: ["exif", "metadata", "strip"], badge: "new", featured: false, accepts: ["png", "jpg", "webp"], nextSteps: ["image-compress", "image-convert"] },
   { slug: "image-enhance", category: "image", dictKey: "imageEnhance", icon: "✦", emoji: "✨", keywords: ["enhance", "sharpen", "hd"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["image-ai-upscale", "image-resize"] },
   { slug: "image-ai-upscale", category: "image", dictKey: "imageAiUpscale", icon: "AI", emoji: "🤖", keywords: ["ai", "upscale", "esrgan"], badge: "beta", featured: false, accepts: ["png", "jpg", "webp"], nextSteps: ["image-enhance", "image-compress"] },
-  { slug: "watermark", category: "image", dictKey: "watermark", icon: "WM", emoji: "💧", keywords: ["watermark", "stamp", "pdf", "image", "overlay", "filigran"], badge: "new", featured: true, accepts: ["png", "jpg", "webp", "pdf"], outputs: ["png", "jpg", "webp", "pdf", "zip"], nextSteps: ["pdf-watermark", "image-compress"] },
+  { slug: "watermark", category: "image", dictKey: "watermark", icon: "WM", emoji: "💧", keywords: ["watermark", "stamp", "pdf", "image", "overlay", "filigran"], badge: "new", featured: true, accepts: ["png", "jpg", "webp", "pdf"], outputs: ["png", "jpg", "webp", "pdf", "zip"], nextSteps: ["video-watermark", "image-crop"] },
   { slug: "ocr", category: "image", dictKey: "ocr", icon: "OCR", emoji: "👁️", keywords: ["ocr", "text", "image"], badge: null, featured: false, nextSteps: ["word-counter", "pdf-to-text"] },
   { slug: "qr-generator", category: "image", dictKey: "qrGenerator", icon: "QR", emoji: "🔳", keywords: ["qr", "code"], badge: null, featured: false, nextSteps: ["url-encoder", "color-converter"] },
   { slug: "color-converter", category: "image", dictKey: "colorConverter", icon: "◈", emoji: "🎨", keywords: ["color", "hex", "rgb"], badge: null, featured: false, nextSteps: ["qr-generator", "html-editor"] },
@@ -80,13 +80,12 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "zip-viewer", category: "archive", dictKey: "zipViewer", icon: "Z", emoji: "🗂️", keywords: ["zip", "view", "inspect", "list"], badge: "new", featured: false, accepts: ["zip"], nextSteps: ["zip-extract", "zip-create"] },
 
   // Video
-  { slug: "video-frame-extractor", category: "video", dictKey: "videoFrames", icon: "▣", emoji: "🎞️", keywords: ["video", "frame", "screenshot", "png"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["png", "zip"], nextSteps: ["video-to-gif", "image-compress"] },
+  { slug: "video-frame-extractor", category: "video", dictKey: "videoFrames", icon: "▣", emoji: "🎞️", keywords: ["video", "frame", "screenshot", "png"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["png", "zip"], nextSteps: ["video-to-gif", "video-watermark"] },
   { slug: "video-to-gif", category: "video", dictKey: "videoToGif", icon: "GIF", emoji: "🎬", keywords: ["video", "gif", "convert", "animate"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["gif"], nextSteps: ["video-frame-extractor", "video-trim"] },
-  { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-to-gif", "video-metadata"] },
-  { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-frame-extractor"] },
-
-  // EBYS / Belgenet (Turkish only)
-  { slug: "belgenet-hazirlik", category: "ebys", dictKey: "belgenetPrep", icon: "BN", emoji: "📋", keywords: ["belgenet", "ebys", "sdp", "ssdp", "arz", "rica", "detsis", "resmi", "yazışma", "html"], badge: "new", featured: true, locales: ["tr"], nextSteps: ["html-editor"] },
+  { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "video-crop"] },
+  { slug: "video-watermark", category: "video", dictKey: "videoWatermark", icon: "WM", emoji: "💧", keywords: ["video", "watermark", "stamp", "overlay"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-crop", "watermark"] },
+  { slug: "video-crop", category: "video", dictKey: "videoCrop", icon: "✂V", emoji: "🎞️", keywords: ["video", "crop", "aspect", "cut"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "image-crop"] },
+  { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-watermark"] },
 
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },

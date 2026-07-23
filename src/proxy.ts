@@ -71,12 +71,14 @@ function detectLocale(request: NextRequest): Locale {
 
 const ADMIN_LOGIN_PATH = "/admin/login";
 
-/** Retired EBYS slugs → belgenet-hazirlik tab (TR only). */
+/** Retired EBYS slugs → home (module deactivated). */
 const EBYS_LEGACY_REDIRECTS: Record<string, string> = {
-  "/tools/arz-rica": "/tools/belgenet-hazirlik?tab=kurum",
-  "/tools/sdp-arama": "/tools/belgenet-hazirlik?tab=sdp",
-  "/tools/detsis": "/tools/belgenet-hazirlik?tab=kurum",
-  "/tools/belgenet-html": "/tools/belgenet-hazirlik?tab=yazi",
+  "/tools/arz-rica": "/",
+  "/tools/sdp-arama": "/",
+  "/tools/detsis": "/",
+  "/tools/belgenet-html": "/",
+  "/tools/belgenet-hazirlik": "/",
+  "/categories/ebys": "/",
 };
 
 function ebysLegacyRedirect(
@@ -87,10 +89,10 @@ function ebysLegacyRedirect(
   const suffix = request.nextUrl.pathname.slice(`/${locale}`.length);
   const target = EBYS_LEGACY_REDIRECTS[suffix];
   if (!target) return null;
-  const [path, query] = target.split("?");
   const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${path}`;
-  url.search = query ? `?${query}` : "";
+  url.pathname = `/${locale}${target === "/" ? "" : target}`;
+  if (url.pathname === `/${locale}`) url.pathname = `/${locale}`;
+  url.search = "";
   return NextResponse.redirect(url, 308);
 }
 

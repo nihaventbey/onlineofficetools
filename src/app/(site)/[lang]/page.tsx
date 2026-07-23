@@ -35,7 +35,6 @@ export default async function HomePage({ params }: PageProps) {
     String(tools.length),
   );
   const categories = visibleCategories(locale);
-  const ebysTools = tools.filter((t) => t.category === "ebys");
 
   const websiteLd = {
     "@context": "https://schema.org",
@@ -129,29 +128,6 @@ export default async function HomePage({ params }: PageProps) {
       </nav>
 
       <RecentTools locale={locale} dict={dict} />
-
-      {locale === "tr" && ebysTools.length ? (
-        <section id="belgenet" className="scroll-mt-24 space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <h2 className="text-2xl font-semibold text-slate-900">
-                Belgenet hazırlık araçları
-              </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Kurum ve arz/rica, tam SSDP V.4 araması, sayfa sığdırma ve
-                Belgenet&apos;e yapıştırılacak HTML — tek iş akışında.
-              </p>
-            </div>
-            <Link
-              href={`/${locale}/categories/ebys`}
-              className="text-sm font-semibold text-amber-700"
-            >
-              {dict.common.openTool} →
-            </Link>
-          </div>
-          <ToolGrid locale={locale} tools={ebysTools} dict={dict} />
-        </section>
-      ) : null}
 
       <section id="tools" className="scroll-mt-24 space-y-4">
         <div>
