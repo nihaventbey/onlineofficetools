@@ -37,6 +37,7 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "image-metadata": () => import("@/components/tools/ImageMetadata").then((m) => ({ default: m.default as ToolComponent })),
   "image-enhance": () => import("@/components/tools/ImageEnhance").then((m) => ({ default: m.default as ToolComponent })),
   "image-ai-upscale": () => import("@/components/tools/ImageAiUpscale").then((m) => ({ default: m.default as ToolComponent })),
+  "watermark": () => import("@/components/tools/Watermark").then((m) => ({ default: m.default as ToolComponent })),
   "zip-create": () => import("@/components/tools/ZipCreate").then((m) => ({ default: m.default as ToolComponent })),
   "zip-extract": () => import("@/components/tools/ZipExtract").then((m) => ({ default: m.default as ToolComponent })),
   "zip-viewer": () => import("@/components/tools/ZipViewer").then((m) => ({ default: m.default as ToolComponent })),

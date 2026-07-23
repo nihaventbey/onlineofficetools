@@ -270,6 +270,12 @@ const FALLBACK_COPY: Record<
     enDesc: "View duration, resolution, aspect ratio, and other video details.",
     trDesc: "Süre, çözünürlük, en-boy oranı ve diğer video ayrıntılarını görün.",
   },
+  watermark: {
+    en: "Watermark",
+    tr: "Filigran (Watermark)",
+    enDesc: "Add text or image watermarks to photos and PDFs.",
+    trDesc: "Görsellere ve PDF'lere metin veya logo filigranı ekleyin.",
+  },
 };
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {

@@ -42,6 +42,7 @@ export const toolDictKeys = [
   "imageMetadata",
   "imageEnhance",
   "imageAiUpscale",
+  "watermark",
   "zipCreate",
   "zipExtract",
   "zipViewer",
