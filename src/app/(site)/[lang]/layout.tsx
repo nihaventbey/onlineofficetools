@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import AdsLayout from "@/components/AdsLayout";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Header from "@/components/Header";
 import {
   getAdSenseConfig,
@@ -143,6 +144,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
           {children}
         </AdsLayout>
         <Footer locale={locale} dict={dict} />
+        <GoogleAnalytics />
         <ConsentBanner
           message={dict.common.consentMessage}
           acceptLabel={dict.common.consentAccept}
