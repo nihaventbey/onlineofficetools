@@ -544,6 +544,15 @@ export type Dictionary = {
       aspect_1_1: string;
       aspect_9_16: string;
       aspect_4_3: string;
+      dragHint: string;
+      presetVertical: string;
+      presetHorizontal: string;
+      presetSquare: string;
+      cropX: string;
+      cropY: string;
+      fileCount: string;
+      downloadAll: string;
+      batchHint: string;
     };
     imageConvert: ToolFileLabels & {
       format: string;
@@ -561,6 +570,9 @@ export type Dictionary = {
       format: string;
       quality: string;
       reset: string;
+      fileCount: string;
+      downloadAll: string;
+      batchHint: string;
     };
     imageMetadata: ToolFileLabels & {
       strip: string;

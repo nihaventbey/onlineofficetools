@@ -836,7 +836,16 @@
       "aspect_16_9": "16:9",
       "aspect_1_1": "1:1",
       "aspect_9_16": "9:16",
-      "aspect_4_3": "4:3"
+      "aspect_4_3": "4:3",
+      "dragHint": "Drag the box to choose the crop area",
+      "presetVertical": "Vertical",
+      "presetHorizontal": "Horizontal",
+      "presetSquare": "Square",
+      "cropX": "X position",
+      "cropY": "Y position",
+      "fileCount": "{count} images",
+      "downloadAll": "Download all (ZIP)",
+      "batchHint": "The same crop is applied proportionally to every image."
     },
     "imageConvert": {
       "title": "Image Converter",
@@ -885,7 +894,10 @@
       "preview": "Preview",
       "format": "Output format",
       "quality": "Quality",
-      "reset": "Reset adjustments"
+      "reset": "Reset adjustments",
+      "fileCount": "{count} images",
+      "downloadAll": "Download all (ZIP)",
+      "batchHint": "Adjustments are applied to all selected images."
     },
     "imageMetadata": {
       "title": "Image Metadata",

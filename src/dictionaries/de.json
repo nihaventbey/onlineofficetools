@@ -836,7 +836,16 @@
       "aspect_16_9": "16:9",
       "aspect_1_1": "1:1",
       "aspect_9_16": "9:16",
-      "aspect_4_3": "4:3"
+      "aspect_4_3": "4:3",
+      "dragHint": "Ziehen Sie den Rahmen, um den Zuschnittbereich zu wählen",
+      "presetVertical": "Vertikal",
+      "presetHorizontal": "Horizontal",
+      "presetSquare": "Quadrat",
+      "cropX": "X-Position",
+      "cropY": "Y-Position",
+      "fileCount": "{count} Bilder",
+      "downloadAll": "Alle herunterladen (ZIP)",
+      "batchHint": "Derselbe Zuschnitt wird proportional auf alle Bilder angewendet."
     },
     "imageConvert": {
       "title": "Bildkonverter",
@@ -885,7 +894,10 @@
       "preview": "Vorschau",
       "format": "Ausgabeformat",
       "quality": "Qualität",
-      "reset": "Einstellungen zurücksetzen"
+      "reset": "Einstellungen zurücksetzen",
+      "fileCount": "{count} Bilder",
+      "downloadAll": "Alle herunterladen (ZIP)",
+      "batchHint": "Die Anpassungen werden auf alle ausgewählten Bilder angewendet."
     },
     "imageMetadata": {
       "title": "Bildmetadaten entfernen",

@@ -836,7 +836,16 @@
       "aspect_16_9": "16:9",
       "aspect_1_1": "1:1",
       "aspect_9_16": "9:16",
-      "aspect_4_3": "4:3"
+      "aspect_4_3": "4:3",
+      "dragHint": "Trascina il riquadro per scegliere l’area di ritaglio",
+      "presetVertical": "Verticale",
+      "presetHorizontal": "Orizzontale",
+      "presetSquare": "Quadrato",
+      "cropX": "Posizione X",
+      "cropY": "Posizione Y",
+      "fileCount": "{count} immagini",
+      "downloadAll": "Scarica tutto (ZIP)",
+      "batchHint": "Lo stesso ritaglio viene applicato in proporzione a tutte le immagini."
     },
     "imageConvert": {
       "title": "Convertitore di immagini",
@@ -885,7 +894,10 @@
       "preview": "Anteprima",
       "format": "Formato di output",
       "quality": "Qualità",
-      "reset": "Reimposta regolazioni"
+      "reset": "Reimposta regolazioni",
+      "fileCount": "{count} immagini",
+      "downloadAll": "Scarica tutto (ZIP)",
+      "batchHint": "Le regolazioni vengono applicate a tutte le immagini selezionate."
     },
     "imageMetadata": {
       "title": "Rimuovi metadati immagine",
