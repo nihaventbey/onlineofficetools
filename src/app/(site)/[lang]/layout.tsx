@@ -78,6 +78,9 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
+    verification: {
+      google: "kb_2Cv5vK2rMofTDNUmljAfEcI8IK1S7pGsu8R62Gs4",
+    },
     // og:image / twitter:image come from the opengraph-image.tsx file
     // convention (Next injects the correct hashed URLs automatically).
     openGraph: {
