@@ -475,6 +475,27 @@ export type Dictionary = {
       compare: string;
       identical: string;
       differences: string;
+      riskTitle: string;
+      riskBody: string;
+      riskHeavy: string;
+      riskAccept: string;
+      mustAcceptRisk: string;
+      needBoth: string;
+      paragraphs: string;
+      scopeNote: string;
+      colOriginal: string;
+      colChanged: string;
+      styleOnlyTag: string;
+      styleBoldOn: string;
+      styleBoldOff: string;
+      styleItalicOn: string;
+      styleItalicOff: string;
+      styleUnderlineOn: string;
+      styleUnderlineOff: string;
+      statText: string;
+      statStyle: string;
+      statAdded: string;
+      statRemoved: string;
     };
     textToPdf: ToolSharedLabels & {
       placeholder: string;
