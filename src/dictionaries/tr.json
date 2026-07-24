@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Taslak önizleme",
     "clearFavorites": "Favorileri sıfırla",
     "clearRecent": "Son kullanılanları temizle",
-    "clearQuickAccess": "Tümünü temizle"
+    "clearQuickAccess": "Tümünü temizle",
+    "closeMenu": "Menüyü kapat",
+    "viewCategory": "Kategorideki tümünü gör",
+    "browseCategories": "Kategorilere göz at",
+    "menuToolsHint": "Bir kategori seçin, ardından aracı açın."
   },
   "home": {
     "title": "Ücretsiz Online Ofis Araçları",
@@ -198,7 +202,13 @@
       "differences": "Fark bulundu",
       "copy": "Kopyala",
       "copied": "Kopyalandı!",
-      "clear": "Temizle"
+      "clear": "Temizle",
+      "downloadDocx": "İki sütunlu DOCX indir",
+      "docxProcessing": "DOCX oluşturuluyor…",
+      "colOriginal": "Orijinal",
+      "colChanged": "Değişen",
+      "empty": "En az bir sütuna metin girin.",
+      "docxError": "DOCX dosyası oluşturulamadı."
     },
     "base64": {
       "title": "Base64 Kodla / Çöz",

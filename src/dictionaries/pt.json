@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Pré-visualização de rascunho",
     "clearFavorites": "Limpar favoritos",
     "clearRecent": "Limpar recentes",
-    "clearQuickAccess": "Limpar tudo"
+    "clearQuickAccess": "Limpar tudo",
+    "closeMenu": "Fechar menu",
+    "viewCategory": "Ver toda a categoria",
+    "browseCategories": "Explorar categorias",
+    "menuToolsHint": "Escolha uma categoria e abra uma ferramenta."
   },
   "home": {
     "title": "Ferramentas de escritório online gratuitas",
@@ -198,7 +202,13 @@
       "differences": "Diferenças encontradas",
       "copy": "Copiar",
       "copied": "Copiado!",
-      "clear": "Limpar"
+      "clear": "Limpar",
+      "downloadDocx": "Descarregar DOCX de duas colunas",
+      "docxProcessing": "A criar DOCX…",
+      "colOriginal": "Original",
+      "colChanged": "Alterado",
+      "empty": "Introduza texto em pelo menos uma coluna.",
+      "docxError": "Não foi possível criar o ficheiro DOCX."
     },
     "base64": {
       "title": "Codificar / decodificar Base64",

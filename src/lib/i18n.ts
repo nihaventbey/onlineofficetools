@@ -102,6 +102,10 @@ export type Dictionary = {
     removeFavorite: string;
     categoryTools: string;
     categoryDescription: string;
+    closeMenu: string;
+    viewCategory: string;
+    browseCategories: string;
+    menuToolsHint: string;
     nextStep: string;
     wasHelpful: string;
     yes: string;
@@ -248,6 +252,12 @@ export type Dictionary = {
       compare: string;
       identical: string;
       differences: string;
+      downloadDocx: string;
+      docxProcessing: string;
+      colOriginal: string;
+      colChanged: string;
+      empty: string;
+      docxError: string;
     };
     base64: ToolSharedLabels & {
       inputPlaceholder: string;

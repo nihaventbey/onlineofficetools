@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Anteprima bozza",
     "clearFavorites": "Cancella preferiti",
     "clearRecent": "Cancella recenti",
-    "clearQuickAccess": "Cancella tutto"
+    "clearQuickAccess": "Cancella tutto",
+    "closeMenu": "Chiudi menu",
+    "viewCategory": "Vedi tutta la categoria",
+    "browseCategories": "Sfoglia categorie",
+    "menuToolsHint": "Scegli una categoria, poi apri uno strumento."
   },
   "home": {
     "title": "Strumenti da ufficio online gratuiti",
@@ -198,7 +202,13 @@
       "differences": "Differenze trovate",
       "copy": "Copia",
       "copied": "Copiato!",
-      "clear": "Pulisci"
+      "clear": "Pulisci",
+      "downloadDocx": "Scarica DOCX a due colonne",
+      "docxProcessing": "Creazione DOCX…",
+      "colOriginal": "Originale",
+      "colChanged": "Modificato",
+      "empty": "Inserisci testo in almeno una colonna.",
+      "docxError": "Impossibile creare il file DOCX."
     },
     "base64": {
       "title": "Codifica / decodifica Base64",

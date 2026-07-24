@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Entwurfsvorschau",
     "clearFavorites": "Favoriten löschen",
     "clearRecent": "Zuletzt verwendet löschen",
-    "clearQuickAccess": "Alles löschen"
+    "clearQuickAccess": "Alles löschen",
+    "closeMenu": "Menü schließen",
+    "viewCategory": "Alle in der Kategorie anzeigen",
+    "browseCategories": "Kategorien durchsuchen",
+    "menuToolsHint": "Kategorie wählen, dann ein Tool öffnen."
   },
   "home": {
     "title": "Kostenlose Online-Office-Tools",
@@ -198,7 +202,13 @@
       "differences": "Unterschiede gefunden",
       "copy": "Kopieren",
       "copied": "Kopiert!",
-      "clear": "Leeren"
+      "clear": "Leeren",
+      "downloadDocx": "Zweispaltiges DOCX herunterladen",
+      "docxProcessing": "DOCX wird erstellt…",
+      "colOriginal": "Original",
+      "colChanged": "Geändert",
+      "empty": "Geben Sie in mindestens einer Spalte Text ein.",
+      "docxError": "DOCX-Datei konnte nicht erstellt werden."
     },
     "base64": {
       "title": "Base64 kodieren / dekodieren",

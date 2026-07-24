@@ -99,8 +99,8 @@ export default function MobileNavDrawer({
     <div className="fixed inset-0 z-[90] xl:hidden" role="presentation">
       <button
         type="button"
-        aria-label="Close menu"
-        className="absolute inset-0 bg-slate-950/45 backdrop-blur-[2px]"
+        aria-label={dict.common.closeMenu}
+        className="absolute inset-0 bg-slate-950/50 backdrop-blur-[3px]"
         onClick={onClose}
       />
       <div
@@ -109,9 +109,9 @@ export default function MobileNavDrawer({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={trapFocus}
-        className="absolute inset-y-0 right-0 flex w-[min(100vw,22rem)] flex-col border-l border-slate-200 bg-white shadow-2xl"
+        className="absolute inset-y-0 right-0 flex w-[min(100vw,22rem)] flex-col border-l border-slate-200 bg-gradient-to-b from-white via-white to-slate-50 shadow-2xl"
       >
-        <div className="flex items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
+        <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-blue-50/80 to-sky-50/40 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2.5">
             {logoUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -132,10 +132,15 @@ export default function MobileNavDrawer({
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 text-lg leading-none text-slate-600 transition hover:border-blue-300 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
-            aria-label="Close menu"
+            className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            aria-label={dict.common.closeMenu}
           >
-            ×
+            <span aria-hidden className="text-lg leading-none">
+              ×
+            </span>
+            <span className="sr-only sm:not-sr-only sm:inline">
+              {dict.common.closeMenu}
+            </span>
           </button>
         </div>
 
@@ -171,11 +176,11 @@ export default function MobileNavDrawer({
             <QuickAccessMenu locale={locale} dict={dict} variant="inline" />
           </div>
 
-          <nav className="space-y-1 border-t border-slate-100 pt-4">
+          <nav className="space-y-2 border-t border-slate-100 pt-4">
             <Link
               href={`/${locale}`}
               onClick={onClose}
-              className="flex min-h-11 items-center rounded-xl px-3 text-sm font-medium text-slate-800 hover:bg-slate-50"
+              className="flex min-h-11 items-center rounded-2xl border border-slate-100 bg-white px-3 text-sm font-medium text-slate-800 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
             >
               {dict.common.home}
             </Link>
@@ -186,25 +191,37 @@ export default function MobileNavDrawer({
               const expanded = mobileCat === cat;
               const style = categoryStyles[cat];
               return (
-                <div key={cat}>
+                <div key={cat} className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                   <button
                     type="button"
                     aria-expanded={expanded}
                     onClick={() => setMobileCat(expanded ? null : cat)}
-                    className={`flex min-h-11 w-full items-center justify-between rounded-xl px-3 text-sm font-semibold ${style.text} hover:bg-slate-50`}
+                    className={`flex min-h-12 w-full items-center justify-between gap-2 px-3 text-sm font-semibold ${style.text} ${expanded ? style.bg : "hover:bg-slate-50"}`}
                   >
-                    <span>{dict.categories[cat]}</span>
-                    <span aria-hidden>{expanded ? "▴" : "▾"}</span>
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm ${style.bg} ${style.text}`}
+                      >
+                        {tools[0]?.emoji ?? "•"}
+                      </span>
+                      <span className="truncate">{dict.categories[cat]}</span>
+                      <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-slate-500">
+                        {tools.length}
+                      </span>
+                    </span>
+                    <span aria-hidden className="text-slate-400">
+                      {expanded ? "▴" : "▾"}
+                    </span>
                   </button>
                   {expanded ? (
-                    <ul className="mb-2 ms-2 space-y-0.5 border-s border-slate-100 ps-2">
+                    <ul className="space-y-0.5 border-t border-slate-100 bg-slate-50/50 p-2">
                       <li>
                         <Link
                           href={`/${locale}/categories/${cat}`}
                           onClick={onClose}
-                          className="flex min-h-10 items-center rounded-lg px-3 text-sm text-slate-600 hover:bg-slate-50"
+                          className={`flex min-h-10 items-center rounded-xl px-3 text-sm font-medium ${style.text} hover:bg-white`}
                         >
-                          {dict.common.allTools}
+                          {dict.common.viewCategory}
                         </Link>
                       </li>
                       {tools.map((tool) => (
@@ -212,9 +229,14 @@ export default function MobileNavDrawer({
                           <Link
                             href={`/${locale}/tools/${tool.slug}`}
                             onClick={onClose}
-                            className="flex min-h-10 items-center rounded-lg px-3 text-sm text-slate-700 hover:bg-slate-50"
+                            className="flex min-h-10 items-center gap-2 rounded-xl px-3 text-sm text-slate-700 hover:bg-white"
                           >
-                            {dict.tools[tool.dictKey].title}
+                            <span aria-hidden className="text-base leading-none">
+                              {tool.emoji}
+                            </span>
+                            <span className="truncate">
+                              {dict.tools[tool.dictKey].title}
+                            </span>
                           </Link>
                         </li>
                       ))}
@@ -227,15 +249,18 @@ export default function MobileNavDrawer({
             <Link
               href={`/${locale}/about`}
               onClick={onClose}
-              className="mt-2 flex min-h-11 items-center rounded-xl px-3 text-sm font-medium text-slate-800 hover:bg-slate-50"
+              className="mt-1 flex min-h-11 items-center rounded-2xl border border-slate-100 bg-white px-3 text-sm font-medium text-slate-800 shadow-sm hover:border-blue-200 hover:bg-blue-50/50"
             >
               {dict.common.about}
             </Link>
           </nav>
         </div>
 
-        <p className="border-t border-slate-100 px-4 py-3 text-xs text-slate-400">
-          {toolRegistry.length} {dict.common.tools.toLowerCase()}
+        <p className="border-t border-slate-100 bg-white px-4 py-3 text-xs text-slate-400">
+          {dict.common.categoryTools.replace(
+            "{count}",
+            String(toolRegistry.length),
+          )}
         </p>
       </div>
     </div>,

@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Aperçu brouillon",
     "clearFavorites": "Effacer les favoris",
     "clearRecent": "Effacer les récents",
-    "clearQuickAccess": "Tout effacer"
+    "clearQuickAccess": "Tout effacer",
+    "closeMenu": "Fermer le menu",
+    "viewCategory": "Voir toute la catégorie",
+    "browseCategories": "Parcourir les catégories",
+    "menuToolsHint": "Choisissez une catégorie, puis ouvrez un outil."
   },
   "home": {
     "title": "Outils bureautiques en ligne gratuits",
@@ -198,7 +202,13 @@
       "differences": "Différences trouvées",
       "copy": "Copier",
       "copied": "Copié !",
-      "clear": "Effacer"
+      "clear": "Effacer",
+      "downloadDocx": "Télécharger DOCX à deux colonnes",
+      "docxProcessing": "Création du DOCX…",
+      "colOriginal": "Original",
+      "colChanged": "Modifié",
+      "empty": "Saisissez du texte dans au moins une colonne.",
+      "docxError": "Impossible de créer le fichier DOCX."
     },
     "base64": {
       "title": "Encoder / décoder Base64",

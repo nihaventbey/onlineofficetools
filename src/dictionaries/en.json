@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Draft preview",
     "clearFavorites": "Clear favorites",
     "clearRecent": "Clear recent",
-    "clearQuickAccess": "Clear all"
+    "clearQuickAccess": "Clear all",
+    "closeMenu": "Close menu",
+    "viewCategory": "View all in category",
+    "browseCategories": "Browse categories",
+    "menuToolsHint": "Pick a category, then open any tool."
   },
   "home": {
     "title": "Free Online Office Tools",
@@ -198,7 +202,13 @@
       "differences": "Differences found",
       "copy": "Copy",
       "copied": "Copied!",
-      "clear": "Clear"
+      "clear": "Clear",
+      "downloadDocx": "Download two-column DOCX",
+      "docxProcessing": "Building DOCX…",
+      "colOriginal": "Original",
+      "colChanged": "Changed",
+      "empty": "Enter text in at least one column.",
+      "docxError": "Could not create the DOCX file."
     },
     "base64": {
       "title": "Base64 Encode / Decode",

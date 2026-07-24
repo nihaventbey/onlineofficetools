@@ -66,7 +66,11 @@
     "draftPreviewTitle": "Предпросмотр черновика",
     "clearFavorites": "Очистить избранное",
     "clearRecent": "Очистить недавние",
-    "clearQuickAccess": "Очистить всё"
+    "clearQuickAccess": "Очистить всё",
+    "closeMenu": "Закрыть меню",
+    "viewCategory": "Смотреть всю категорию",
+    "browseCategories": "Категории",
+    "menuToolsHint": "Выберите категорию, затем откройте инструмент."
   },
   "home": {
     "title": "Бесплатные онлайн-инструменты для офиса",
@@ -198,7 +202,13 @@
       "differences": "Найдены различия",
       "copy": "Копировать",
       "copied": "Скопировано!",
-      "clear": "Очистить"
+      "clear": "Очистить",
+      "downloadDocx": "Скачать двухколоночный DOCX",
+      "docxProcessing": "Создание DOCX…",
+      "colOriginal": "Исходный",
+      "colChanged": "Изменённый",
+      "empty": "Введите текст хотя бы в одном столбце.",
+      "docxError": "Не удалось создать файл DOCX."
     },
     "base64": {
       "title": "Кодирование / декодирование Base64",
