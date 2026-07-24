@@ -8,7 +8,8 @@ import { getToolBySlug } from "@/lib/tools/registry";
 export const alt = "Online Office Tools";
 export const size = OG_SIZE;
 export const contentType = "image/png";
-export const revalidate = 60;
+// Tool OG PNGs dominate ISR writes (slug × locale). Daily is enough.
+export const revalidate = 86400;
 export const dynamicParams = true;
 
 type Props = { params: Promise<{ lang: string; slug: string }> };

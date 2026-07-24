@@ -4,7 +4,7 @@ import { resolveFaviconSrc } from "@/lib/og";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));

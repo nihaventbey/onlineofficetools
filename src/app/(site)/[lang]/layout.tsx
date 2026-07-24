@@ -31,8 +31,9 @@ const geistMono = Geist_Mono({
 });
 
 export const dynamicParams = false;
-// CMS branding (logo) and settings should refresh reasonably quickly.
-export const revalidate = 60;
+// CMS branding refreshes hourly; admin settings also call revalidatePath on save.
+// Keep this high to avoid burning Vercel ISR write quota.
+export const revalidate = 3600;
 export const viewport: Viewport = {
   themeColor: "#2563eb",
 };

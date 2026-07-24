@@ -5,7 +5,8 @@ import { getOgBrandName, OG_SIZE, resolveOgLogoSrc } from "@/lib/og";
 export const alt = "Online Office Tools";
 export const size = OG_SIZE;
 export const contentType = "image/png";
-export const revalidate = 60;
+// OG PNGs are large ISR writes; regenerate at most daily unless redeployed.
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
