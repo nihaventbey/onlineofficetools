@@ -549,6 +549,19 @@ export type Dictionary = {
       format: string;
       quality: string;
     };
+    imageAdjust: ToolFileLabels & {
+      brightness: string;
+      contrast: string;
+      saturate: string;
+      hue: string;
+      grayscale: string;
+      sepia: string;
+      original: string;
+      preview: string;
+      format: string;
+      quality: string;
+      reset: string;
+    };
     imageMetadata: ToolFileLabels & {
       strip: string;
       info: string;

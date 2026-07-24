@@ -35,6 +35,7 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "image-compress": () => import("@/components/tools/ImageCompress").then((m) => ({ default: m.default as ToolComponent })),
   "image-crop": () => import("@/components/tools/ImageCrop").then((m) => ({ default: m.default as ToolComponent })),
   "image-convert": () => import("@/components/tools/ImageConvert").then((m) => ({ default: m.default as ToolComponent })),
+  "image-adjust": () => import("@/components/tools/ImageAdjust").then((m) => ({ default: m.default as ToolComponent })),
   "image-metadata": () => import("@/components/tools/ImageMetadata").then((m) => ({ default: m.default as ToolComponent })),
   "image-enhance": () => import("@/components/tools/ImageEnhance").then((m) => ({ default: m.default as ToolComponent })),
   "image-ai-upscale": () => import("@/components/tools/ImageAiUpscale").then((m) => ({ default: m.default as ToolComponent })),

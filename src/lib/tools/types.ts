@@ -39,6 +39,7 @@ export const toolDictKeys = [
   "imageCompress",
   "imageCrop",
   "imageConvert",
+  "imageAdjust",
   "imageMetadata",
   "imageEnhance",
   "imageAiUpscale",
