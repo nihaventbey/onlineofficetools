@@ -87,6 +87,9 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-crop", category: "video", dictKey: "videoCrop", icon: "✂V", emoji: "🎞️", keywords: ["video", "crop", "aspect", "cut", "kirp", "kırp", "trim"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "image-crop"] },
   { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-watermark"] },
 
+  // Audio
+  { slug: "audio-editor", category: "audio", dictKey: "audioEditor", icon: "♪", emoji: "🎵", keywords: ["audio", "trim", "cut", "waveform", "convert", "wav", "webm", "mp3", "ses", "kırp", "dalga"], badge: "new", featured: true, accepts: ["mp3", "wav", "ogg", "m4a", "webm", "flac"], outputs: ["wav", "webm"], nextSteps: ["video-trim", "zip-create"] },
+
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },
   { slug: "base64", category: "developer", dictKey: "base64", icon: "64", emoji: "🔐", keywords: ["base64"], badge: null, featured: false, nextSteps: ["url-encoder", "json-formatter"] },

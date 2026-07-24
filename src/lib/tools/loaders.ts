@@ -48,6 +48,7 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "video-watermark": () => import("@/components/tools/VideoWatermark").then((m) => ({ default: m.default as ToolComponent })),
   "video-crop": () => import("@/components/tools/VideoCrop").then((m) => ({ default: m.default as ToolComponent })),
   "video-metadata": () => import("@/components/tools/VideoInfo").then((m) => ({ default: m.default as ToolComponent })),
+  "audio-editor": () => import("@/components/tools/AudioEditor").then((m) => ({ default: m.default as ToolComponent })),
   ocr: () => import("@/components/tools/OcrTool").then((m) => ({ default: m.default as ToolComponent })),
   "qr-generator": () => import("@/components/tools/QrGenerator").then((m) => ({ default: m.default as ToolComponent })),
   "color-converter": () => import("@/components/tools/ColorConverter").then((m) => ({ default: m.default as ToolComponent })),

@@ -91,7 +91,8 @@
     "documents": "Documents",
     "spreadsheets": "Spreadsheets",
     "presentations": "Presentations",
-    "ebys": "Official docs (TR)"
+    "ebys": "Official docs (TR)",
+    "audio": "Audio"
   },
   "legal": {
     "privacy": {
@@ -1292,6 +1293,38 @@
       "endTime": "End (s)",
       "muteAudio": "Mute audio",
       "tooLong": "Selected range exceeds the 5 minute limit."
+    },
+    "audioEditor": {
+      "title": "Audio Editor",
+      "description": "View the waveform, trim a range, and convert audio to WAV or WebM.",
+      "metaTitle": "Audio Editor — Trim & Convert Online",
+      "metaDescription": "Free browser audio editor with waveform, trim, and WAV/WebM convert. No uploads.",
+      "dropHint": "Drop an audio file here or click to select",
+      "selectHint": "MP3, WAV, OGG, M4A, FLAC, WebM — up to 100 MB",
+      "remove": "Remove",
+      "download": "Download",
+      "processing": "Processing…",
+      "invalidFile": "Please select an audio file.",
+      "tooLarge": "File exceeds the size limit.",
+      "error": "Something went wrong.",
+      "limitHint": "Audio stays on your device. Max 100 MB. WAV export is instant; WebM plays in real time.",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear",
+      "decodeError": "Could not decode this audio file in your browser.",
+      "waveform": "Waveform",
+      "waveformHint": "Drag on the waveform to set the trim start or end.",
+      "startTime": "Start (seconds)",
+      "endTime": "End (seconds)",
+      "selection": "Selection",
+      "play": "Play selection",
+      "pause": "Pause",
+      "formatLabel": "Output format",
+      "formatWav": "WAV (lossless PCM)",
+      "formatWebm": "WebM / Opus (compressed)",
+      "formatHint": "WAV works everywhere. WebM needs MediaRecorder (best in Chrome or Firefox).",
+      "safariWarning": "Safari and some browsers have limited MediaRecorder support. Prefer WAV, or try Chrome/Firefox for WebM.",
+      "webmUnsupported": "WebM export is not supported in this browser. Choose WAV instead."
     }
   },
   "toolPage": {

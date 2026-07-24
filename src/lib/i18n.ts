@@ -172,6 +172,7 @@ export type Dictionary = {
     image: string;
     archive: string;
     video: string;
+    audio: string;
     ebys: string;
     developer: string;
     security: string;
@@ -604,6 +605,22 @@ export type Dictionary = {
       endTime: string;
       muteAudio: string;
       tooLong: string;
+    };
+    audioEditor: ToolFileLabels & {
+      decodeError: string;
+      waveform: string;
+      waveformHint: string;
+      startTime: string;
+      endTime: string;
+      selection: string;
+      play: string;
+      pause: string;
+      formatLabel: string;
+      formatWav: string;
+      formatWebm: string;
+      formatHint: string;
+      safariWarning: string;
+      webmUnsupported: string;
     };
     videoCrop: ToolFileLabels & {
       safariWarning: string;

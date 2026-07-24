@@ -25,6 +25,7 @@ const DESKTOP_NAV_CATEGORIES = [
   "pdf",
   "image",
   "video",
+  "audio",
 ] as const;
 
 export default function Header({

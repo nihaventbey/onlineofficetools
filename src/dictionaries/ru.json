@@ -91,7 +91,8 @@
     "presentations": "Презентации",
     "archive": "Архив",
     "video": "Видео",
-    "ebys": "Офиц. док. (TR)"
+    "ebys": "Офиц. док. (TR)",
+    "audio": "Аудио"
   },
   "legal": {
     "privacy": {
@@ -1292,6 +1293,38 @@
       "endTime": "End (s)",
       "muteAudio": "Mute audio",
       "tooLong": "Selected range exceeds the 5 minute limit."
+    },
+    "audioEditor": {
+      "title": "Аудиоредактор",
+      "description": "Покажите волну, обрежьте фрагмент и конвертируйте в WAV или WebM.",
+      "metaTitle": "Аудиоредактор — обрезка и конвертация",
+      "metaDescription": "Бесплатный аудиоредактор с волной, обрезкой и конвертацией WAV/WebM. Без загрузок.",
+      "dropHint": "Перетащите аудиофайл сюда или выберите",
+      "selectHint": "MP3, WAV, OGG, M4A, FLAC, WebM — до 100 МБ",
+      "remove": "Удалить",
+      "download": "Скачать",
+      "processing": "Обработка…",
+      "invalidFile": "Выберите аудиофайл.",
+      "tooLarge": "Файл превышает лимит размера.",
+      "error": "Что-то пошло не так.",
+      "limitHint": "Аудио остаётся на устройстве. Макс. 100 МБ. WAV мгновенно; WebM в реальном времени.",
+      "copy": "Копировать",
+      "copied": "Скопировано!",
+      "clear": "Очистить",
+      "decodeError": "Не удалось декодировать этот аудиофайл в браузере.",
+      "waveform": "Волновая форма",
+      "waveformHint": "Перетащите по волне, чтобы задать начало или конец.",
+      "startTime": "Начало (секунды)",
+      "endTime": "Конец (секунды)",
+      "selection": "Выделение",
+      "play": "Воспроизвести выделение",
+      "pause": "Пауза",
+      "formatLabel": "Формат вывода",
+      "formatWav": "WAV (без потерь PCM)",
+      "formatWebm": "WebM / Opus (сжатый)",
+      "formatHint": "WAV работает везде. WebM требует MediaRecorder (Chrome/Firefox).",
+      "safariWarning": "В Safari и некоторых браузерах MediaRecorder ограничен. Предпочтите WAV или Chrome/Firefox для WebM.",
+      "webmUnsupported": "Экспорт WebM не поддерживается. Выберите WAV."
     }
   },
   "toolPage": {

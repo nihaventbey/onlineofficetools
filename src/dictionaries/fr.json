@@ -91,7 +91,8 @@
     "presentations": "Présentations",
     "archive": "Archive",
     "video": "Vidéo",
-    "ebys": "Docs officiels (TR)"
+    "ebys": "Docs officiels (TR)",
+    "audio": "Audio"
   },
   "legal": {
     "privacy": {
@@ -1292,6 +1293,38 @@
       "endTime": "End (s)",
       "muteAudio": "Mute audio",
       "tooLong": "Selected range exceeds the 5 minute limit."
+    },
+    "audioEditor": {
+      "title": "Éditeur audio",
+      "description": "Affichez la forme d’onde, découpez et convertissez en WAV ou WebM.",
+      "metaTitle": "Éditeur audio — Découper et convertir",
+      "metaDescription": "Éditeur audio gratuit avec forme d’onde, découpe et conversion WAV/WebM. Aucun envoi.",
+      "dropHint": "Déposez un fichier audio ici ou cliquez pour choisir",
+      "selectHint": "MP3, WAV, OGG, M4A, FLAC, WebM — jusqu’à 100 Mo",
+      "remove": "Retirer",
+      "download": "Télécharger",
+      "processing": "Traitement…",
+      "invalidFile": "Veuillez sélectionner un fichier audio.",
+      "tooLarge": "Le fichier dépasse la limite de taille.",
+      "error": "Une erreur s’est produite.",
+      "limitHint": "L’audio reste sur votre appareil. Max. 100 Mo. WAV instantané ; WebM en temps réel.",
+      "copy": "Copier",
+      "copied": "Copié !",
+      "clear": "Effacer",
+      "decodeError": "Impossible de décoder ce fichier audio dans votre navigateur.",
+      "waveform": "Forme d’onde",
+      "waveformHint": "Faites glisser sur la forme d’onde pour définir début ou fin.",
+      "startTime": "Début (secondes)",
+      "endTime": "Fin (secondes)",
+      "selection": "Sélection",
+      "play": "Lire la sélection",
+      "pause": "Pause",
+      "formatLabel": "Format de sortie",
+      "formatWav": "WAV (PCM sans perte)",
+      "formatWebm": "WebM / Opus (compressé)",
+      "formatHint": "WAV fonctionne partout. WebM nécessite MediaRecorder (Chrome/Firefox).",
+      "safariWarning": "Safari et certains navigateurs ont un support MediaRecorder limité. Préférez WAV, ou Chrome/Firefox pour WebM.",
+      "webmUnsupported": "L’export WebM n’est pas pris en charge. Choisissez WAV."
     }
   },
   "toolPage": {

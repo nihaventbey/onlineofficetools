@@ -52,6 +52,7 @@ export const toolDictKeys = [
   "videoWatermark",
   "videoCrop",
   "videoInfo",
+  "audioEditor",
   "arzRica",
   "sdpSearch",
   "detsis",

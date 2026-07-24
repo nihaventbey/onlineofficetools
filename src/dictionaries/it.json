@@ -91,7 +91,8 @@
     "presentations": "Presentazioni",
     "archive": "Archivio",
     "video": "Video",
-    "ebys": "Documenti ufficiali (TR)"
+    "ebys": "Documenti ufficiali (TR)",
+    "audio": "Audio"
   },
   "legal": {
     "privacy": {
@@ -1292,6 +1293,38 @@
       "endTime": "End (s)",
       "muteAudio": "Mute audio",
       "tooLong": "Selected range exceeds the 5 minute limit."
+    },
+    "audioEditor": {
+      "title": "Editor audio",
+      "description": "Visualizza la forma d’onda, taglia e converti in WAV o WebM.",
+      "metaTitle": "Editor audio — Taglia e converti",
+      "metaDescription": "Editor audio gratuito con forma d’onda, trim e conversione WAV/WebM. Nessun upload.",
+      "dropHint": "Trascina un file audio qui o clicca per selezionare",
+      "selectHint": "MP3, WAV, OGG, M4A, FLAC, WebM — fino a 100 MB",
+      "remove": "Rimuovi",
+      "download": "Scarica",
+      "processing": "Elaborazione…",
+      "invalidFile": "Seleziona un file audio.",
+      "tooLarge": "Il file supera il limite di dimensione.",
+      "error": "Qualcosa è andato storto.",
+      "limitHint": "L’audio resta sul dispositivo. Max 100 MB. WAV istantaneo; WebM in tempo reale.",
+      "copy": "Copia",
+      "copied": "Copiato!",
+      "clear": "Cancella",
+      "decodeError": "Impossibile decodificare questo audio nel browser.",
+      "waveform": "Forma d’onda",
+      "waveformHint": "Trascina sulla forma d’onda per impostare inizio o fine.",
+      "startTime": "Inizio (secondi)",
+      "endTime": "Fine (secondi)",
+      "selection": "Selezione",
+      "play": "Riproduci selezione",
+      "pause": "Pausa",
+      "formatLabel": "Formato di output",
+      "formatWav": "WAV (PCM senza perdita)",
+      "formatWebm": "WebM / Opus (compresso)",
+      "formatHint": "WAV funziona ovunque. WebM richiede MediaRecorder (Chrome/Firefox).",
+      "safariWarning": "Safari e alcuni browser hanno MediaRecorder limitato. Preferisci WAV, o Chrome/Firefox per WebM.",
+      "webmUnsupported": "Esportazione WebM non supportata. Scegli WAV."
     }
   },
   "toolPage": {

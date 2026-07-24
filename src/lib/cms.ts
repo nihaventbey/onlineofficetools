@@ -282,6 +282,12 @@ const FALLBACK_COPY: Record<
     enDesc: "Crop videos to free size or common aspect ratios.",
     trDesc: "Videoları serbest veya hazır en-boy oranına kırpın.",
   },
+  "audio-editor": {
+    en: "Audio Editor",
+    tr: "Ses Editörü",
+    enDesc: "View waveform, trim audio, and convert to WAV or WebM.",
+    trDesc: "Ses dalgasını görün, kırpın ve WAV veya WebM’e dönüştürün.",
+  },
   watermark: {
     en: "Watermark",
     tr: "Filigran (Watermark)",

@@ -91,7 +91,8 @@
     "presentations": "Sunumlar",
     "archive": "Arşiv",
     "video": "Video",
-    "ebys": "EBYS / Belgenet"
+    "ebys": "EBYS / Belgenet",
+    "audio": "Ses"
   },
   "legal": {
     "privacy": {
@@ -1399,6 +1400,38 @@
       "endTime": "Bitiş (sn)",
       "muteAudio": "Sesi kapat",
       "tooLong": "Seçilen aralık 5 dakikayı aşıyor."
+    },
+    "audioEditor": {
+      "title": "Ses Editörü",
+      "description": "Ses dalgasını görün, aralığı kırpın ve WAV veya WebM’e dönüştürün.",
+      "metaTitle": "Ses Editörü — Kırp ve Dönüştür",
+      "metaDescription": "Tarayıcıda dalga formu, ses kırpma ve WAV/WebM dönüştürme. Yükleme yok.",
+      "dropHint": "Ses dosyasını buraya bırakın veya seçin",
+      "selectHint": "MP3, WAV, OGG, M4A, FLAC, WebM — en fazla 100 MB",
+      "remove": "Kaldır",
+      "download": "İndir",
+      "processing": "İşleniyor…",
+      "invalidFile": "Lütfen bir ses dosyası seçin.",
+      "tooLarge": "Dosya boyut sınırını aşıyor.",
+      "error": "Bir şeyler ters gitti.",
+      "limitHint": "Ses cihazınızda kalır. En fazla 100 MB. WAV anında; WebM gerçek zamanlı kodlanır.",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı!",
+      "clear": "Temizle",
+      "decodeError": "Bu ses dosyası tarayıcınızda çözülemedi.",
+      "waveform": "Ses dalgası",
+      "waveformHint": "Kırpma başlangıç/bitişini ayarlamak için dalga üzerinde sürükleyin.",
+      "startTime": "Başlangıç (saniye)",
+      "endTime": "Bitiş (saniye)",
+      "selection": "Seçim",
+      "play": "Seçimi çal",
+      "pause": "Duraklat",
+      "formatLabel": "Çıktı formatı",
+      "formatWav": "WAV (kayıpsız PCM)",
+      "formatWebm": "WebM / Opus (sıkıştırılmış)",
+      "formatHint": "WAV her yerde çalışır. WebM için MediaRecorder gerekir (Chrome/Firefox önerilir).",
+      "safariWarning": "Safari ve bazı tarayıcılarda MediaRecorder sınırlıdır. WebM için Chrome/Firefox deneyin veya WAV seçin.",
+      "webmUnsupported": "Bu tarayıcıda WebM dışa aktarma desteklenmiyor. WAV seçin."
     }
   },
   "toolPage": {
