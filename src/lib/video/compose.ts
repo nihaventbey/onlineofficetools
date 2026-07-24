@@ -25,6 +25,8 @@ export type ComposeRecordOptions = {
   stampBitmap?: ImageBitmap | null;
   mute?: boolean;
   maxWidth?: number;
+  /** Force exact output size (social presets). Crop is scaled to fill. */
+  outputSize?: { width: number; height: number };
   signal?: AbortSignal;
   onProgress?: (ratio: number) => void;
 };
@@ -41,6 +43,7 @@ function resolveOutputSize(
   video: HTMLVideoElement,
   crop: VideoCropRect | undefined,
   maxWidth: number,
+  outputSize?: { width: number; height: number },
 ): { outW: number; outH: number; sx: number; sy: number; sw: number; sh: number } {
   const vw = video.videoWidth || 1;
   const vh = video.videoHeight || 1;
@@ -52,13 +55,21 @@ function resolveOutputSize(
   const sh = crop
     ? Math.max(1, Math.min(Math.floor(crop.h), vh - sy))
     : vh;
+
+  if (outputSize) {
+    let outW = Math.max(2, Math.floor(outputSize.width));
+    let outH = Math.max(2, Math.floor(outputSize.height));
+    outW = outW - (outW % 2);
+    outH = outH - (outH % 2);
+    return { outW, outH, sx, sy, sw, sh };
+  }
+
   let outW = sw;
   let outH = sh;
   if (outW > maxWidth) {
     outH = Math.round((sh / sw) * maxWidth);
     outW = maxWidth;
   }
-  // Even dimensions help some encoders
   outW = Math.max(2, outW - (outW % 2));
   outH = Math.max(2, outH - (outH % 2));
   return { outW, outH, sx, sy, sw, sh };
@@ -99,12 +110,14 @@ export function paintComposePreview(
     watermark?: WatermarkOptions;
     stampBitmap?: ImageBitmap | null;
     maxWidth?: number;
+    outputSize?: { width: number; height: number };
   },
 ) {
   const geom = resolveOutputSize(
     video,
     options.crop,
     options.maxWidth ?? MAX_COMPOSE_WIDTH,
+    options.outputSize,
   );
   canvas.width = geom.outW;
   canvas.height = geom.outH;
@@ -127,6 +140,7 @@ export async function composeAndRecord(
     video,
     mute = false,
     maxWidth = MAX_COMPOSE_WIDTH,
+    outputSize,
     signal,
     onProgress,
   } = options;
@@ -138,7 +152,7 @@ export async function composeAndRecord(
   if (end <= start) throw new Error("INVALID_RANGE");
   if (end - start > MAX_COMPOSE_DURATION_SEC) throw new Error("TOO_LONG");
 
-  const geom = resolveOutputSize(video, options.crop, maxWidth);
+  const geom = resolveOutputSize(video, options.crop, maxWidth, outputSize);
   const canvas = document.createElement("canvas");
   canvas.width = geom.outW;
   canvas.height = geom.outH;

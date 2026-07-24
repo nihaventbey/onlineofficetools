@@ -3,7 +3,7 @@
 export const MAX_AUDIO_BYTES = 100 * 1024 * 1024;
 export const MAX_WAVEFORM_BARS = 800;
 
-export type AudioExportFormat = "wav" | "webm";
+export type AudioExportFormat = "wav" | "mp3" | "webm" | "ogg";
 
 export function isAudioFile(file: File): boolean {
   return (
@@ -121,12 +121,20 @@ export function audioBufferToWav(buffer: AudioBuffer): Blob {
   return new Blob([arrayBuffer], { type: "audio/wav" });
 }
 
-function pickAudioRecorderMime(): string {
-  const candidates = [
-    "audio/webm;codecs=opus",
-    "audio/webm",
-    "audio/ogg;codecs=opus",
-  ];
+function pickAudioRecorderMime(preferOgg = false): string {
+  const candidates = preferOgg
+    ? [
+        "audio/ogg;codecs=opus",
+        "audio/ogg",
+        "audio/webm;codecs=opus",
+        "audio/webm",
+      ]
+    : [
+        "audio/webm;codecs=opus",
+        "audio/webm",
+        "audio/ogg;codecs=opus",
+        "audio/ogg",
+      ];
   for (const mime of candidates) {
     if (
       typeof MediaRecorder !== "undefined" &&
@@ -135,18 +143,67 @@ function pickAudioRecorderMime(): string {
       return mime;
     }
   }
-  return "audio/webm";
+  return preferOgg ? "audio/ogg" : "audio/webm";
 }
 
-/** Re-encode via MediaRecorder (typically WebM/Opus). Real-time duration. */
+export function isOggExportSupported(): boolean {
+  if (typeof MediaRecorder === "undefined") return false;
+  return (
+    MediaRecorder.isTypeSupported("audio/ogg;codecs=opus") ||
+    MediaRecorder.isTypeSupported("audio/ogg")
+  );
+}
+
+/** Encode AudioBuffer as MP3 via lamejs (dynamic import). */
+export async function audioBufferToMp3(
+  buffer: AudioBuffer,
+  onProgress?: (ratio: number) => void,
+): Promise<Blob> {
+  const lamejs = await import("lamejs");
+  const Mp3Encoder = lamejs.Mp3Encoder;
+  const numChannels = Math.min(2, buffer.numberOfChannels);
+  const sampleRate = buffer.sampleRate;
+  const encoder = new Mp3Encoder(numChannels, sampleRate, 128);
+  const left = buffer.getChannelData(0);
+  const right =
+    numChannels > 1 ? buffer.getChannelData(1) : buffer.getChannelData(0);
+  const block = 1152;
+  const parts: Int8Array[] = [];
+  const total = left.length;
+
+  for (let i = 0; i < total; i += block) {
+    const end = Math.min(i + block, total);
+    const leftChunk = new Int16Array(end - i);
+    const rightChunk = new Int16Array(end - i);
+    for (let j = 0; j < end - i; j++) {
+      const l = Math.max(-1, Math.min(1, left[i + j] ?? 0));
+      const r = Math.max(-1, Math.min(1, right[i + j] ?? 0));
+      leftChunk[j] = l < 0 ? l * 0x8000 : l * 0x7fff;
+      rightChunk[j] = r < 0 ? r * 0x8000 : r * 0x7fff;
+    }
+    const mp3buf =
+      numChannels === 1
+        ? encoder.encodeBuffer(leftChunk)
+        : encoder.encodeBuffer(leftChunk, rightChunk);
+    if (mp3buf.length) parts.push(mp3buf);
+    onProgress?.(Math.min(1, end / total));
+  }
+  const flush = encoder.flush();
+  if (flush.length) parts.push(flush);
+  onProgress?.(1);
+  return new Blob(parts as BlobPart[], { type: "audio/mpeg" });
+}
+
+/** Re-encode via MediaRecorder (WebM/Opus or OGG). Real-time duration. */
 export async function audioBufferToCompressed(
   buffer: AudioBuffer,
   onProgress?: (ratio: number) => void,
+  preferOgg = false,
 ): Promise<{ blob: Blob; mime: string }> {
   if (typeof MediaRecorder === "undefined") {
     throw new Error("NO_RECORDER");
   }
-  const mime = pickAudioRecorderMime();
+  const mime = pickAudioRecorderMime(preferOgg);
   const ctx = new AudioContext({ sampleRate: buffer.sampleRate });
   try {
     const dest = ctx.createMediaStreamDestination();
@@ -181,7 +238,6 @@ export async function audioBufferToCompressed(
       tick();
     });
 
-    // Small pad so encoder flushes
     await new Promise((r) => setTimeout(r, 120));
     if (recorder.state !== "inactive") recorder.stop();
     dest.stream.getTracks().forEach((t) => t.stop());
@@ -203,7 +259,22 @@ export async function exportAudio(
     const blob = audioBufferToWav(buffer);
     return { blob, extension: "wav", mime: "audio/wav" };
   }
-  const { blob, mime } = await audioBufferToCompressed(buffer, onProgress);
+  if (format === "mp3") {
+    const blob = await audioBufferToMp3(buffer, onProgress);
+    return { blob, extension: "mp3", mime: "audio/mpeg" };
+  }
+  if (format === "ogg") {
+    const { blob, mime } = await audioBufferToCompressed(
+      buffer,
+      onProgress,
+      true,
+    );
+    if (!mime.includes("ogg")) {
+      throw new Error("NO_OGG");
+    }
+    return { blob, extension: "ogg", mime };
+  }
+  const { blob, mime } = await audioBufferToCompressed(buffer, onProgress, false);
   const extension = mime.includes("ogg") ? "ogg" : "webm";
   return { blob, extension, mime };
 }

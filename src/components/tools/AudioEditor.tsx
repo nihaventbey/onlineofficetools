@@ -9,6 +9,7 @@ import {
   exportAudio,
   formatDuration,
   isAudioFile,
+  isOggExportSupported,
   MAX_AUDIO_BYTES,
   sliceAudioBuffer,
   type AudioExportFormat,
@@ -32,6 +33,7 @@ export default function AudioEditor({ labels }: Props) {
   const [playing, setPlaying] = useState(false);
   const [playhead, setPlayhead] = useState(0);
   const [safariNote, setSafariNote] = useState(false);
+  const [oggOk, setOggOk] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const playCtxRef = useRef<AudioContext | null>(null);
@@ -45,6 +47,7 @@ export default function AudioEditor({ labels }: Props) {
     const isSafari =
       /Safari/i.test(ua) && !/Chrome|Chromium|Edg|Firefox/i.test(ua);
     setSafariNote(isSafari || typeof MediaRecorder === "undefined");
+    setOggOk(isOggExportSupported());
     return () => {
       stopPlayback();
       if (playCtxRef.current) {
@@ -249,8 +252,15 @@ export default function AudioEditor({ labels }: Props) {
       setError(labels.error);
       return;
     }
-    if (format === "webm" && typeof MediaRecorder === "undefined") {
+    if (
+      (format === "webm" || format === "ogg") &&
+      typeof MediaRecorder === "undefined"
+    ) {
       setError(labels.webmUnsupported);
+      return;
+    }
+    if (format === "ogg" && !isOggExportSupported()) {
+      setError(labels.oggUnsupported);
       return;
     }
     setBusy(true);
@@ -263,7 +273,9 @@ export default function AudioEditor({ labels }: Props) {
       const base = fileName.replace(/\.[^.]+$/, "") || "audio";
       downloadBlob(blob, `${base}-edit.${extension}`);
     } catch {
-      setError(format === "webm" ? labels.webmUnsupported : labels.error);
+      if (format === "ogg") setError(labels.oggUnsupported);
+      else if (format === "webm") setError(labels.webmUnsupported);
+      else setError(labels.error);
     } finally {
       setBusy(false);
       setProgress(0);
@@ -289,7 +301,7 @@ export default function AudioEditor({ labels }: Props) {
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <p className="text-sm text-slate-500">{labels.limitHint}</p>
-      {safariNote && format === "webm" ? (
+      {safariNote && (format === "webm" || format === "ogg") ? (
         <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
           {labels.safariWarning}
         </p>
@@ -416,17 +428,39 @@ export default function AudioEditor({ labels }: Props) {
                 <input
                   type="radio"
                   name="audio-format"
+                  checked={format === "mp3"}
+                  onChange={() => setFormat("mp3")}
+                  disabled={busy}
+                />
+                {labels.formatMp3}
+              </label>
+              <label className="flex items-center gap-2 text-sm text-slate-700">
+                <input
+                  type="radio"
+                  name="audio-format"
                   checked={format === "webm"}
                   onChange={() => setFormat("webm")}
                   disabled={busy}
                 />
                 {labels.formatWebm}
               </label>
+              {oggOk ? (
+                <label className="flex items-center gap-2 text-sm text-slate-700">
+                  <input
+                    type="radio"
+                    name="audio-format"
+                    checked={format === "ogg"}
+                    onChange={() => setFormat("ogg")}
+                    disabled={busy}
+                  />
+                  {labels.formatOgg}
+                </label>
+              ) : null}
             </div>
             <p className="text-xs text-slate-500">{labels.formatHint}</p>
           </fieldset>
 
-          {busy && progress > 0 && format === "webm" ? (
+          {busy && progress > 0 && format !== "wav" ? (
             <div className="h-2 overflow-hidden rounded-full bg-slate-100">
               <div
                 className="h-full bg-sky-500 transition-[width]"

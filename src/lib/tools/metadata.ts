@@ -84,11 +84,12 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-to-gif", category: "video", dictKey: "videoToGif", icon: "GIF", emoji: "🎬", keywords: ["video", "gif", "convert", "animate"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["gif"], nextSteps: ["video-frame-extractor", "video-trim"] },
   { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "video-crop"] },
   { slug: "video-watermark", category: "video", dictKey: "videoWatermark", icon: "WM", emoji: "💧", keywords: ["video", "watermark", "stamp", "overlay", "filigran", "logo"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-crop", "watermark"] },
-  { slug: "video-crop", category: "video", dictKey: "videoCrop", icon: "✂V", emoji: "🎞️", keywords: ["video", "crop", "aspect", "cut", "kirp", "kırp", "trim"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "image-crop"] },
-  { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-watermark"] },
+  { slug: "video-crop", category: "video", dictKey: "videoCrop", icon: "✂V", emoji: "🎞️", keywords: ["video", "crop", "aspect", "cut", "kirp", "kırp", "trim"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-resize", "video-watermark"] },
+  { slug: "video-resize", category: "video", dictKey: "videoResize", icon: "↔V", emoji: "📐", keywords: ["video", "resize", "social", "instagram", "tiktok", "youtube", "shorts", "reels", "ebat"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-crop", "video-watermark"] },
+  { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-resize"] },
 
   // Audio
-  { slug: "audio-editor", category: "audio", dictKey: "audioEditor", icon: "♪", emoji: "🎵", keywords: ["audio", "trim", "cut", "waveform", "convert", "wav", "webm", "mp3", "ses", "kırp", "dalga"], badge: "new", featured: true, accepts: ["mp3", "wav", "ogg", "m4a", "webm", "flac"], outputs: ["wav", "webm"], nextSteps: ["video-trim", "zip-create"] },
+  { slug: "audio-editor", category: "audio", dictKey: "audioEditor", icon: "♪", emoji: "🎵", keywords: ["audio", "trim", "cut", "waveform", "convert", "wav", "webm", "mp3", "ses", "kırp", "dalga"], badge: "new", featured: true, accepts: ["mp3", "wav", "ogg", "m4a", "webm", "flac"], outputs: ["wav", "mp3", "webm", "ogg"], nextSteps: ["video-trim", "zip-create"] },
 
   // Developer
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },
@@ -102,8 +103,10 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "password-generator", category: "security", dictKey: "passwordGenerator", icon: "✱", emoji: "🔑", keywords: ["password", "secure"], badge: "popular", featured: true, nextSteps: ["uuid-generator", "base64"] },
 
   // Calculator
-  { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", emoji: "⚖️", keywords: ["unit", "convert"], badge: null, featured: false, nextSteps: ["date-difference", "word-counter"] },
-  { slug: "date-difference", category: "calculator", dictKey: "dateDifference", icon: "📅", emoji: "📅", keywords: ["date", "difference"], badge: null, featured: false, nextSteps: ["unit-converter"] },
+  { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", emoji: "⚖️", keywords: ["unit", "convert"], badge: null, featured: false, nextSteps: ["date-difference", "birthday-calculator"] },
+  { slug: "date-difference", category: "calculator", dictKey: "dateDifference", icon: "📅", emoji: "📅", keywords: ["date", "difference"], badge: null, featured: false, nextSteps: ["birthday-calculator", "unit-converter"] },
+  { slug: "birthday-calculator", category: "calculator", dictKey: "birthdayCalculator", icon: "🎂", emoji: "🎂", keywords: ["birthday", "age", "doğum", "yaş"], badge: "new", featured: true, nextSteps: ["date-difference", "area-calculator"] },
+  { slug: "area-calculator", category: "calculator", dictKey: "areaCalculator", icon: "⬡", emoji: "📐", keywords: ["area", "land", "field", "polygon", "triangle", "alan", "arazi", "tarla"], badge: "new", featured: true, nextSteps: ["unit-converter", "birthday-calculator"] },
 ];
 
 export const toolSlugs = toolMetaList.map((t) => t.slug);

@@ -285,8 +285,26 @@ const FALLBACK_COPY: Record<
   "audio-editor": {
     en: "Audio Editor",
     tr: "Ses Editörü",
-    enDesc: "View waveform, trim audio, and convert to WAV or WebM.",
-    trDesc: "Ses dalgasını görün, kırpın ve WAV veya WebM’e dönüştürün.",
+    enDesc: "View waveform, trim audio, and convert to WAV, MP3, or WebM.",
+    trDesc: "Ses dalgasını görün, kırpın ve WAV, MP3 veya WebM’e dönüştürün.",
+  },
+  "birthday-calculator": {
+    en: "Birthday Calculator",
+    tr: "Doğum Günü Hesaplayıcı",
+    enDesc: "Calculate age, next birthday countdown, and weekday of birth.",
+    trDesc: "Yaş, sonraki doğum günü ve doğulan günü hesaplayın.",
+  },
+  "area-calculator": {
+    en: "Area Calculator",
+    tr: "Alan Hesaplayıcı",
+    enDesc: "Draw land shapes, scale in metres, and read area and side lengths.",
+    trDesc: "Arazi şekilleri çizin, metre ölçeği verin; alan ve kenarları okuyun.",
+  },
+  "video-resize": {
+    en: "Video Resize for Social",
+    tr: "Sosyal Medya Video Ebatlandırıcı",
+    enDesc: "Resize and crop video to Instagram, TikTok, YouTube Shorts and more.",
+    trDesc: "Videoyu Instagram, TikTok, YouTube Shorts vb. ebatlara kırpın.",
   },
   watermark: {
     en: "Watermark",
