@@ -49,6 +49,7 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "video-watermark": () => import("@/components/tools/VideoWatermark").then((m) => ({ default: m.default as ToolComponent })),
   "video-crop": () => import("@/components/tools/VideoCrop").then((m) => ({ default: m.default as ToolComponent })),
   "video-resize": () => import("@/components/tools/VideoResize").then((m) => ({ default: m.default as ToolComponent })),
+  "video-audio-visualizer": () => import("@/components/tools/VideoAudioVisualizer").then((m) => ({ default: m.default as ToolComponent })),
   "video-metadata": () => import("@/components/tools/VideoInfo").then((m) => ({ default: m.default as ToolComponent })),
   "audio-editor": () => import("@/components/tools/AudioEditor").then((m) => ({ default: m.default as ToolComponent })),
   "birthday-calculator": () => import("@/components/tools/BirthdayCalculator").then((m) => ({ default: m.default as ToolComponent })),
