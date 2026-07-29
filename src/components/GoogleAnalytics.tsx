@@ -27,20 +27,41 @@ function hasAnalyticsConsent(): boolean {
   }
 }
 
+function applyConsent(accepted: boolean) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("consent", "update", {
+    analytics_storage: accepted ? "granted" : "denied",
+    ad_storage: accepted ? "granted" : "denied",
+    ad_user_data: accepted ? "granted" : "denied",
+    ad_personalization: accepted ? "granted" : "denied",
+  });
+}
+
 /**
- * Google Analytics 4 (gtag). Loads only after the site consent banner
- * is accepted — same gate as advertising preferences.
+ * Loads gtag on every page so Google Tag Coverage sees the site as tagged.
+ * Storage stays denied until the consent banner grants it (Consent Mode v2).
  */
 export default function GoogleAnalytics() {
   const pathname = usePathname();
-  const [allowed, setAllowed] = useState(false);
+  const [consented, setConsented] = useState(false);
 
   useEffect(() => {
-    setAllowed(hasAnalyticsConsent());
+    const accepted = hasAnalyticsConsent();
+    setConsented(accepted);
+    applyConsent(accepted);
 
     function onConsent(event: Event) {
       const detail = (event as CustomEvent<ConsentChangeDetail>).detail;
-      setAllowed(Boolean(detail?.accepted));
+      const ok = Boolean(detail?.accepted);
+      setConsented(ok);
+      applyConsent(ok);
+      if (ok && typeof window.gtag === "function") {
+        window.gtag("event", "page_view", {
+          page_path: window.location.pathname + window.location.search,
+          page_location: window.location.href,
+          page_title: document.title,
+        });
+      }
     }
 
     window.addEventListener(CONSENT_CHANGE_EVENT, onConsent);
@@ -48,14 +69,16 @@ export default function GoogleAnalytics() {
   }, []);
 
   useEffect(() => {
-    if (!allowed || typeof window.gtag !== "function") return;
-    const path =
-      pathname +
-      (typeof window !== "undefined" ? window.location.search : "");
-    window.gtag("config", GA_ID, { page_path: path });
-  }, [pathname, allowed]);
+    if (!consented || typeof window.gtag !== "function") return;
+    const path = pathname + window.location.search;
+    window.gtag("event", "page_view", {
+      page_path: path,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+  }, [pathname, consented]);
 
-  if (!allowed || !GA_ID.startsWith("G-")) return null;
+  if (!GA_ID.startsWith("G-")) return null;
 
   return (
     <>
@@ -68,7 +91,7 @@ export default function GoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${GA_ID}');
+          gtag('config', '${GA_ID}', { anonymize_ip: true });
         `}
       </Script>
     </>
