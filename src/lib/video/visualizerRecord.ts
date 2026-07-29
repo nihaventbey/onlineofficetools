@@ -4,7 +4,7 @@ import {
   type VisualizerDrawOptions,
 } from "@/lib/video/visualizerDraw";
 
-export const MAX_VIZ_DURATION_SEC = 5 * 60;
+export const MAX_VIZ_DURATION_SEC = 30 * 60;
 
 export type OutputPreset = {
   width: number;

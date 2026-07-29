@@ -231,6 +231,7 @@ export default function VideoAudioVisualizer({ labels }: Props) {
   async function startPreview() {
     if (!hasMedia) return;
     stopPreview();
+    setError("");
     let media: HTMLAudioElement | HTMLVideoElement;
     try {
       media = await freshMediaForPreview();
@@ -239,32 +240,50 @@ export default function VideoAudioVisualizer({ labels }: Props) {
       return;
     }
 
-    const ctx = new AudioContext();
-    await ctx.resume();
-    audioCtxRef.current = ctx;
-    const source = ctx.createMediaElementSource(media);
-    const analyser = ctx.createAnalyser();
-    analyser.fftSize = 512;
-    analyser.smoothingTimeConstant = 0.75;
-    source.connect(analyser);
-    analyser.connect(ctx.destination);
-    analyserRef.current = analyser;
+    try {
+      const ctx = new AudioContext();
+      await ctx.resume();
+      audioCtxRef.current = ctx;
+      const source = ctx.createMediaElementSource(media);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 512;
+      analyser.smoothingTimeConstant = 0.75;
+      source.connect(analyser);
+      analyser.connect(ctx.destination);
+      analyserRef.current = analyser;
 
-    media.currentTime = startTime;
-    previewActiveRef.current = true;
-    setPreviewing(true);
-    await media.play();
-
-    const loop = () => {
-      if (!previewActiveRef.current || !analyserRef.current) return;
-      paintPreview();
-      if (media.currentTime >= endTime || media.ended) {
-        media.pause();
+      await new Promise<void>((resolve) => {
+        const done = () => {
+          media.removeEventListener("seeked", done);
+          resolve();
+        };
+        media.addEventListener("seeked", done);
         media.currentTime = startTime;
-      }
+        // Already at target
+        if (Math.abs(media.currentTime - startTime) < 0.05) {
+          media.removeEventListener("seeked", done);
+          resolve();
+        }
+      });
+
+      previewActiveRef.current = true;
+      setPreviewing(true);
+      await media.play();
+
+      const loop = () => {
+        if (!previewActiveRef.current || !analyserRef.current) return;
+        paintPreview();
+        if (media.currentTime >= endTime || media.ended) {
+          media.currentTime = startTime;
+          void media.play().catch(() => undefined);
+        }
+        previewRafRef.current = requestAnimationFrame(loop);
+      };
       previewRafRef.current = requestAnimationFrame(loop);
-    };
-    previewRafRef.current = requestAnimationFrame(loop);
+    } catch {
+      stopPreview();
+      setError(labels.error);
+    }
   }
 
   useEffect(() => {
