@@ -1554,7 +1554,11 @@
       "startTime": "Начало (с)",
       "endTime": "Конец (с)",
       "duration": "Длительность",
-      "tooLong": "Максимум 5 минут."
+      "tooLong": "Максимум 5 минут.",
+      "backgroundMode": "Фон для монтажа",
+      "bgChromaGreen": "Хромакей зелёный",
+      "bgChromaMagenta": "Хромакей пурпурный",
+      "chromaHint": "Зелёный/пурпурный легко вырезаются в Premiere, DaVinci, CapCut. Настоящая альфа WebM в браузере ненадёжна."
     }
   },
   "toolPage": {

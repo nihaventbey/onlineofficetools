@@ -1661,7 +1661,11 @@
       "startTime": "Başlangıç (sn)",
       "endTime": "Bitiş (sn)",
       "duration": "Süre",
-      "tooLong": "En fazla 5 dakika."
+      "tooLong": "En fazla 5 dakika.",
+      "backgroundMode": "Editör arka planı",
+      "bgChromaGreen": "Yeşil chroma (kolay sil)",
+      "bgChromaMagenta": "Macenta chroma (kolay sil)",
+      "chromaHint": "Yeşil/macenta Premiere, DaVinci, CapCut’ta kolayca silinir. Tarayıcıda gerçek WebM şeffaflığı güvenilir değildir."
     }
   },
   "toolPage": {

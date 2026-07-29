@@ -792,6 +792,10 @@ export type Dictionary = {
       gradient: string;
       transparentBackground: string;
       backgroundColor: string;
+      backgroundMode: string;
+      bgChromaGreen: string;
+      bgChromaMagenta: string;
+      chromaHint: string;
       placement: string;
       placementBottom: string;
       placementCenter: string;

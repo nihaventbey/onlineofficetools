@@ -1554,7 +1554,11 @@
       "startTime": "Inicio (s)",
       "endTime": "Fin (s)",
       "duration": "Duración",
-      "tooLong": "Máximo 5 minutos."
+      "tooLong": "Máximo 5 minutos.",
+      "backgroundMode": "Fondo para editores",
+      "bgChromaGreen": "Chroma verde (key)",
+      "bgChromaMagenta": "Chroma magenta (key)",
+      "chromaHint": "Verde/magenta se eliminan limpio en Premiere, DaVinci, CapCut. El alpha WebM real no es fiable en navegadores."
     }
   },
   "toolPage": {

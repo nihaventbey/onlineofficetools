@@ -76,7 +76,7 @@ export default function VideoAudioVisualizer({ labels }: Props) {
   const [colorPrimary, setColorPrimary] = useState("#22d3ee");
   const [colorSecondary, setColorSecondary] = useState("#6366f1");
   const [gradient, setGradient] = useState(true);
-  const [transparentBg, setTransparentBg] = useState(true);
+  const [bgMode, setBgMode] = useState<"transparent" | "solid" | "chromaGreen" | "chromaMagenta">("chromaGreen");
   const [bgColor, setBgColor] = useState("#0f172a");
   const [placement, setPlacement] = useState<VisualizerPlacement>("bottom");
   const [bandHeight, setBandHeight] = useState(0.28);
@@ -108,13 +108,22 @@ export default function VideoAudioVisualizer({ labels }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const resolvedBackground =
+    bgMode === "transparent"
+      ? "transparent"
+      : bgMode === "chromaGreen"
+        ? "#00ff00"
+        : bgMode === "chromaMagenta"
+          ? "#ff00ff"
+          : bgColor;
+
   const drawOpts = useCallback(
     () => ({
       style,
       colorPrimary,
       colorSecondary,
       gradient,
-      background: transparentBg ? "transparent" : bgColor,
+      background: resolvedBackground,
       placement,
       bandHeight,
       sensitivity,
@@ -124,8 +133,7 @@ export default function VideoAudioVisualizer({ labels }: Props) {
       colorPrimary,
       colorSecondary,
       gradient,
-      transparentBg,
-      bgColor,
+      resolvedBackground,
       placement,
       bandHeight,
       sensitivity,
@@ -261,7 +269,7 @@ export default function VideoAudioVisualizer({ labels }: Props) {
 
   useEffect(() => {
     if (previewing) paintPreview();
-  }, [paintPreview, previewing, style, colorPrimary, colorSecondary, gradient, transparentBg, placement, bandHeight, sensitivity, exportMode]);
+  }, [paintPreview, previewing, style, colorPrimary, colorSecondary, gradient, bgMode, bgColor, placement, bandHeight, sensitivity, exportMode]);
 
   async function onAudioFile(file: File) {
     if (!isAudioFile(file)) {
@@ -558,16 +566,30 @@ export default function VideoAudioVisualizer({ labels }: Props) {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={transparentBg}
-                onChange={(e) => setTransparentBg(e.target.checked)}
+            <label className="block text-sm">
+              <span className="mb-1 block font-medium text-slate-700">{labels.backgroundMode}</span>
+              <select
+                value={bgMode}
+                onChange={(e) =>
+                  setBgMode(
+                    e.target.value as
+                      | "transparent"
+                      | "solid"
+                      | "chromaGreen"
+                      | "chromaMagenta",
+                  )
+                }
                 disabled={busy || (exportMode === "composite" && Boolean(videoEl))}
-              />
-              {labels.transparentBackground}
+                className="min-h-11 w-full rounded-xl border border-slate-200 px-3"
+              >
+                <option value="chromaGreen">{labels.bgChromaGreen}</option>
+                <option value="chromaMagenta">{labels.bgChromaMagenta}</option>
+                <option value="transparent">{labels.transparentBackground}</option>
+                <option value="solid">{labels.backgroundColor}</option>
+              </select>
+              <p className="mt-1 text-xs text-slate-500">{labels.chromaHint}</p>
             </label>
-            {!transparentBg ? (
+            {bgMode === "solid" ? (
               <label className="block text-sm">
                 <span className="mb-1 block font-medium text-slate-700">{labels.backgroundColor}</span>
                 <input

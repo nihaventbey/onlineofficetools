@@ -1554,7 +1554,11 @@
       "startTime": "Start (Sek.)",
       "endTime": "Ende (Sek.)",
       "duration": "Dauer",
-      "tooLong": "Maximal 5 Minuten."
+      "tooLong": "Maximal 5 Minuten.",
+      "backgroundMode": "Hintergrund für Editoren",
+      "bgChromaGreen": "Chroma-Grün (ausstanzen)",
+      "bgChromaMagenta": "Chroma-Magenta (ausstanzen)",
+      "chromaHint": "Grün/Magenta lassen sich in Premiere, DaVinci, CapCut sauber ausstanzen. Echtes WebM-Alpha ist im Browser unzuverlässig."
     }
   },
   "toolPage": {

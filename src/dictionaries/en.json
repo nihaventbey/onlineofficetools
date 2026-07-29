@@ -1554,7 +1554,11 @@
       "startTime": "Start (seconds)",
       "endTime": "End (seconds)",
       "duration": "Duration",
-      "tooLong": "Maximum length is 5 minutes."
+      "tooLong": "Maximum length is 5 minutes.",
+      "backgroundMode": "Background for editors",
+      "bgChromaGreen": "Chroma green (key out)",
+      "bgChromaMagenta": "Chroma magenta (key out)",
+      "chromaHint": "Green/magenta keys cleanly in Premiere, DaVinci, CapCut. True WebM alpha is unreliable in browsers."
     }
   },
   "toolPage": {
