@@ -132,17 +132,23 @@ function drawMirror(
   sens: number,
   opts: VisualizerDrawOptions,
 ) {
-  const bars = Math.min(64, freq.length);
-  const step = Math.floor(freq.length / bars);
+  // Half the bars fan out from center to each side (classic mirrored spectrum).
+  const halfCount = Math.min(48, Math.floor(freq.length / 2));
+  const step = Math.max(1, Math.floor(freq.length / (halfCount * 2)));
   const gap = 2;
-  const barW = Math.max(2, (r.rw - gap * bars) / bars);
-  const mid = r.y + r.rh / 2;
+  const usable = r.rw / 2;
+  const barW = Math.max(2, (usable - gap * halfCount) / halfCount);
+  const midY = r.y + r.rh / 2;
+  const midX = r.x + r.rw / 2;
   strokeFill(ctx, opts.gradient, opts.colorPrimary, opts.colorSecondary);
-  for (let i = 0; i < bars; i++) {
+  for (let i = 0; i < halfCount; i++) {
     const v = (freq[i * step] ?? 0) / 255;
-    const half = Math.max(1, (v * sens * r.rh * 0.45));
-    const x = r.x + i * (barW + gap);
-    ctx.fillRect(x, mid - half, barW, half * 2);
+    const half = Math.max(1, v * sens * r.rh * 0.45);
+    const offset = i * (barW + gap);
+    // Right side (outward from center)
+    ctx.fillRect(midX + offset, midY - half, barW, half * 2);
+    // Left side (mirror)
+    ctx.fillRect(midX - offset - barW, midY - half, barW, half * 2);
   }
 }
 
