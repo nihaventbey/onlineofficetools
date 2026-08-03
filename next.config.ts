@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -11,8 +12,15 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    // Note: "/" is handled by src/proxy.ts (geo/language-aware redirect).
+    // Note: "/" is handled by src/middleware.ts (geo/language-aware redirect).
     return [
+      // Collapse www → apex so Google does not treat them as duplicate hosts.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.onlineofficetools.com" }],
+        destination: "https://onlineofficetools.com/:path*",
+        permanent: true,
+      },
       {
         source: "/:lang(en|tr|de|fr|es|it|pt|ru)/word-counter",
         destination: "/:lang/tools/word-counter",

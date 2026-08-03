@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { defaultLocale, isLocale, locales, type Locale } from "@/lib/i18n";
+import { defaultLocale, isLocale, type Locale } from "@/lib/locales";
 import { updateSupabaseSession } from "@/lib/supabase/middleware";
 
 /**
- * Maps visitor country (Vercel geo header) to a site locale.
- * Only used when the user has no explicit NEXT_LOCALE cookie.
+ * Locale redirects + admin session refresh.
+ * Cloudflare: CF-IPCountry. Vercel: x-vercel-ip-country.
  */
 const countryToLocale: Record<string, Locale> = {
   TR: "tr",
@@ -54,12 +54,26 @@ function localeFromAcceptLanguage(header: string | null): Locale | null {
   return null;
 }
 
+function isCrawler(userAgent: string | null): boolean {
+  if (!userAgent) return false;
+  return /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|twitterbot|linkedinbot|embedly|pinterest|redditbot|applebot|semrushbot|ahrefsbot|mj12bot|dotbot|bytespider|gptbot|claudebot|perplexity/i.test(
+    userAgent,
+  );
+}
+
 function detectLocale(request: NextRequest): Locale {
   const cookie = request.cookies.get("NEXT_LOCALE")?.value;
   if (cookie && isLocale(cookie)) return cookie;
 
-  const country =
-    request.headers.get("x-vercel-ip-country")?.toUpperCase() ?? "";
+  if (isCrawler(request.headers.get("user-agent"))) {
+    return defaultLocale;
+  }
+
+  const country = (
+    request.headers.get("cf-ipcountry") ??
+    request.headers.get("x-vercel-ip-country") ??
+    ""
+  ).toUpperCase();
   const byCountry = countryToLocale[country];
   if (byCountry) return byCountry;
 
@@ -71,7 +85,6 @@ function detectLocale(request: NextRequest): Locale {
 
 const ADMIN_LOGIN_PATH = "/admin/login";
 
-/** Retired EBYS slugs → home (module deactivated). */
 const EBYS_LEGACY_REDIRECTS: Record<string, string> = {
   "/tools/arz-rica": "/",
   "/tools/sdp-arama": "/",
@@ -100,14 +113,8 @@ async function handleAdminRoute(
   request: NextRequest,
 ): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
-
-  // Forward the current pathname to Server Components (e.g. the admin
-  // layout guard) so they can tell the login page apart from the rest of
-  // the admin panel without re-parsing the URL.
   request.headers.set("x-pathname", pathname);
 
-  // Refresh the Supabase session cookies on every admin request so the
-  // access token doesn't silently expire mid-session.
   const { response, user } = await updateSupabaseSession(request);
 
   if (pathname === ADMIN_LOGIN_PATH) {
@@ -125,7 +132,7 @@ async function handleAdminRoute(
   return response;
 }
 
-export default function proxy(
+export function middleware(
   request: NextRequest,
 ): NextResponse | Promise<NextResponse> {
   const { pathname } = request.nextUrl;
@@ -141,20 +148,15 @@ export default function proxy(
     return NextResponse.next();
   }
 
-  // Path has no locale prefix (e.g. "/" or "/tools/word-counter"):
-  // send the visitor to their detected language.
   const locale = detectLocale(request);
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
-  // 307 (temporary): the target depends on the visitor, so it must not be cached.
-  return NextResponse.redirect(url, 307);
+  const status = isCrawler(request.headers.get("user-agent")) ? 308 : 307;
+  return NextResponse.redirect(url, status);
 }
 
 export const config = {
   matcher: [
-    // Run on the admin panel (session refresh + auth guard) and on the
-    // public site for locale redirects. Skip Next internals, the API,
-    // and static/SEO files everywhere.
     "/((?!_next|api|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };

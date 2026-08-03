@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ToolSearch from "@/components/tools/ToolSearch";
@@ -11,6 +12,18 @@ import { featuredTools } from "@/lib/tools/registry";
 type PageProps = {
   params: Promise<{ lang: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  return {
+    openGraph: {
+      url: absoluteUrl(`/${lang}`),
+    },
+  };
+}
 
 export default async function HomePage({ params }: PageProps) {
   const { lang } = await params;
@@ -35,17 +48,33 @@ export default async function HomePage({ params }: PageProps) {
   );
   const categories = visibleCategories(locale);
 
+  // WebSite/Organization feed Knowledge Graph; they do NOT appear in the
+  // Rich Results Test UI. Test a tool URL for FAQ/HowTo/Breadcrumb instead.
+  // SearchAction omitted: there is no server search URL (filter is client-side).
   const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: dict.common.siteName,
     url: absoluteUrl(`/${locale}`),
     inLanguage: locale,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${absoluteUrl(`/${locale}`)}#tools`,
-      "query-input": "required name=search_term_string",
+    publisher: {
+      "@type": "Organization",
+      name: dict.common.siteName,
+      url: absoluteUrl(`/${locale}`),
     },
+  };
+
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: dict.home.title,
+    numberOfItems: tools.length,
+    itemListElement: tools.slice(0, 20).map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.title,
+      url: absoluteUrl(`/${locale}/tools/${t.slug}`),
+    })),
   };
 
   return (
@@ -53,6 +82,10 @@ export default async function HomePage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
       />
       <section className="relative overflow-hidden rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 px-5 py-7 shadow-sm sm:px-10 sm:py-10 lg:px-12 lg:py-12">
         <div

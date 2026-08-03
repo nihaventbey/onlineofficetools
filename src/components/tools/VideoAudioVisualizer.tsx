@@ -159,6 +159,11 @@ export default function VideoAudioVisualizer({ labels }: Props) {
     );
   }, [drawOpts, exportMode, presetId, videoEl]);
 
+  // RAF loop must read the latest painter — otherwise style/color/placement
+  // changes stay stuck in the closure from startPreview() until stop.
+  const paintPreviewRef = useRef(paintPreview);
+  paintPreviewRef.current = paintPreview;
+
   function stopPreview() {
     previewActiveRef.current = false;
     cancelAnimationFrame(previewRafRef.current);
@@ -272,7 +277,7 @@ export default function VideoAudioVisualizer({ labels }: Props) {
 
       const loop = () => {
         if (!previewActiveRef.current || !analyserRef.current) return;
-        paintPreview();
+        paintPreviewRef.current();
         if (media.currentTime >= endTime || media.ended) {
           media.currentTime = startTime;
           void media.play().catch(() => undefined);

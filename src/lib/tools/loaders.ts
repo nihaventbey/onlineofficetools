@@ -76,3 +76,9 @@ export async function loadToolComponent(
   const mod = await loader();
   return mod.default;
 }
+
+export function hasToolLoader(slug: string): boolean {
+  return Boolean(loaders[slug]);
+}
+
+export const toolLoaderSlugs = Object.keys(loaders);

@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   CONSENT_CHANGE_EVENT,
   CONSENT_STORAGE_KEY,
@@ -37,30 +37,33 @@ function applyConsent(accepted: boolean) {
   });
 }
 
+function trackPageView(pathname: string) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", "page_view", {
+    page_path: pathname + window.location.search,
+    page_location: window.location.href,
+    page_title: document.title,
+  });
+}
+
 /**
  * Loads gtag on every page so Google Tag Coverage sees the site as tagged.
  * Storage stays denied until the consent banner grants it (Consent Mode v2).
+ * Initial page_view comes from gtag config; client navigations send another.
  */
 export default function GoogleAnalytics() {
   const pathname = usePathname();
-  const [consented, setConsented] = useState(false);
+  const isFirstPath = useRef(true);
 
   useEffect(() => {
-    const accepted = hasAnalyticsConsent();
-    setConsented(accepted);
-    applyConsent(accepted);
+    applyConsent(hasAnalyticsConsent());
 
     function onConsent(event: Event) {
       const detail = (event as CustomEvent<ConsentChangeDetail>).detail;
       const ok = Boolean(detail?.accepted);
-      setConsented(ok);
       applyConsent(ok);
-      if (ok && typeof window.gtag === "function") {
-        window.gtag("event", "page_view", {
-          page_path: window.location.pathname + window.location.search,
-          page_location: window.location.href,
-          page_title: document.title,
-        });
+      if (ok) {
+        trackPageView(window.location.pathname);
       }
     }
 
@@ -69,14 +72,12 @@ export default function GoogleAnalytics() {
   }, []);
 
   useEffect(() => {
-    if (!consented || typeof window.gtag !== "function") return;
-    const path = pathname + window.location.search;
-    window.gtag("event", "page_view", {
-      page_path: path,
-      page_location: window.location.href,
-      page_title: document.title,
-    });
-  }, [pathname, consented]);
+    if (isFirstPath.current) {
+      isFirstPath.current = false;
+      return;
+    }
+    trackPageView(pathname);
+  }, [pathname]);
 
   if (!GA_ID.startsWith("G-")) return null;
 
@@ -89,9 +90,9 @@ export default function GoogleAnalytics() {
       <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}', { anonymize_ip: true });
+          window.gtag = window.gtag || function(){dataLayer.push(arguments);};
+          window.gtag('js', new Date());
+          window.gtag('config', '${GA_ID}');
         `}
       </Script>
     </>

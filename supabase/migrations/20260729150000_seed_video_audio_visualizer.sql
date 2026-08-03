@@ -2,7 +2,7 @@
 
 insert into public.tools (slug, category, status, sort_order)
 values
-  ('video-audio-visualizer', 'video', 'published', 645)
+  ('video-audio-visualizer', 'audio', 'published', 645)
 on conflict (slug) do update set
   category = excluded.category,
   status = 'published',

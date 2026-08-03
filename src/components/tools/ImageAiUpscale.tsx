@@ -19,6 +19,16 @@ type Props = { labels: Dictionary["tools"]["imageAiUpscale"] };
 const MODEL_URL =
   "https://media.githubusercontent.com/media/xinntao/Real-ESRGAN/master/models/RealESRGAN_x2plus.onnx";
 
+/** Keep ORT WASM off our host — Cloudflare Workers assets max out at 25 MiB. */
+const ORT_WASM_CDN =
+  "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/";
+
+async function loadOrt() {
+  const ort = await import("onnxruntime-web");
+  // Prefer CDN paths so the 26 MiB jsep.wasm is never required from /_next/static.
+  ort.env.wasm.wasmPaths = ORT_WASM_CDN;
+  return ort;
+}
 async function canvasUpscale2x(file: File): Promise<Blob> {
   const bmp = await loadImageBitmap(file);
   const canvas = document.createElement("canvas");
@@ -49,7 +59,7 @@ export default function ImageAiUpscale({ labels }: Props) {
   }, [preview, result]);
 
   useEffect(() => {
-    void import("onnxruntime-web")
+    void loadOrt()
       .then(() => setOrtAvailable(true))
       .catch(() => setOrtAvailable(false));
   }, []);
@@ -88,7 +98,7 @@ export default function ImageAiUpscale({ labels }: Props) {
       }
 
       setLoadingModel(true);
-      const ort = await import("onnxruntime-web");
+      const ort = await loadOrt();
       setLoadingModel(false);
 
       // Beta: attempt CDN model; fall back to canvas 2× if inference fails.

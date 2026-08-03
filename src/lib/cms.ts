@@ -344,10 +344,12 @@ async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {
     });
 }
 
-/** CMS category wins when it is a recognized category; otherwise fall back to the registry. */
+/** Registry is the UI taxonomy source of truth (nav + category pages). */
 function resolveCategory(cmsCategory: string | null, slug: string): ToolCategory {
+  const fromRegistry = getToolBySlug(slug)?.category;
+  if (fromRegistry) return fromRegistry;
   if (cmsCategory && isToolCategory(cmsCategory)) return cmsCategory;
-  return getToolBySlug(slug)?.category ?? "text";
+  return "text";
 }
 
 async function offlineTool(slug: string, locale: Locale): Promise<CmsToolPage | null> {

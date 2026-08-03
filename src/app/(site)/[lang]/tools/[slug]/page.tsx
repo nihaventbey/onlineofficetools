@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import ToolFeedback from "@/components/tools/ToolFeedback";
+import ToolMount from "@/components/tools/ToolMount";
 import { buildFaqHowToJsonLd } from "@/components/tools/ToolFaqHowTo";
 import {
   getAdSenseConfig,
@@ -12,7 +13,6 @@ import {
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { getToolBySlug } from "@/lib/tools/registry";
-import { loadToolComponent } from "@/lib/tools/loaders";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -57,8 +57,7 @@ export async function generateMetadata({
       canonical: absoluteUrl(`/${locale}/tools/${slug}`),
       languages: languageAlternates(`/tools/${slug}`),
     },
-    // og:image / twitter:image come from the opengraph-image.tsx file
-    // convention (Next injects the correct hashed URLs automatically).
+    // Static OG — no next/og ImageResponse (Cloudflare Worker size).
     openGraph: {
       type: "website",
       locale,
@@ -66,11 +65,13 @@ export async function generateMetadata({
       siteName: dict.common.siteName,
       title,
       description,
+      images: [{ url: "/og-default.png", width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: ["/og-default.png"],
     },
   };
 }
@@ -86,9 +87,6 @@ export default async function ToolPage({ params }: PageProps) {
   const dict = await getDictionary(locale);
   const tool = await getPublishedTool(slug, locale);
   if (!tool) notFound();
-
-  const Component = await loadToolComponent(slug);
-  if (!Component) notFound();
 
   const labels = dict.tools[reg.dictKey];
   const all = await getPublishedTools(locale);
@@ -188,7 +186,7 @@ export default async function ToolPage({ params }: PageProps) {
         cmsHowtoSteps={tool.howtoSteps}
         adConfig={adConfig}
       >
-        <Component labels={labels} />
+        <ToolMount slug={slug} labels={labels} />
         <ToolFeedback dict={dict} slug={slug} />
         {tool.content ? (
           <article className="prose prose-slate max-w-none">

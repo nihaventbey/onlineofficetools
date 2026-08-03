@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ToolPageShell from "@/components/tools/ToolPageShell";
+import ToolMount from "@/components/tools/ToolMount";
 import { getToolForPreview } from "@/lib/cms";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { verifyPreviewToken } from "@/lib/preview-token";
 import { getAdminUser } from "@/lib/supabase/requireAdminUser";
 import { getToolBySlug } from "@/lib/tools/registry";
-import { loadToolComponent } from "@/lib/tools/loaders";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -49,9 +49,6 @@ export default async function ToolPreviewPage({ params, searchParams }: PageProp
   const tool = await getToolForPreview(slug, locale);
   if (!tool) notFound();
 
-  const Component = await loadToolComponent(slug);
-  if (!Component) notFound();
-
   const labels = dict.tools[reg.dictKey];
 
   return (
@@ -74,7 +71,7 @@ export default async function ToolPreviewPage({ params, searchParams }: PageProp
         cmsHowtoSteps={tool.howtoSteps}
         showShare={false}
       >
-        <Component labels={labels} />
+        <ToolMount slug={slug} labels={labels} />
         {tool.content ? (
           <article className="prose prose-slate max-w-none">
             <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-600">

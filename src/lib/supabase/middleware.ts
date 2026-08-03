@@ -10,7 +10,7 @@ type SessionResult = {
 
 /**
  * Refreshes the Supabase auth session for a request/response pair inside
- * the proxy (Next.js middleware). Mirrors the official `@supabase/ssr`
+ * the middleware (Next.js Edge middleware). Mirrors the official `@supabase/ssr`
  * middleware pattern: reads cookies from the incoming request and mirrors
  * any refreshed cookies onto both the request (for downstream server
  * components) and the outgoing response (so the browser gets them too).

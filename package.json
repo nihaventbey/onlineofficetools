@@ -7,12 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "preview": "opennextjs-cloudflare build && node scripts/cf-strip-large-assets.mjs && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && node scripts/cf-strip-large-assets.mjs && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && node scripts/cf-strip-large-assets.mjs && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "cf:strip-assets": "node scripts/cf-strip-large-assets.mjs",
     "sync:sdp": "node scripts/sync-sdp.mjs",
     "sync:detsis": "node scripts/sync-detsis.mjs",
     "test:sdp": "node scripts/test-sdp-sync.mjs",
     "test:arz-rica": "node --experimental-strip-types scripts/test-arz-relation.mjs"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.2",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.50.0",
     "docx": "^9.5.1",
@@ -21,7 +27,7 @@
     "lamejs": "^1.2.1",
     "mammoth": "^1.9.1",
     "marked": "^18.0.6",
-    "next": "16.2.10",
+    "next": "^16.2.11",
     "onnxruntime-web": "^1.22.0",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.1.200",
@@ -39,8 +45,16 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "^16.2.11",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.118.0"
+  },
+  "allowScripts": {
+    "esbuild@0.25.4": true,
+    "esbuild@0.28.1": true,
+    "workerd@1.20260730.1": true,
+    "sharp@0.35.2": true,
+    "sharp@0.34.5": true
   }
 }

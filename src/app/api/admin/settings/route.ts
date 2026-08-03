@@ -127,11 +127,8 @@ export async function POST(request: Request) {
     }
   }
 
-  // Invalidate site layouts so the new logo/settings appear promptly.
+  // One layout invalidation is enough; looping every locale burned free ISR writes.
   revalidatePath("/", "layout");
-  for (const lang of ["en", "tr", "de", "fr", "es", "it", "pt", "ru"]) {
-    revalidatePath(`/${lang}`, "layout");
-  }
 
   return NextResponse.json({ ok: true, key, value });
 }

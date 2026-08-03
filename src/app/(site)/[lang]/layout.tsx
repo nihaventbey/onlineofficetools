@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import AdsLayout from "@/components/AdsLayout";
 import ConsentBanner from "@/components/ConsentBanner";
@@ -22,20 +20,34 @@ import {
 import { absoluteUrl, languageAlternates, SITE_URL } from "@/lib/site";
 import "../../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+/** Must run synchronously before AdSense/gtag so Consent Mode v2 is detected. */
+const CONSENT_DEFAULT_SCRIPT = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+try {
+  if (localStorage.getItem('${CONSENT_STORAGE_KEY}') === 'accepted') {
+    gtag('consent', 'update', {
+      analytics_storage: 'granted',
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted'
+    });
+  }
+} catch (e) {}
+`;
 
 export const dynamicParams = false;
-// CMS branding refreshes hourly; admin settings also call revalidatePath on save.
-// Keep this high to avoid burning Vercel ISR write quota.
-export const revalidate = 3600;
+// Fully static until deploy or on-demand revalidatePath (admin save).
+// Time-based ISR was burning Vercel free-tier write quota across locales × tools.
+export const revalidate = false;
 export const viewport: Viewport = {
   themeColor: "#2563eb",
 };
@@ -71,12 +83,15 @@ export async function generateMetadata({
     },
     description,
     alternates: {
+      // Home canonical; child routes override with their own path.
       canonical: absoluteUrl(`/${lang}`),
       languages,
     },
-    // Favicon/apple icons come from the icon.tsx / apple-icon.tsx file
-    // convention, which converts the CMS SVG artwork to PNG (Safari and
-    // Google Search do not support SVG favicons).
+    // Static icons/OG — avoids bundling next/og WASM (keeps Cloudflare free Worker under 3 MiB).
+    icons: {
+      icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+      apple: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+    },
     robots: {
       index: true,
       follow: true,
@@ -84,20 +99,21 @@ export async function generateMetadata({
     verification: {
       google: "kb_2Cv5vK2rMofTDNUmljAfEcI8IK1S7pGsu8R62Gs4",
     },
-    // og:image / twitter:image come from the opengraph-image.tsx file
-    // convention (Next injects the correct hashed URLs automatically).
+    // Do not set openGraph.url here — it would leak the homepage URL onto
+    // every child page that does not override openGraph.
     openGraph: {
       type: "website",
       locale: lang,
-      url: absoluteUrl(`/${lang}`),
       siteName,
       title: dict.home.title,
       description,
+      images: [{ url: "/og-default.png", width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.home.title,
       description,
+      images: ["/og-default.png"],
     },
     manifest: "/manifest.webmanifest",
   };
@@ -122,32 +138,15 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <head>
-        <Script id="google-consent-default" strategy="beforeInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('consent', 'default', {
-              analytics_storage: 'denied',
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              wait_for_update: 500
-            });
-            try {
-              if (localStorage.getItem('${CONSENT_STORAGE_KEY}') === 'accepted') {
-                gtag('consent', 'update', {
-                  analytics_storage: 'granted',
-                  ad_storage: 'granted',
-                  ad_user_data: 'granted',
-                  ad_personalization: 'granted'
-                });
-              }
-            } catch (e) {}
-          `}
-        </Script>
+        {/* Inline + first in <head>: Next.js beforeInteractive is unreliable
+            outside app/layout.tsx and was loading AFTER AdSense. */}
+        <script
+          id="google-consent-default"
+          dangerouslySetInnerHTML={{ __html: CONSENT_DEFAULT_SCRIPT }}
+        />
         {showAdSenseScript ? (
           <script
             async

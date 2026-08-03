@@ -9,7 +9,7 @@ import type { Database } from "@/lib/supabase/types";
  *
  * Note: cookie writes silently no-op when called from a Server Component
  * (Next.js only allows cookie mutation from Server Actions and Route
- * Handlers). Session refresh for those contexts is handled by the proxy
+ * Handlers). Session refresh for those contexts is handled by middleware
  * (`src/lib/supabase/middleware.ts`).
  */
 export async function createSupabaseServerClient(): Promise<SupabaseClient<Database> | null> {

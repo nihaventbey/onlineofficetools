@@ -1,0 +1,8 @@
+NEXTJS_ENV=development
+# Copy to .dev.vars and fill for local Workers preview:
+# NEXT_PUBLIC_SITE_URL=https://onlineofficetools.com
+# NEXT_PUBLIC_SUPABASE_URL=
+# NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+# NEXT_PUBLIC_GA_MEASUREMENT_ID=
+# NEXT_PUBLIC_ADSENSE_CLIENT=
+# SUPABASE_SERVICE_ROLE_KEY=
