@@ -132,7 +132,7 @@ async function handleAdminRoute(
   return response;
 }
 
-export function middleware(
+export async function middleware(
   request: NextRequest,
 ): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
