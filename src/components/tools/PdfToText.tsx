@@ -42,7 +42,11 @@ export default function PdfToText({ labels }: Props) {
         const page = await pdf.getPage(i);
         const content = await page.getTextContent();
         const pageText = content.items
-          .map((item) => ("str" in item ? item.str : ""))
+          .map((item: { str?: string } | unknown) =>
+            item && typeof item === "object" && "str" in item
+              ? String((item as { str: unknown }).str)
+              : "",
+          )
           .join(" ")
           .trim();
         parts.push(`${labels.pages} ${i}\n${pageText}`);

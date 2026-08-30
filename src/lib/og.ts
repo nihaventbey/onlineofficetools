@@ -10,7 +10,7 @@ export const OG_SIZE = { width: 1200, height: 630 } as const;
  */
 async function toDataUri(url: string): Promise<string | null> {
   try {
-    const res = await fetch(url, { next: { revalidate: 300 } });
+    const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) return null;
     let mime = (res.headers.get("content-type") ?? "").split(";")[0]!.trim();
     if (!mime || mime === "application/octet-stream") {

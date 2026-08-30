@@ -134,7 +134,7 @@ async function handleAdminRoute(
 
 export function middleware(
   request: NextRequest,
-): NextResponse | Promise<NextResponse> {
+): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
@@ -154,6 +154,8 @@ export function middleware(
   const status = isCrawler(request.headers.get("user-agent")) ? 308 : 307;
   return NextResponse.redirect(url, status);
 }
+
+export default middleware;
 
 export const config = {
   matcher: [

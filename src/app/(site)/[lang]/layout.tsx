@@ -46,7 +46,6 @@ try {
 
 export const dynamicParams = false;
 // Fully static until deploy or on-demand revalidatePath (admin save).
-// Time-based ISR was burning Vercel free-tier write quota across locales × tools.
 export const revalidate = false;
 export const viewport: Viewport = {
   themeColor: "#2563eb",

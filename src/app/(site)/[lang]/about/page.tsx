@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import LegalPage from "@/components/legal/LegalPage";
-import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
+import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
 type PageProps = { params: Promise<{ lang: string }> };
 

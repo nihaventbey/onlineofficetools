@@ -4,10 +4,14 @@ import { notFound } from "next/navigation";
 import ToolSearch from "@/components/tools/ToolSearch";
 import ToolGrid from "@/components/tools/ToolGrid";
 import { getPublishedTools } from "@/lib/cms";
-import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
+import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
 import { categoryStyles, visibleCategories } from "@/lib/tools/categories";
 import { featuredTools } from "@/lib/tools/registry";
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
 type PageProps = {
   params: Promise<{ lang: string }>;

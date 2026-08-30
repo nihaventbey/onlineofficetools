@@ -210,6 +210,17 @@ export default function ToolEditor({ toolId }: ToolEditorProps) {
       return;
     }
 
+    // Trigger on-demand revalidation for all locales and categories
+    try {
+      await fetch("/api/admin/tools/revalidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: slug.trim(), category: category.trim() }),
+      });
+    } catch {
+      // Revalidation failure is non-fatal to save flow
+    }
+
     setSaving(false);
     router.replace("/admin/tools");
     router.refresh();
