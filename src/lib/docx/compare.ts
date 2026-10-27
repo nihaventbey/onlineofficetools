@@ -229,7 +229,6 @@ export function compareBlocks(
   const rows: CompareRow[] = [];
   let i = 0;
   let j = 0;
-  let textChanges = 0;
   let styleOnly = 0;
   let added = 0;
   let removed = 0;
@@ -255,24 +254,20 @@ export function compareBlocks(
       // Look ahead: if next right matches current left after a short add, treat as change
       // Simpler: emit remove; pairing with following add happens in a second pass
       removed++;
-      textChanges++;
       rows.push({ kind: "removed", left: left[i]!.text, right: "" });
       i++;
     } else {
       added++;
-      textChanges++;
       rows.push({ kind: "added", left: "", right: right[j]!.text });
       j++;
     }
   }
   while (i < left.length) {
     removed++;
-    textChanges++;
     rows.push({ kind: "removed", left: left[i++]!.text, right: "" });
   }
   while (j < right.length) {
     added++;
-    textChanges++;
     rows.push({ kind: "added", left: "", right: right[j++]!.text });
   }
 

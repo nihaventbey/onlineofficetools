@@ -25,7 +25,10 @@ export default function BelgenetHtml({ labels }: Props) {
   const syncingRef = useRef(false);
   const debounceRef = useRef<number | null>(null);
   const htmlRef = useRef(html);
-  htmlRef.current = html;
+
+  useEffect(() => {
+    htmlRef.current = html;
+  }, [html]);
 
   const fit = useMemo(
     () => estimatePageFit({ html, font, fontSizePt: fontSize }),

@@ -115,7 +115,7 @@ export default function QuickAccessMenu({
     };
   }, [variant]);
 
-  function ClearBar() {
+  function renderClearBar() {
     if (!favorites.length && !recent.length) return null;
     return (
       <div className="mb-2 flex flex-wrap items-center justify-end gap-1.5 border-b border-slate-100 pb-2">
@@ -153,7 +153,7 @@ export default function QuickAccessMenu({
   if (variant === "inline") {
     return (
       <div className={`space-y-3 ${className}`}>
-        <ClearBar />
+        {renderClearBar()}
         <div className="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
           {(
             [
@@ -214,7 +214,7 @@ export default function QuickAccessMenu({
           aria-label={dict.common.quickAccess}
           className="absolute right-0 z-50 mt-2 w-[min(92vw,20rem)] rounded-2xl border border-slate-200 bg-white p-3 shadow-xl"
         >
-          <ClearBar />
+          {renderClearBar()}
           <div className="mb-3 grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1">
             {(
               [

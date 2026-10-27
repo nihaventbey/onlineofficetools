@@ -5,7 +5,8 @@ import type { Dictionary } from "@/lib/i18n";
 import { useToolDraft } from "@/lib/state/useToolDraft";
 
 type Props = { labels: Dictionary["tools"]["ocr"] };
-type Draft = { text: string; lang: "eng" | "tur" };
+type OcrLang = "eng" | "tur" | "deu" | "fra" | "spa" | "ita" | "por" | "rus";
+type Draft = { text: string; lang: OcrLang };
 
 export default function OcrTool({ labels }: Props) {
   const [draft, setDraft, clear] = useToolDraft<Draft>("ocr", {
@@ -67,18 +68,27 @@ export default function OcrTool({ labels }: Props) {
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <div className="flex flex-wrap gap-2">
-        {(["eng", "tur"] as const).map((lang) => (
+        {([
+          { code: "eng", label: labels.langEn || "English" },
+          { code: "tur", label: labels.langTr || "Türkçe" },
+          { code: "deu", label: "Deutsch" },
+          { code: "fra", label: "Français" },
+          { code: "spa", label: "Español" },
+          { code: "ita", label: "Italiano" },
+          { code: "por", label: "Português" },
+          { code: "rus", label: "Русский" },
+        ] as const).map(({ code, label }) => (
           <button
-            key={lang}
+            key={code}
             type="button"
-            onClick={() => setDraft({ ...draft, lang })}
-            className={`min-h-11 rounded-xl px-4 text-sm font-medium ${
-              draft.lang === lang
-                ? "bg-blue-600 text-white"
-                : "border border-slate-200 bg-slate-50 text-slate-700"
+            onClick={() => setDraft({ ...draft, lang: code })}
+            className={`min-h-10 rounded-xl px-3 text-xs font-medium transition ${
+              draft.lang === code
+                ? "bg-blue-600 text-white shadow-sm"
+                : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
             }`}
           >
-            {lang === "eng" ? labels.langEn : labels.langTr}
+            {label}
           </button>
         ))}
       </div>

@@ -18,10 +18,6 @@ function byId(catalog, id) {
   return e;
 }
 
-function assert(cond, msg) {
-  if (!cond) throw new Error(msg);
-}
-
 function assertEq(actual, expected, label) {
   if (actual !== expected) {
     throw new Error(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
