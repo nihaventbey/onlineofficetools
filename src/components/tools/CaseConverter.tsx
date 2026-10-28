@@ -8,20 +8,20 @@ type Props = { labels: Dictionary["tools"]["caseConverter"] };
 
 function toTitleCase(text: string): string {
   return text.replace(
-    /\w\S*/g,
-    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+    /[\p{L}\p{N}]\S*/gu,
+    (word) => word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase(),
   );
 }
 
 function toSentenceCase(text: string): string {
   return text
-    .toLowerCase()
-    .replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase());
+    .toLocaleLowerCase()
+    .replace(/(^\s*[\p{L}\p{N}]|[.!?]\s*[\p{L}\p{N}])/gu, (match) => match.toLocaleUpperCase());
 }
 
 function toWords(text: string): string[] {
   return text
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/([\p{Ll}\p{N}])([\p{Lu}])/gu, "$1 $2")
     .replace(/[_\-]+/g, " ")
     .trim()
     .split(/\s+/)

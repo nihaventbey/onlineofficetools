@@ -20,14 +20,52 @@ const LOWER = "abcdefghijklmnopqrstuvwxyz";
 const NUMS = "0123456789";
 const SYMS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
-function randomFrom(charset: string, count: number): string {
-  const arr = new Uint32Array(count);
-  crypto.getRandomValues(arr);
-  let out = "";
-  for (let i = 0; i < count; i++) {
-    out += charset[arr[i] % charset.length];
+function buildPassword(opts: {
+  length: number;
+  upper: boolean;
+  lower: boolean;
+  numbers: boolean;
+  symbols: boolean;
+}): string {
+  const pools: string[] = [];
+  if (opts.upper) pools.push(UPPER);
+  if (opts.lower) pools.push(LOWER);
+  if (opts.numbers) pools.push(NUMS);
+  if (opts.symbols) pools.push(SYMS);
+  if (!pools.length) pools.push(LOWER);
+
+  const len = Math.min(128, Math.max(4, opts.length));
+  const chars: string[] = [];
+
+  // Guarantee at least one character from each selected class
+  for (const pool of pools) {
+    const arr = new Uint32Array(1);
+    crypto.getRandomValues(arr);
+    chars.push(pool[arr[0]! % pool.length]!);
   }
-  return out;
+
+  // Fill remaining length from combined pool
+  const full = pools.join("");
+  const remaining = len - chars.length;
+  if (remaining > 0) {
+    const arr = new Uint32Array(remaining);
+    crypto.getRandomValues(arr);
+    for (let i = 0; i < remaining; i++) {
+      chars.push(full[arr[i]! % full.length]!);
+    }
+  }
+
+  // Cryptographic shuffle
+  const shuffle = new Uint32Array(chars.length);
+  crypto.getRandomValues(shuffle);
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = shuffle[i]! % (i + 1);
+    const temp = chars[i]!;
+    chars[i] = chars[j]!;
+    chars[j] = temp;
+  }
+
+  return chars.join("");
 }
 
 export default function PasswordGenerator({ labels }: Props) {
@@ -40,6 +78,13 @@ export default function PasswordGenerator({ labels }: Props) {
     password: "",
   });
   const [copied, setCopied] = useState(false);
+
+  // Auto-generate strong initial password if empty
+  useMemo(() => {
+    if (!draft.password) {
+      draft.password = buildPassword(draft);
+    }
+  }, [draft]);
 
   const strength = useMemo(() => {
     const len = draft.password.length;
@@ -55,14 +100,7 @@ export default function PasswordGenerator({ labels }: Props) {
   }, [draft.password, labels]);
 
   function generate() {
-    let charset = "";
-    if (draft.upper) charset += UPPER;
-    if (draft.lower) charset += LOWER;
-    if (draft.numbers) charset += NUMS;
-    if (draft.symbols) charset += SYMS;
-    if (!charset) charset = LOWER;
-    const length = Math.min(128, Math.max(4, draft.length));
-    setDraft({ ...draft, length, password: randomFrom(charset, length) });
+    setDraft({ ...draft, password: buildPassword(draft) });
   }
 
   async function handleCopy() {

@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, isLocale, type Locale } from "@/lib/locales";
 import { updateSupabaseSession } from "@/lib/supabase/middleware";
+import { renderMarkdownForRequest } from "@/lib/agents/markdownNegotiation";
+
+const AGENT_LINK_HEADER = [
+  '</.well-known/api-catalog>; rel="api-catalog"',
+  '</.well-known/ai-catalog.json>; rel="service-desc"',
+  '</.well-known/agent-skills/index.json>; rel="agent-skills"',
+  '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+].join(", ");
 
 /**
  * Locale redirects + admin session refresh.
@@ -141,18 +149,39 @@ export async function middleware(
     return handleAdminRoute(request);
   }
 
+  // Markdown for Agents (Accept: text/markdown negotiation)
+  const acceptHeader = request.headers.get("accept") || "";
+  if (acceptHeader.includes("text/markdown")) {
+    const md = renderMarkdownForRequest(pathname);
+    const tokens = Math.ceil(md.length / 4);
+    return new NextResponse(md, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "x-markdown-tokens": String(tokens),
+        Vary: "Accept",
+        Link: AGENT_LINK_HEADER,
+        "Cache-Control": "public, max-age=3600, s-maxage=86400",
+      },
+    });
+  }
+
   const firstSegment = pathname.split("/")[1] ?? "";
   if (isLocale(firstSegment)) {
     const legacy = ebysLegacyRedirect(request, firstSegment);
     if (legacy) return legacy;
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set("Link", AGENT_LINK_HEADER);
+    return response;
   }
 
   const locale = detectLocale(request);
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
   const status = isCrawler(request.headers.get("user-agent")) ? 308 : 307;
-  return NextResponse.redirect(url, status);
+  const redirectResponse = NextResponse.redirect(url, status);
+  redirectResponse.headers.set("Link", AGENT_LINK_HEADER);
+  return redirectResponse;
 }
 
 export default middleware;

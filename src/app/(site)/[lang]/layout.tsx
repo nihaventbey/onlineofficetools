@@ -86,10 +86,16 @@ export async function generateMetadata({
       canonical: absoluteUrl(`/${lang}`),
       languages,
     },
-    // Static icons/OG — avoids bundling next/og WASM (keeps Cloudflare free Worker under 3 MiB).
+    // Google Favicon crawler requires a multiple of 48px (48x48, 96x96, 192x192) and root /favicon.ico
     icons: {
-      icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
-      apple: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+      icon: [
+        { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
     robots: {
       index: true,
@@ -140,6 +146,17 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
       className="h-full antialiased"
     >
       <head>
+        {/* Favicon for Googlebot-Image, Google Search and desktop/mobile browsers */}
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+        {/* AI Agent & API Discovery Links (RFC 8288 / RFC 9727 / SEP-1649 / ARD) */}
+        <link rel="api-catalog" href="/.well-known/api-catalog" />
+        <link rel="service-desc" href="/.well-known/ai-catalog.json" />
+        <link rel="agent-skills" href="/.well-known/agent-skills/index.json" />
+        <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json" />
+
         {/* Inline + first in <head>: Next.js beforeInteractive is unreliable
             outside app/layout.tsx and was loading AFTER AdSense. */}
         <script

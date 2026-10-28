@@ -17,7 +17,13 @@ export default function Base64Tool({ labels }: Props) {
 
   function encode() {
     try {
-      setOutput(btoa(unescape(encodeURIComponent(draft.input))));
+      const bytes = new TextEncoder().encode(draft.input);
+      let binary = "";
+      const len = bytes.byteLength;
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]!);
+      }
+      setOutput(btoa(binary));
       setError("");
     } catch {
       setError(labels.error);
@@ -26,7 +32,12 @@ export default function Base64Tool({ labels }: Props) {
 
   function decode() {
     try {
-      setOutput(decodeURIComponent(escape(atob(draft.input.trim()))));
+      const binary = atob(draft.input.trim());
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      setOutput(new TextDecoder().decode(bytes));
       setError("");
     } catch {
       setError(labels.error);

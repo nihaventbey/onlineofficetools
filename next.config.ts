@@ -12,6 +12,24 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Link",
+            value: [
+              '</.well-known/api-catalog>; rel="api-catalog"',
+              '</.well-known/ai-catalog.json>; rel="service-desc"',
+              '</.well-known/agent-skills/index.json>; rel="agent-skills"',
+              '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+            ].join(", "),
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     // Note: "/" is handled by src/middleware.ts (geo/language-aware redirect).
     return [

@@ -57,7 +57,46 @@ export default function ToolPageShell({
 
   useEffect(() => {
     pushRecent(slug);
-  }, [slug, pushRecent]);
+
+    // WebMCP API Integration (https://webmachinelearning.github.io/webmcp/)
+    if (typeof document !== "undefined") {
+      const modelContext = (
+        document as unknown as {
+          modelContext?: {
+            registerTool?: (
+              tool: Record<string, unknown>,
+              options?: { signal?: AbortSignal },
+            ) => Promise<unknown>;
+          };
+        }
+      ).modelContext;
+
+      if (modelContext && typeof modelContext.registerTool === "function") {
+        const controller = new AbortController();
+        const toolName = slug.replace(/-/g, "_");
+        void modelContext
+          .registerTool(
+            {
+              name: toolName,
+              description: `${title}: ${description}`,
+              inputSchema: {
+                type: "object",
+                properties: {
+                  action: { type: "string", description: "Operation to execute" },
+                },
+              },
+              execute: async () => {
+                return { success: true, tool: slug, url: window.location.href };
+              },
+            },
+            { signal: controller.signal },
+          )
+          .catch(() => undefined);
+
+        return () => controller.abort();
+      }
+    }
+  }, [slug, title, description, pushRecent]);
 
   return (
     <div className="mx-auto max-w-4xl space-y-8 pb-10">
@@ -146,7 +185,15 @@ export default function ToolPageShell({
         </div>
       </header>
 
-      {children}
+      {/* Declarative WebMCP Tool Container (https://github.com/webmachinelearning/webmcp) */}
+      <div
+        id="tool-interactive-container"
+        data-webmcp-tool={slug}
+        data-toolname={slug.replace(/-/g, "_")}
+        data-tooldescription={description}
+      >
+        {children}
+      </div>
 
       {adConfig ? (
         <AdSlot
