@@ -5,6 +5,7 @@ import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Header from "@/components/Header";
+import WebMcpProvider from "@/components/WebMcpProvider";
 import {
   getAdSenseConfig,
   getSiteSettings,
@@ -151,11 +152,15 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-        {/* AI Agent & API Discovery Links (RFC 8288 / RFC 9727 / SEP-1649 / ARD) */}
+        {/* AI Agent & API Discovery Links (RFC 8288 / RFC 9727 / SEP-1649 / ARD / Poppy / Auth.md) */}
         <link rel="api-catalog" href="/.well-known/api-catalog" />
         <link rel="service-desc" href="/.well-known/ai-catalog.json" />
         <link rel="agent-skills" href="/.well-known/agent-skills/index.json" />
         <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json" />
+        <link rel="poppy-manifest" href="/.well-known/poppy.json" />
+        <link rel="oauth-authorization-server" href="/.well-known/oauth-authorization-server" />
+        <link rel="oauth-protected-resource" href="/.well-known/oauth-protected-resource" />
+        <link rel="auth-md" href="/auth.md" />
 
         {/* Inline + first in <head>: Next.js beforeInteractive is unreliable
             outside app/layout.tsx and was loading AFTER AdSense. */}
@@ -177,6 +182,7 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
             {siteSettings.maintenanceMessage}
           </div>
         ) : null}
+        <WebMcpProvider />
         <Header
           locale={locale}
           dict={dict}

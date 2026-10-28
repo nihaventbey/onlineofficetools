@@ -1,22 +1,43 @@
-# Authentication & Agent Access for Online Office Tools
+# Auth.md
 
-Welcome to **Online Office Tools** (https://onlineofficetools.com).
+Agent registration and authentication metadata for Online Office Tools (https://onlineofficetools.com).
 
-## Public Web Tools Architecture (Zero-Auth)
-All office utilities (PDF, documents, spreadsheets, images, video, audio, text, and developer tools) run **100% in the user's browser (client-side)**:
-- **No API keys or registration required** for web and agent access to public tools.
-- **Privacy Guarantee**: Document contents, images, and files never leave the browser. No uploads occur to our servers.
-- **Autonomous Agents**: AI agents (OpenAI, Anthropic, Google Gemini, Perplexity) may freely inspect, scrape, and interact with all public tool pages (`/[lang]/tools/[slug]`).
+## Overview
+Online Office Tools is a privacy-first web application providing 60+ in-browser office utilities (PDF converters, image editors, text utilities, and document processors). All document processing executes 100% client-side in the user's browser via WebAssembly and JavaScript.
+
+## Public Tools & Zero-Auth Access
+- **Access Level**: Public / Unauthenticated
+- **Requirement**: No API keys, credentials, or pre-registration are needed to use public tools or inspect site metadata.
+- **Privacy Guarantee**: Zero file uploads to servers. All operations execute in-memory locally within the browser context.
+- **Agent Policy**: AI agents (OpenAI GPT, Anthropic Claude, Google Gemini, Perplexity, autonomous agent frameworks) are permitted and encouraged to crawl, parse, and execute tools.
 
 ## Agent Registration & Protocols
-- **API Catalog**: `/.well-known/api-catalog` (RFC 9727)
-- **Agent Resource Discovery (ARD)**: `/.well-known/ai-catalog.json`
-- **MCP Server Card**: `/.well-known/mcp/server-card.json` (SEP-1649)
-- **Agent Skills**: `/.well-known/agent-skills/index.json`
-- **Content Signals**: `robots.txt` declares `Content-Signal: ai-train=no, search=yes, ai-input=yes`
+- **Registration URI**: `https://onlineofficetools.com/auth.md`
+- **Supported Identity Types**: `agent`, `user`, `service`
+- **Supported Credential Types**: `bearer_token`, `anonymous`
+- **Token Endpoint**: `https://onlineofficetools.com/api/auth/token`
+- **Revocation Endpoint**: `https://onlineofficetools.com/api/auth/revoke`
+- **Claim URI**: `https://onlineofficetools.com/auth.md#claims`
+- **Policy URI**: `https://onlineofficetools.com/en/privacy`
 
-## Administrative CMS API
-Administrative routes under `/api/admin/*` and `/admin/*` require authorization:
-- **Provider**: Supabase Auth (OAuth 2.0 / OpenID Connect)
-- **Issuer**: `https://<supabase-project-id>.supabase.co/auth/v1`
-- **Token Type**: Bearer (JWT)
+## Discovery Endpoints
+- **Personal Agent Protocol (Poppy)**: `/.well-known/poppy.json`
+- **OAuth Authorization Server (RFC 8414)**: `/.well-known/oauth-authorization-server`
+- **OAuth Protected Resource (RFC 9728)**: `/.well-known/oauth-protected-resource`
+- **API Catalog (RFC 9727)**: `/.well-known/api-catalog`
+- **Agent Resource Discovery (ARD)**: `/.well-known/ai-catalog.json`
+- **MCP Server Card (SEP-1649)**: `/.well-known/mcp/server-card.json`
+- **Agent Skills (RFC v0.2.0)**: `/.well-known/agent-skills/index.json`
+- **Robots & Content Signals**: `/robots.txt` (`Content-Signal: ai-train=no, search=yes, ai-input=yes`)
+
+## DNS for AI Discovery (DNS-AID)
+DNS-AID discovery records (draft-mozleywilliams-dnsop-dnsaid / RFC 9460) configured for `onlineofficetools.com`:
+- `_index._agents.onlineofficetools.com. IN HTTPS 1 onlineofficetools.com. alpn="h2,h3" port="443"`
+- `_a2a._agents.onlineofficetools.com. IN HTTPS 1 onlineofficetools.com. alpn="h2,h3" port="443"`
+- Public discovery zones are signed with DNSSEC.
+
+## Claims
+Agents and clients operate under the following permission scopes:
+- `public:read`: Read-only access to site pages, metadata, markdown negotiation endpoints, and skill manifests (granted to all agents by default).
+- `tools:execute`: Execution of in-browser client-side WebAssembly tools via WebMCP or DOM automation.
+- `admin:write`: Administrative CMS access (restricted to authorized administrators via Supabase OAuth).

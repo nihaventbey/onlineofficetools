@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "online-office-tools",
+      "type": "skill",
+      "description": "Client-side document, PDF, media, and office conversion tools running privately in the browser.",
+      "url": "https://onlineofficetools.com/.well-known/agent-skills/office-tools/SKILL.md",
+      "digest": "sha256:124f53ba1481923b5569932cc26c531c9212eea4c49fd5538b8a6ef8223ebcaf"
+    }
+  ]
+}

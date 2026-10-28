@@ -7,12 +7,8 @@ export const revalidate = 86400;
 export async function GET() {
   const metadata = {
     resource: SITE_URL,
-    authorization_servers: [
-      process.env.NEXT_PUBLIC_SUPABASE_URL
-        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1`
-        : `${SITE_URL}/api/auth`,
-    ],
-    scopes_supported: ["public:read", "admin:write"],
+    authorization_servers: [SITE_URL],
+    scopes_supported: ["public:read", "tools:execute", "admin:write"],
     bearer_methods_supported: ["header"],
     resource_documentation: `${SITE_URL}/auth.md`,
   };

@@ -1,0 +1,16 @@
+{
+  "protocol_version": "0.1",
+  "organization": {
+    "name": "Online Office Tools",
+    "domain": "onlineofficetools.com"
+  },
+  "auth": {
+    "issuer": "https://onlineofficetools.com"
+  },
+  "apis": {
+    "catalog_url": "https://onlineofficetools.com/.well-known/api-catalog"
+  },
+  "web": {
+    "home_url": "https://onlineofficetools.com/en"
+  }
+}

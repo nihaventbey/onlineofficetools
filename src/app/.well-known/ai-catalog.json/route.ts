@@ -17,14 +17,15 @@ export async function GET() {
     ];
 
     return {
+      identifier: `urn:air:${host}:tool:${tool.slug}`,
       id: `urn:air:${host}:tool:${tool.slug}`,
       displayName: tool.slug
         .split("-")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" "),
-      category: tool.category,
       type: "text/html",
       url: `${SITE_URL}/en/tools/${tool.slug}`,
+      category: tool.category,
       representativeQueries: queries,
       keywords: tool.keywords,
       accepts: tool.accepts ?? [],

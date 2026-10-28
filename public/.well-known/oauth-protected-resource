@@ -1,0 +1,15 @@
+{
+  "resource": "https://onlineofficetools.com",
+  "authorization_servers": [
+    "https://onlineofficetools.com"
+  ],
+  "scopes_supported": [
+    "public:read",
+    "tools:execute",
+    "admin:write"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ],
+  "resource_documentation": "https://onlineofficetools.com/auth.md"
+}

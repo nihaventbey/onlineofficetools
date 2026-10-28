@@ -1,0 +1,37 @@
+{
+  "issuer": "https://onlineofficetools.com",
+  "authorization_endpoint": "https://onlineofficetools.com/api/auth/authorize",
+  "token_endpoint": "https://onlineofficetools.com/api/auth/token",
+  "revocation_endpoint": "https://onlineofficetools.com/api/auth/revoke",
+  "device_authorization_endpoint": "https://onlineofficetools.com/api/auth/device",
+  "jwks_uri": "https://onlineofficetools.com/.well-known/jwks.json",
+  "response_types_supported": [
+    "code",
+    "token"
+  ],
+  "grant_types_supported": [
+    "authorization_code",
+    "refresh_token",
+    "client_credentials",
+    "urn:ietf:params:oauth:grant-type:device_code"
+  ],
+  "poppy_domains": [
+    "onlineofficetools.com"
+  ],
+  "service_documentation": "https://onlineofficetools.com/auth.md",
+  "agent_auth": {
+    "register_uri": "https://onlineofficetools.com/auth.md",
+    "supported_identity_types": [
+      "agent",
+      "user",
+      "service"
+    ],
+    "credential_types": [
+      "bearer_token",
+      "anonymous"
+    ],
+    "revocation_uri": "https://onlineofficetools.com/api/auth/revoke",
+    "claim_uri": "https://onlineofficetools.com/auth.md#claims",
+    "policy_uri": "https://onlineofficetools.com/en/privacy"
+  }
+}

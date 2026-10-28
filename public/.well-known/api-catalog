@@ -1,0 +1,49 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://onlineofficetools.com/api",
+      "service-desc": [
+        {
+          "href": "https://onlineofficetools.com/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://onlineofficetools.com/en",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://onlineofficetools.com/api/health",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://onlineofficetools.com/.well-known/mcp/server-card.json",
+      "service-desc": [
+        {
+          "href": "https://onlineofficetools.com/.well-known/mcp/server-card.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://onlineofficetools.com/auth.md",
+          "type": "text/markdown"
+        }
+      ]
+    },
+    {
+      "anchor": "https://onlineofficetools.com/.well-known/agent-skills/index.json",
+      "service-desc": [
+        {
+          "href": "https://onlineofficetools.com/.well-known/agent-skills/index.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

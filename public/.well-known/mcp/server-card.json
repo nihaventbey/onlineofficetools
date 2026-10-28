@@ -1,0 +1,1464 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/server-card/v1.json",
+  "serverInfo": {
+    "name": "onlineofficetools-mcp",
+    "version": "1.0.0",
+    "description": "Privacy-first client-side office utilities for PDF, images, video, spreadsheets, and developer tools.",
+    "websiteUrl": "https://onlineofficetools.com"
+  },
+  "transport": {
+    "type": "http",
+    "endpoint": "https://onlineofficetools.com/api"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "word_counter",
+      "description": "Execute or link to word-counter (text). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/word-counter"
+    },
+    {
+      "name": "case_converter",
+      "description": "Execute or link to case-converter (text). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/case-converter"
+    },
+    {
+      "name": "lorem_ipsum",
+      "description": "Execute or link to lorem-ipsum (text). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/lorem-ipsum"
+    },
+    {
+      "name": "text_diff",
+      "description": "Execute or link to text-diff (text). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/text-diff"
+    },
+    {
+      "name": "find_replace",
+      "description": "Execute or link to find-replace (text). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/find-replace"
+    },
+    {
+      "name": "pdf_to_text",
+      "description": "Execute or link to pdf-to-text (documents). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-to-text"
+    },
+    {
+      "name": "docx_viewer",
+      "description": "Execute or link to docx-viewer (documents). Input formats: docx.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/docx-viewer"
+    },
+    {
+      "name": "docx_to_html",
+      "description": "Execute or link to docx-to-html (documents). Input formats: docx.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/docx-to-html"
+    },
+    {
+      "name": "html_to_docx",
+      "description": "Execute or link to html-to-docx (documents). Input formats: html, txt.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/html-to-docx"
+    },
+    {
+      "name": "docx_diff",
+      "description": "Execute or link to docx-diff (documents). Input formats: docx.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/docx-diff"
+    },
+    {
+      "name": "text_to_pdf",
+      "description": "Execute or link to text-to-pdf (documents). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/text-to-pdf"
+    },
+    {
+      "name": "xlsx_viewer",
+      "description": "Execute or link to xlsx-viewer (spreadsheets). Input formats: xlsx, xls.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/xlsx-viewer"
+    },
+    {
+      "name": "xlsx_to_csv",
+      "description": "Execute or link to xlsx-to-csv (spreadsheets). Input formats: xlsx.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/xlsx-to-csv"
+    },
+    {
+      "name": "csv_to_xlsx",
+      "description": "Execute or link to csv-to-xlsx (spreadsheets). Input formats: csv.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/csv-to-xlsx"
+    },
+    {
+      "name": "csv_editor",
+      "description": "Execute or link to csv-editor (spreadsheets). Input formats: csv.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/csv-editor"
+    },
+    {
+      "name": "images_to_pptx",
+      "description": "Execute or link to images-to-pptx (presentations). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/images-to-pptx"
+    },
+    {
+      "name": "text_to_pptx",
+      "description": "Execute or link to text-to-pptx (presentations). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/text-to-pptx"
+    },
+    {
+      "name": "pptx_extract",
+      "description": "Execute or link to pptx-extract (presentations). Input formats: pptx.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pptx-extract"
+    },
+    {
+      "name": "pdf_merge",
+      "description": "Execute or link to pdf-merge (pdf). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-merge"
+    },
+    {
+      "name": "pdf_split",
+      "description": "Execute or link to pdf-split (pdf). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-split"
+    },
+    {
+      "name": "pdf_rotate",
+      "description": "Execute or link to pdf-rotate (pdf). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-rotate"
+    },
+    {
+      "name": "pdf_compress",
+      "description": "Execute or link to pdf-compress (pdf). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-compress"
+    },
+    {
+      "name": "images_to_pdf",
+      "description": "Execute or link to images-to-pdf (pdf). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/images-to-pdf"
+    },
+    {
+      "name": "pdf_to_images",
+      "description": "Execute or link to pdf-to-images (pdf). Input formats: pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-to-images"
+    },
+    {
+      "name": "pdf_watermark",
+      "description": "Execute or link to pdf-watermark (pdf). Input formats: pdf, png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/pdf-watermark"
+    },
+    {
+      "name": "image_resize",
+      "description": "Execute or link to image-resize (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-resize"
+    },
+    {
+      "name": "image_compress",
+      "description": "Execute or link to image-compress (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-compress"
+    },
+    {
+      "name": "image_crop",
+      "description": "Execute or link to image-crop (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-crop"
+    },
+    {
+      "name": "image_convert",
+      "description": "Execute or link to image-convert (image). Input formats: png, jpg, webp, gif.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-convert"
+    },
+    {
+      "name": "image_adjust",
+      "description": "Execute or link to image-adjust (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-adjust"
+    },
+    {
+      "name": "image_metadata",
+      "description": "Execute or link to image-metadata (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-metadata"
+    },
+    {
+      "name": "image_enhance",
+      "description": "Execute or link to image-enhance (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-enhance"
+    },
+    {
+      "name": "image_ai_upscale",
+      "description": "Execute or link to image-ai-upscale (image). Input formats: png, jpg, webp.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/image-ai-upscale"
+    },
+    {
+      "name": "watermark",
+      "description": "Execute or link to watermark (image). Input formats: png, jpg, webp, pdf.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/watermark"
+    },
+    {
+      "name": "ocr",
+      "description": "Execute or link to ocr (image). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/ocr"
+    },
+    {
+      "name": "qr_generator",
+      "description": "Execute or link to qr-generator (image). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/qr-generator"
+    },
+    {
+      "name": "color_converter",
+      "description": "Execute or link to color-converter (image). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/color-converter"
+    },
+    {
+      "name": "zip_create",
+      "description": "Execute or link to zip-create (archive). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/zip-create"
+    },
+    {
+      "name": "zip_extract",
+      "description": "Execute or link to zip-extract (archive). Input formats: zip.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/zip-extract"
+    },
+    {
+      "name": "zip_viewer",
+      "description": "Execute or link to zip-viewer (archive). Input formats: zip.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/zip-viewer"
+    },
+    {
+      "name": "video_frame_extractor",
+      "description": "Execute or link to video-frame-extractor (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-frame-extractor"
+    },
+    {
+      "name": "video_to_gif",
+      "description": "Execute or link to video-to-gif (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-to-gif"
+    },
+    {
+      "name": "video_trim",
+      "description": "Execute or link to video-trim (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-trim"
+    },
+    {
+      "name": "video_watermark",
+      "description": "Execute or link to video-watermark (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-watermark"
+    },
+    {
+      "name": "video_crop",
+      "description": "Execute or link to video-crop (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-crop"
+    },
+    {
+      "name": "video_resize",
+      "description": "Execute or link to video-resize (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-resize"
+    },
+    {
+      "name": "video_audio_visualizer",
+      "description": "Execute or link to video-audio-visualizer (audio). Input formats: mp3, wav, ogg, m4a, mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-audio-visualizer"
+    },
+    {
+      "name": "video_metadata",
+      "description": "Execute or link to video-metadata (video). Input formats: mp4, webm, mov.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/video-metadata"
+    },
+    {
+      "name": "audio_editor",
+      "description": "Execute or link to audio-editor (audio). Input formats: mp3, wav, ogg, m4a, webm, flac.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/audio-editor"
+    },
+    {
+      "name": "json_formatter",
+      "description": "Execute or link to json-formatter (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/json-formatter"
+    },
+    {
+      "name": "base64",
+      "description": "Execute or link to base64 (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/base64"
+    },
+    {
+      "name": "html_editor",
+      "description": "Execute or link to html-editor (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/html-editor"
+    },
+    {
+      "name": "markdown_preview",
+      "description": "Execute or link to markdown-preview (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/markdown-preview"
+    },
+    {
+      "name": "url_encoder",
+      "description": "Execute or link to url-encoder (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/url-encoder"
+    },
+    {
+      "name": "uuid_generator",
+      "description": "Execute or link to uuid-generator (developer). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/uuid-generator"
+    },
+    {
+      "name": "password_generator",
+      "description": "Execute or link to password-generator (security). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/password-generator"
+    },
+    {
+      "name": "unit_converter",
+      "description": "Execute or link to unit-converter (calculator). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/unit-converter"
+    },
+    {
+      "name": "date_difference",
+      "description": "Execute or link to date-difference (calculator). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/date-difference"
+    },
+    {
+      "name": "birthday_calculator",
+      "description": "Execute or link to birthday-calculator (calculator). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/birthday-calculator"
+    },
+    {
+      "name": "area_calculator",
+      "description": "Execute or link to area-calculator (calculator). Input formats: any.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it",
+              "pt",
+              "ru"
+            ],
+            "default": "en"
+          }
+        }
+      },
+      "url": "https://onlineofficetools.com/en/tools/area-calculator"
+    }
+  ]
+}

@@ -1,0 +1,1509 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/schemas/v1/ai-catalog.json",
+  "specVersion": "1.0",
+  "host": {
+    "name": "Online Office Tools",
+    "domain": "onlineofficetools.com",
+    "description": "Privacy-first, browser-based office utilities for PDF, documents, spreadsheets, images, video, audio, and developers.",
+    "url": "https://onlineofficetools.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:word-counter",
+      "id": "urn:air:onlineofficetools.com:tool:word-counter",
+      "displayName": "Word Counter",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/word-counter",
+      "category": "text",
+      "representativeQueries": [
+        "free online word counter",
+        "word count character tool",
+        "how to use word counter in browser",
+        "text utility word counter"
+      ],
+      "keywords": [
+        "word",
+        "count",
+        "character"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:case-converter",
+      "id": "urn:air:onlineofficetools.com:tool:case-converter",
+      "displayName": "Case Converter",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/case-converter",
+      "category": "text",
+      "representativeQueries": [
+        "free online case converter",
+        "case upper lower tool",
+        "how to use case converter in browser",
+        "text utility case converter"
+      ],
+      "keywords": [
+        "case",
+        "upper",
+        "lower"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:lorem-ipsum",
+      "id": "urn:air:onlineofficetools.com:tool:lorem-ipsum",
+      "displayName": "Lorem Ipsum",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/lorem-ipsum",
+      "category": "text",
+      "representativeQueries": [
+        "free online lorem ipsum",
+        "lorem placeholder tool",
+        "how to use lorem ipsum in browser",
+        "text utility lorem ipsum"
+      ],
+      "keywords": [
+        "lorem",
+        "placeholder"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:text-diff",
+      "id": "urn:air:onlineofficetools.com:tool:text-diff",
+      "displayName": "Text Diff",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/text-diff",
+      "category": "text",
+      "representativeQueries": [
+        "free online text diff",
+        "diff compare tool",
+        "how to use text diff in browser",
+        "text utility text diff"
+      ],
+      "keywords": [
+        "diff",
+        "compare"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:find-replace",
+      "id": "urn:air:onlineofficetools.com:tool:find-replace",
+      "displayName": "Find Replace",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/find-replace",
+      "category": "text",
+      "representativeQueries": [
+        "free online find replace",
+        "find replace whitespace tool",
+        "how to use find replace in browser",
+        "text utility find replace"
+      ],
+      "keywords": [
+        "find",
+        "replace",
+        "whitespace"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-to-text",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-to-text",
+      "displayName": "Pdf To Text",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-to-text",
+      "category": "documents",
+      "representativeQueries": [
+        "free online pdf to text",
+        "pdf extract text tool",
+        "how to use pdf to text in browser",
+        "documents utility pdf to text"
+      ],
+      "keywords": [
+        "pdf",
+        "extract",
+        "text"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "txt"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:docx-viewer",
+      "id": "urn:air:onlineofficetools.com:tool:docx-viewer",
+      "displayName": "Docx Viewer",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/docx-viewer",
+      "category": "documents",
+      "representativeQueries": [
+        "free online docx viewer",
+        "word docx view tool",
+        "how to use docx viewer in browser",
+        "documents utility docx viewer"
+      ],
+      "keywords": [
+        "word",
+        "docx",
+        "view"
+      ],
+      "accepts": [
+        "docx"
+      ],
+      "outputs": [
+        "html",
+        "txt"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:docx-to-html",
+      "id": "urn:air:onlineofficetools.com:tool:docx-to-html",
+      "displayName": "Docx To Html",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/docx-to-html",
+      "category": "documents",
+      "representativeQueries": [
+        "free online docx to html",
+        "docx html convert tool",
+        "how to use docx to html in browser",
+        "documents utility docx to html"
+      ],
+      "keywords": [
+        "docx",
+        "html",
+        "convert"
+      ],
+      "accepts": [
+        "docx"
+      ],
+      "outputs": [
+        "html"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:html-to-docx",
+      "id": "urn:air:onlineofficetools.com:tool:html-to-docx",
+      "displayName": "Html To Docx",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/html-to-docx",
+      "category": "documents",
+      "representativeQueries": [
+        "free online html to docx",
+        "html docx word tool",
+        "how to use html to docx in browser",
+        "documents utility html to docx"
+      ],
+      "keywords": [
+        "html",
+        "docx",
+        "word"
+      ],
+      "accepts": [
+        "html",
+        "txt"
+      ],
+      "outputs": [
+        "docx"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:docx-diff",
+      "id": "urn:air:onlineofficetools.com:tool:docx-diff",
+      "displayName": "Docx Diff",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/docx-diff",
+      "category": "documents",
+      "representativeQueries": [
+        "free online docx diff",
+        "docx compare diff tool",
+        "how to use docx diff in browser",
+        "documents utility docx diff"
+      ],
+      "keywords": [
+        "docx",
+        "compare",
+        "diff"
+      ],
+      "accepts": [
+        "docx"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:text-to-pdf",
+      "id": "urn:air:onlineofficetools.com:tool:text-to-pdf",
+      "displayName": "Text To Pdf",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/text-to-pdf",
+      "category": "documents",
+      "representativeQueries": [
+        "free online text to pdf",
+        "text pdf tool",
+        "how to use text to pdf in browser",
+        "documents utility text to pdf"
+      ],
+      "keywords": [
+        "text",
+        "pdf"
+      ],
+      "accepts": [],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:xlsx-viewer",
+      "id": "urn:air:onlineofficetools.com:tool:xlsx-viewer",
+      "displayName": "Xlsx Viewer",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/xlsx-viewer",
+      "category": "spreadsheets",
+      "representativeQueries": [
+        "free online xlsx viewer",
+        "excel xlsx sheet tool",
+        "how to use xlsx viewer in browser",
+        "spreadsheets utility xlsx viewer"
+      ],
+      "keywords": [
+        "excel",
+        "xlsx",
+        "sheet"
+      ],
+      "accepts": [
+        "xlsx",
+        "xls"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:xlsx-to-csv",
+      "id": "urn:air:onlineofficetools.com:tool:xlsx-to-csv",
+      "displayName": "Xlsx To Csv",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/xlsx-to-csv",
+      "category": "spreadsheets",
+      "representativeQueries": [
+        "free online xlsx to csv",
+        "xlsx csv excel tool",
+        "how to use xlsx to csv in browser",
+        "spreadsheets utility xlsx to csv"
+      ],
+      "keywords": [
+        "xlsx",
+        "csv",
+        "excel"
+      ],
+      "accepts": [
+        "xlsx"
+      ],
+      "outputs": [
+        "csv"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:csv-to-xlsx",
+      "id": "urn:air:onlineofficetools.com:tool:csv-to-xlsx",
+      "displayName": "Csv To Xlsx",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/csv-to-xlsx",
+      "category": "spreadsheets",
+      "representativeQueries": [
+        "free online csv to xlsx",
+        "csv xlsx excel tool",
+        "how to use csv to xlsx in browser",
+        "spreadsheets utility csv to xlsx"
+      ],
+      "keywords": [
+        "csv",
+        "xlsx",
+        "excel"
+      ],
+      "accepts": [
+        "csv"
+      ],
+      "outputs": [
+        "xlsx"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:csv-editor",
+      "id": "urn:air:onlineofficetools.com:tool:csv-editor",
+      "displayName": "Csv Editor",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/csv-editor",
+      "category": "spreadsheets",
+      "representativeQueries": [
+        "free online csv editor",
+        "csv table edit tool",
+        "how to use csv editor in browser",
+        "spreadsheets utility csv editor"
+      ],
+      "keywords": [
+        "csv",
+        "table",
+        "edit"
+      ],
+      "accepts": [
+        "csv"
+      ],
+      "outputs": [
+        "csv"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:images-to-pptx",
+      "id": "urn:air:onlineofficetools.com:tool:images-to-pptx",
+      "displayName": "Images To Pptx",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/images-to-pptx",
+      "category": "presentations",
+      "representativeQueries": [
+        "free online images to pptx",
+        "pptx powerpoint images tool",
+        "how to use images to pptx in browser",
+        "presentations utility images to pptx"
+      ],
+      "keywords": [
+        "pptx",
+        "powerpoint",
+        "images"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": [
+        "pptx"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:text-to-pptx",
+      "id": "urn:air:onlineofficetools.com:tool:text-to-pptx",
+      "displayName": "Text To Pptx",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/text-to-pptx",
+      "category": "presentations",
+      "representativeQueries": [
+        "free online text to pptx",
+        "pptx powerpoint outline tool",
+        "how to use text to pptx in browser",
+        "presentations utility text to pptx"
+      ],
+      "keywords": [
+        "pptx",
+        "powerpoint",
+        "outline"
+      ],
+      "accepts": [],
+      "outputs": [
+        "pptx"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pptx-extract",
+      "id": "urn:air:onlineofficetools.com:tool:pptx-extract",
+      "displayName": "Pptx Extract",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pptx-extract",
+      "category": "presentations",
+      "representativeQueries": [
+        "free online pptx extract",
+        "pptx extract text tool",
+        "how to use pptx extract in browser",
+        "presentations utility pptx extract"
+      ],
+      "keywords": [
+        "pptx",
+        "extract",
+        "text"
+      ],
+      "accepts": [
+        "pptx"
+      ],
+      "outputs": [
+        "txt"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-merge",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-merge",
+      "displayName": "Pdf Merge",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-merge",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf merge",
+        "pdf merge combine tool",
+        "how to use pdf merge in browser",
+        "pdf utility pdf merge"
+      ],
+      "keywords": [
+        "pdf",
+        "merge",
+        "combine"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-split",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-split",
+      "displayName": "Pdf Split",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-split",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf split",
+        "pdf split tool",
+        "how to use pdf split in browser",
+        "pdf utility pdf split"
+      ],
+      "keywords": [
+        "pdf",
+        "split"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-rotate",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-rotate",
+      "displayName": "Pdf Rotate",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-rotate",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf rotate",
+        "pdf rotate tool",
+        "how to use pdf rotate in browser",
+        "pdf utility pdf rotate"
+      ],
+      "keywords": [
+        "pdf",
+        "rotate"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-compress",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-compress",
+      "displayName": "Pdf Compress",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-compress",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf compress",
+        "pdf compress tool",
+        "how to use pdf compress in browser",
+        "pdf utility pdf compress"
+      ],
+      "keywords": [
+        "pdf",
+        "compress"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:images-to-pdf",
+      "id": "urn:air:onlineofficetools.com:tool:images-to-pdf",
+      "displayName": "Images To Pdf",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/images-to-pdf",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online images to pdf",
+        "images pdf tool",
+        "how to use images to pdf in browser",
+        "pdf utility images to pdf"
+      ],
+      "keywords": [
+        "images",
+        "pdf"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": [
+        "pdf"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-to-images",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-to-images",
+      "displayName": "Pdf To Images",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-to-images",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf to images",
+        "pdf images png tool",
+        "how to use pdf to images in browser",
+        "pdf utility pdf to images"
+      ],
+      "keywords": [
+        "pdf",
+        "images",
+        "png"
+      ],
+      "accepts": [
+        "pdf"
+      ],
+      "outputs": [
+        "png"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:pdf-watermark",
+      "id": "urn:air:onlineofficetools.com:tool:pdf-watermark",
+      "displayName": "Pdf Watermark",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/pdf-watermark",
+      "category": "pdf",
+      "representativeQueries": [
+        "free online pdf watermark",
+        "watermark stamp pdf tool",
+        "how to use pdf watermark in browser",
+        "pdf utility pdf watermark"
+      ],
+      "keywords": [
+        "watermark",
+        "stamp",
+        "pdf",
+        "image",
+        "overlay",
+        "filigran"
+      ],
+      "accepts": [
+        "pdf",
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": [
+        "pdf",
+        "png",
+        "jpg",
+        "webp",
+        "zip"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-resize",
+      "id": "urn:air:onlineofficetools.com:tool:image-resize",
+      "displayName": "Image Resize",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-resize",
+      "category": "image",
+      "representativeQueries": [
+        "free online image resize",
+        "resize scale dimensions tool",
+        "how to use image resize in browser",
+        "image utility image resize"
+      ],
+      "keywords": [
+        "resize",
+        "scale",
+        "dimensions"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-compress",
+      "id": "urn:air:onlineofficetools.com:tool:image-compress",
+      "displayName": "Image Compress",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-compress",
+      "category": "image",
+      "representativeQueries": [
+        "free online image compress",
+        "compress optimize tool",
+        "how to use image compress in browser",
+        "image utility image compress"
+      ],
+      "keywords": [
+        "compress",
+        "optimize"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-crop",
+      "id": "urn:air:onlineofficetools.com:tool:image-crop",
+      "displayName": "Image Crop",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-crop",
+      "category": "image",
+      "representativeQueries": [
+        "free online image crop",
+        "crop rotate flip tool",
+        "how to use image crop in browser",
+        "image utility image crop"
+      ],
+      "keywords": [
+        "crop",
+        "rotate",
+        "flip"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-convert",
+      "id": "urn:air:onlineofficetools.com:tool:image-convert",
+      "displayName": "Image Convert",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-convert",
+      "category": "image",
+      "representativeQueries": [
+        "free online image convert",
+        "convert jpg png tool",
+        "how to use image convert in browser",
+        "image utility image convert"
+      ],
+      "keywords": [
+        "convert",
+        "jpg",
+        "png",
+        "webp"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp",
+        "gif"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-adjust",
+      "id": "urn:air:onlineofficetools.com:tool:image-adjust",
+      "displayName": "Image Adjust",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-adjust",
+      "category": "image",
+      "representativeQueries": [
+        "free online image adjust",
+        "brightness contrast saturation tool",
+        "how to use image adjust in browser",
+        "image utility image adjust"
+      ],
+      "keywords": [
+        "brightness",
+        "contrast",
+        "saturation",
+        "hue",
+        "color",
+        "parlaklık",
+        "kontrast",
+        "renk"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": [
+        "png",
+        "jpg",
+        "webp"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-metadata",
+      "id": "urn:air:onlineofficetools.com:tool:image-metadata",
+      "displayName": "Image Metadata",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-metadata",
+      "category": "image",
+      "representativeQueries": [
+        "free online image metadata",
+        "exif metadata strip tool",
+        "how to use image metadata in browser",
+        "image utility image metadata"
+      ],
+      "keywords": [
+        "exif",
+        "metadata",
+        "strip"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-enhance",
+      "id": "urn:air:onlineofficetools.com:tool:image-enhance",
+      "displayName": "Image Enhance",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-enhance",
+      "category": "image",
+      "representativeQueries": [
+        "free online image enhance",
+        "enhance sharpen hd tool",
+        "how to use image enhance in browser",
+        "image utility image enhance"
+      ],
+      "keywords": [
+        "enhance",
+        "sharpen",
+        "hd"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:image-ai-upscale",
+      "id": "urn:air:onlineofficetools.com:tool:image-ai-upscale",
+      "displayName": "Image Ai Upscale",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/image-ai-upscale",
+      "category": "image",
+      "representativeQueries": [
+        "free online image ai upscale",
+        "ai upscale esrgan tool",
+        "how to use image ai upscale in browser",
+        "image utility image ai upscale"
+      ],
+      "keywords": [
+        "ai",
+        "upscale",
+        "esrgan"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:watermark",
+      "id": "urn:air:onlineofficetools.com:tool:watermark",
+      "displayName": "Watermark",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/watermark",
+      "category": "image",
+      "representativeQueries": [
+        "free online watermark",
+        "watermark stamp pdf tool",
+        "how to use watermark in browser",
+        "image utility watermark"
+      ],
+      "keywords": [
+        "watermark",
+        "stamp",
+        "pdf",
+        "image",
+        "overlay",
+        "filigran"
+      ],
+      "accepts": [
+        "png",
+        "jpg",
+        "webp",
+        "pdf"
+      ],
+      "outputs": [
+        "png",
+        "jpg",
+        "webp",
+        "pdf",
+        "zip"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:ocr",
+      "id": "urn:air:onlineofficetools.com:tool:ocr",
+      "displayName": "Ocr",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/ocr",
+      "category": "image",
+      "representativeQueries": [
+        "free online ocr",
+        "ocr text image tool",
+        "how to use ocr in browser",
+        "image utility ocr"
+      ],
+      "keywords": [
+        "ocr",
+        "text",
+        "image"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:qr-generator",
+      "id": "urn:air:onlineofficetools.com:tool:qr-generator",
+      "displayName": "Qr Generator",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/qr-generator",
+      "category": "image",
+      "representativeQueries": [
+        "free online qr generator",
+        "qr code tool",
+        "how to use qr generator in browser",
+        "image utility qr generator"
+      ],
+      "keywords": [
+        "qr",
+        "code"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:color-converter",
+      "id": "urn:air:onlineofficetools.com:tool:color-converter",
+      "displayName": "Color Converter",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/color-converter",
+      "category": "image",
+      "representativeQueries": [
+        "free online color converter",
+        "color hex rgb tool",
+        "how to use color converter in browser",
+        "image utility color converter"
+      ],
+      "keywords": [
+        "color",
+        "hex",
+        "rgb"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:zip-create",
+      "id": "urn:air:onlineofficetools.com:tool:zip-create",
+      "displayName": "Zip Create",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/zip-create",
+      "category": "archive",
+      "representativeQueries": [
+        "free online zip create",
+        "zip archive compress tool",
+        "how to use zip create in browser",
+        "archive utility zip create"
+      ],
+      "keywords": [
+        "zip",
+        "archive",
+        "compress",
+        "pack"
+      ],
+      "accepts": [],
+      "outputs": [
+        "zip"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:zip-extract",
+      "id": "urn:air:onlineofficetools.com:tool:zip-extract",
+      "displayName": "Zip Extract",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/zip-extract",
+      "category": "archive",
+      "representativeQueries": [
+        "free online zip extract",
+        "zip extract unzip tool",
+        "how to use zip extract in browser",
+        "archive utility zip extract"
+      ],
+      "keywords": [
+        "zip",
+        "extract",
+        "unzip",
+        "unpack"
+      ],
+      "accepts": [
+        "zip"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:zip-viewer",
+      "id": "urn:air:onlineofficetools.com:tool:zip-viewer",
+      "displayName": "Zip Viewer",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/zip-viewer",
+      "category": "archive",
+      "representativeQueries": [
+        "free online zip viewer",
+        "zip view inspect tool",
+        "how to use zip viewer in browser",
+        "archive utility zip viewer"
+      ],
+      "keywords": [
+        "zip",
+        "view",
+        "inspect",
+        "list"
+      ],
+      "accepts": [
+        "zip"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-frame-extractor",
+      "id": "urn:air:onlineofficetools.com:tool:video-frame-extractor",
+      "displayName": "Video Frame Extractor",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-frame-extractor",
+      "category": "video",
+      "representativeQueries": [
+        "free online video frame extractor",
+        "video frame screenshot tool",
+        "how to use video frame extractor in browser",
+        "video utility video frame extractor"
+      ],
+      "keywords": [
+        "video",
+        "frame",
+        "screenshot",
+        "png"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "png",
+        "zip"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-to-gif",
+      "id": "urn:air:onlineofficetools.com:tool:video-to-gif",
+      "displayName": "Video To Gif",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-to-gif",
+      "category": "video",
+      "representativeQueries": [
+        "free online video to gif",
+        "video gif convert tool",
+        "how to use video to gif in browser",
+        "video utility video to gif"
+      ],
+      "keywords": [
+        "video",
+        "gif",
+        "convert",
+        "animate"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "gif"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-trim",
+      "id": "urn:air:onlineofficetools.com:tool:video-trim",
+      "displayName": "Video Trim",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-trim",
+      "category": "video",
+      "representativeQueries": [
+        "free online video trim",
+        "video trim cut tool",
+        "how to use video trim in browser",
+        "video utility video trim"
+      ],
+      "keywords": [
+        "video",
+        "trim",
+        "cut",
+        "mute",
+        "webm"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "webm"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-watermark",
+      "id": "urn:air:onlineofficetools.com:tool:video-watermark",
+      "displayName": "Video Watermark",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-watermark",
+      "category": "video",
+      "representativeQueries": [
+        "free online video watermark",
+        "video watermark stamp tool",
+        "how to use video watermark in browser",
+        "video utility video watermark"
+      ],
+      "keywords": [
+        "video",
+        "watermark",
+        "stamp",
+        "overlay",
+        "filigran",
+        "logo"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "webm"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-crop",
+      "id": "urn:air:onlineofficetools.com:tool:video-crop",
+      "displayName": "Video Crop",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-crop",
+      "category": "video",
+      "representativeQueries": [
+        "free online video crop",
+        "video crop aspect tool",
+        "how to use video crop in browser",
+        "video utility video crop"
+      ],
+      "keywords": [
+        "video",
+        "crop",
+        "aspect",
+        "cut",
+        "kirp",
+        "kırp",
+        "trim"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "webm"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-resize",
+      "id": "urn:air:onlineofficetools.com:tool:video-resize",
+      "displayName": "Video Resize",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-resize",
+      "category": "video",
+      "representativeQueries": [
+        "free online video resize",
+        "video resize social tool",
+        "how to use video resize in browser",
+        "video utility video resize"
+      ],
+      "keywords": [
+        "video",
+        "resize",
+        "social",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "shorts",
+        "reels",
+        "ebat"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "webm"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-audio-visualizer",
+      "id": "urn:air:onlineofficetools.com:tool:video-audio-visualizer",
+      "displayName": "Video Audio Visualizer",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-audio-visualizer",
+      "category": "audio",
+      "representativeQueries": [
+        "free online video audio visualizer",
+        "audio visualizer spectrum tool",
+        "how to use video audio visualizer in browser",
+        "audio utility video audio visualizer"
+      ],
+      "keywords": [
+        "audio",
+        "visualizer",
+        "spectrum",
+        "waveform",
+        "overlay",
+        "transparent",
+        "editor",
+        "ses",
+        "görselleştirici",
+        "spektrum"
+      ],
+      "accepts": [
+        "mp3",
+        "wav",
+        "ogg",
+        "m4a",
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": [
+        "webm"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:video-metadata",
+      "id": "urn:air:onlineofficetools.com:tool:video-metadata",
+      "displayName": "Video Metadata",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/video-metadata",
+      "category": "video",
+      "representativeQueries": [
+        "free online video metadata",
+        "video metadata info tool",
+        "how to use video metadata in browser",
+        "video utility video metadata"
+      ],
+      "keywords": [
+        "video",
+        "metadata",
+        "info",
+        "duration"
+      ],
+      "accepts": [
+        "mp4",
+        "webm",
+        "mov"
+      ],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:audio-editor",
+      "id": "urn:air:onlineofficetools.com:tool:audio-editor",
+      "displayName": "Audio Editor",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/audio-editor",
+      "category": "audio",
+      "representativeQueries": [
+        "free online audio editor",
+        "audio trim cut tool",
+        "how to use audio editor in browser",
+        "audio utility audio editor"
+      ],
+      "keywords": [
+        "audio",
+        "trim",
+        "cut",
+        "waveform",
+        "convert",
+        "wav",
+        "webm",
+        "mp3",
+        "ses",
+        "kırp",
+        "dalga"
+      ],
+      "accepts": [
+        "mp3",
+        "wav",
+        "ogg",
+        "m4a",
+        "webm",
+        "flac"
+      ],
+      "outputs": [
+        "wav",
+        "mp3",
+        "webm",
+        "ogg"
+      ]
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:json-formatter",
+      "id": "urn:air:onlineofficetools.com:tool:json-formatter",
+      "displayName": "Json Formatter",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/json-formatter",
+      "category": "developer",
+      "representativeQueries": [
+        "free online json formatter",
+        "json format tool",
+        "how to use json formatter in browser",
+        "developer utility json formatter"
+      ],
+      "keywords": [
+        "json",
+        "format"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:base64",
+      "id": "urn:air:onlineofficetools.com:tool:base64",
+      "displayName": "Base64",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/base64",
+      "category": "developer",
+      "representativeQueries": [
+        "free online base64",
+        "base64 tool",
+        "how to use base64 in browser",
+        "developer utility base64"
+      ],
+      "keywords": [
+        "base64"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:html-editor",
+      "id": "urn:air:onlineofficetools.com:tool:html-editor",
+      "displayName": "Html Editor",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/html-editor",
+      "category": "developer",
+      "representativeQueries": [
+        "free online html editor",
+        "html editor wysiwyg tool",
+        "how to use html editor in browser",
+        "developer utility html editor"
+      ],
+      "keywords": [
+        "html",
+        "editor",
+        "wysiwyg"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:markdown-preview",
+      "id": "urn:air:onlineofficetools.com:tool:markdown-preview",
+      "displayName": "Markdown Preview",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/markdown-preview",
+      "category": "developer",
+      "representativeQueries": [
+        "free online markdown preview",
+        "markdown tool",
+        "how to use markdown preview in browser",
+        "developer utility markdown preview"
+      ],
+      "keywords": [
+        "markdown"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:url-encoder",
+      "id": "urn:air:onlineofficetools.com:tool:url-encoder",
+      "displayName": "Url Encoder",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/url-encoder",
+      "category": "developer",
+      "representativeQueries": [
+        "free online url encoder",
+        "url encode tool",
+        "how to use url encoder in browser",
+        "developer utility url encoder"
+      ],
+      "keywords": [
+        "url",
+        "encode"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:uuid-generator",
+      "id": "urn:air:onlineofficetools.com:tool:uuid-generator",
+      "displayName": "Uuid Generator",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/uuid-generator",
+      "category": "developer",
+      "representativeQueries": [
+        "free online uuid generator",
+        "uuid tool",
+        "how to use uuid generator in browser",
+        "developer utility uuid generator"
+      ],
+      "keywords": [
+        "uuid"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:password-generator",
+      "id": "urn:air:onlineofficetools.com:tool:password-generator",
+      "displayName": "Password Generator",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/password-generator",
+      "category": "security",
+      "representativeQueries": [
+        "free online password generator",
+        "password secure tool",
+        "how to use password generator in browser",
+        "security utility password generator"
+      ],
+      "keywords": [
+        "password",
+        "secure"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:unit-converter",
+      "id": "urn:air:onlineofficetools.com:tool:unit-converter",
+      "displayName": "Unit Converter",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/unit-converter",
+      "category": "calculator",
+      "representativeQueries": [
+        "free online unit converter",
+        "unit convert tool",
+        "how to use unit converter in browser",
+        "calculator utility unit converter"
+      ],
+      "keywords": [
+        "unit",
+        "convert"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:date-difference",
+      "id": "urn:air:onlineofficetools.com:tool:date-difference",
+      "displayName": "Date Difference",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/date-difference",
+      "category": "calculator",
+      "representativeQueries": [
+        "free online date difference",
+        "date difference tool",
+        "how to use date difference in browser",
+        "calculator utility date difference"
+      ],
+      "keywords": [
+        "date",
+        "difference"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:birthday-calculator",
+      "id": "urn:air:onlineofficetools.com:tool:birthday-calculator",
+      "displayName": "Birthday Calculator",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/birthday-calculator",
+      "category": "calculator",
+      "representativeQueries": [
+        "free online birthday calculator",
+        "birthday age doğum tool",
+        "how to use birthday calculator in browser",
+        "calculator utility birthday calculator"
+      ],
+      "keywords": [
+        "birthday",
+        "age",
+        "doğum",
+        "yaş"
+      ],
+      "accepts": [],
+      "outputs": []
+    },
+    {
+      "identifier": "urn:air:onlineofficetools.com:tool:area-calculator",
+      "id": "urn:air:onlineofficetools.com:tool:area-calculator",
+      "displayName": "Area Calculator",
+      "type": "text/html",
+      "url": "https://onlineofficetools.com/en/tools/area-calculator",
+      "category": "calculator",
+      "representativeQueries": [
+        "free online area calculator",
+        "area land field tool",
+        "how to use area calculator in browser",
+        "calculator utility area calculator"
+      ],
+      "keywords": [
+        "area",
+        "land",
+        "field",
+        "polygon",
+        "triangle",
+        "alan",
+        "arazi",
+        "tarla"
+      ],
+      "accepts": [],
+      "outputs": []
+    }
+  ]
+}

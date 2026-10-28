@@ -8,6 +8,11 @@ const AGENT_LINK_HEADER = [
   '</.well-known/ai-catalog.json>; rel="service-desc"',
   '</.well-known/agent-skills/index.json>; rel="agent-skills"',
   '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+  '</.well-known/poppy.json>; rel="poppy-manifest"',
+  '</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"',
+  '</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"',
+  '</auth.md>; rel="auth-md"',
+  '</auth.md>; rel="service-doc"',
 ].join(", ");
 
 /**
