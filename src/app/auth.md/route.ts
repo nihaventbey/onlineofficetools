@@ -12,7 +12,7 @@ export async function GET() {
   try {
     content = fs.readFileSync(filePath, "utf-8");
   } catch {
-    content = `# Auth.md\n\nAgent registration metadata for ${SITE_URL}.\n`;
+    content = `# auth.md\n\nYou are an agent. Agent registration metadata for ${SITE_URL}.\n`;
   }
 
   return new NextResponse(content, {
@@ -24,6 +24,7 @@ export async function GET() {
         `</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"`,
         `</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"`,
         `</.well-known/poppy.json>; rel="poppy-manifest"`,
+        `</.well-known/agent-card.json>; rel="agent-card"`,
       ].join(", "),
     },
   });

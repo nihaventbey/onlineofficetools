@@ -8,6 +8,7 @@ const AGENT_LINK_HEADER = [
   '</.well-known/ai-catalog.json>; rel="service-desc"',
   '</.well-known/agent-skills/index.json>; rel="agent-skills"',
   '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+  '</.well-known/agent-card.json>; rel="agent-card"',
   '</.well-known/poppy.json>; rel="poppy-manifest"',
   '</.well-known/oauth-authorization-server>; rel="oauth-authorization-server"',
   '</.well-known/oauth-protected-resource>; rel="oauth-protected-resource"',
@@ -89,6 +90,10 @@ export async function middleware(
 ): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/.well-known/") || pathname === "/auth.md") {
+    return NextResponse.next();
+  }
+
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
     return handleAdminRoute(request);
   }
@@ -114,24 +119,20 @@ export async function middleware(
   if (isLocale(firstSegment)) {
     const legacy = ebysLegacyRedirect(request, firstSegment);
     if (legacy) return legacy;
-    const response = NextResponse.next();
-    response.headers.set("Link", AGENT_LINK_HEADER);
-    return response;
+    return NextResponse.next();
   }
 
   const locale = detectLocale(request);
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
   const status = isCrawler(request.headers.get("user-agent")) ? 308 : 307;
-  const redirectResponse = NextResponse.redirect(url, status);
-  redirectResponse.headers.set("Link", AGENT_LINK_HEADER);
-  return redirectResponse;
+  return NextResponse.redirect(url, status);
 }
 
 export default middleware;
 
 export const config = {
   matcher: [
-    "/((?!_next|api|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
+    "/((?!_next|api|\\.well-known|auth\\.md|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };

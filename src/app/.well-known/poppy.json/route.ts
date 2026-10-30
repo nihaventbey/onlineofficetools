@@ -16,9 +16,14 @@ export async function GET() {
     auth: {
       issuer: SITE_URL,
     },
-    apis: {
-      catalog_url: `${SITE_URL}/.well-known/api-catalog`,
-    },
+    apis: [
+      {
+        type: "openapi",
+        url: `${SITE_URL}/.well-known/api-catalog`,
+        description:
+          "Online Office Tools API Catalog and Agent Discovery Endpoints",
+      },
+    ],
     web: {
       home_url: `${SITE_URL}/en`,
     },
