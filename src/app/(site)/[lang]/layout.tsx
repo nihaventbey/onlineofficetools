@@ -90,13 +90,15 @@ export async function generateMetadata({
     // Google Favicon crawler requires a multiple of 48px (48x48, 96x96, 192x192) and root /favicon.ico
     icons: {
       icon: [
-        { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-        { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+        { url: "/favicon-48x48.png?v=2", sizes: "48x48", type: "image/png" },
+        { url: "/favicon-32x32.png?v=2", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png?v=2", sizes: "16x16", type: "image/png" },
+        { url: "/favicon.ico?v=2", sizes: "any" },
+        { url: "/icon-192.png?v=2", sizes: "192x192", type: "image/png" },
+        { url: "/icon-512.png?v=2", sizes: "512x512", type: "image/png" },
       ],
-      shortcut: "/favicon.ico",
-      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+      shortcut: "/favicon.ico?v=2",
+      apple: [{ url: "/apple-touch-icon.png?v=2", sizes: "180x180", type: "image/png" }],
     },
     robots: {
       index: true,
@@ -148,9 +150,11 @@ export default async function SiteLayout({ children, params }: LayoutProps) {
     >
       <head>
         {/* Favicon for Googlebot-Image, Google Search and desktop/mobile browsers */}
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=2" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
 
         {/* AI Agent & API Discovery Links (RFC 8288 / RFC 9727 / SEP-1649 / ARD / Poppy / Auth.md) */}
         <link rel="api-catalog" href="/.well-known/api-catalog" />
