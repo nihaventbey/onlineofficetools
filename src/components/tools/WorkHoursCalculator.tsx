@@ -7,26 +7,28 @@ type Props = {
   labels: Dictionary["tools"]["workHoursCalculator"];
 };
 
+type DayKey = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+
 type DayRow = {
-  name: string;
+  key: DayKey;
   enabled: boolean;
   start: string;
   end: string;
   breakMin: number;
 };
 
-const DEFAULT_DAYS: DayRow[] = [
-  { name: "Pazartesi", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { name: "Salı", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { name: "Çarşamba", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { name: "Perşembe", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { name: "Cuma", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { name: "Cumartesi", enabled: false, start: "09:00", end: "14:00", breakMin: 30 },
-  { name: "Pazar", enabled: false, start: "09:00", end: "18:00", breakMin: 60 },
+const INITIAL_DAYS: DayRow[] = [
+  { key: "mon", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "tue", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "wed", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "thu", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "fri", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "sat", enabled: false, start: "09:00", end: "14:00", breakMin: 30 },
+  { key: "sun", enabled: false, start: "09:00", end: "18:00", breakMin: 60 },
 ];
 
 export default function WorkHoursCalculator({ labels }: Props) {
-  const [days, setDays] = useState<DayRow[]>(DEFAULT_DAYS);
+  const [days, setDays] = useState<DayRow[]>(INITIAL_DAYS);
   const [standardDailyHours, setStandardDailyHours] = useState<number>(8.5);
   const [hourlyWage, setHourlyWage] = useState<string>("0");
   const [overtimeMultiplier, setOvertimeMultiplier] = useState<number>(1.5);
@@ -76,7 +78,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
     const fmtHours = (mins: number) => {
       const h = Math.floor(mins / 60);
       const m = Math.round(mins % 60);
-      return `${h} sa ${m > 0 ? `${m} dk` : ""}`;
+      return `${h} ${labels.hoursUnit} ${m > 0 ? `${m} ${labels.minsUnit}` : ""}`;
     };
 
     return {
@@ -91,21 +93,21 @@ export default function WorkHoursCalculator({ labels }: Props) {
       totalPay,
       wage,
     };
-  }, [days, standardDailyHours, hourlyWage, overtimeMultiplier]);
+  }, [days, standardDailyHours, hourlyWage, overtimeMultiplier, labels.hoursUnit, labels.minsUnit]);
 
   function copySummary() {
     const lines = [
-      "Haftalık Çalışma & Mesai Dökümü",
+      labels.summaryTitle,
       "-------------------------------",
-      `Toplam Net Çalışma: ${totals.fmtNet} (${totals.netHoursDecimal} Saat)`,
-      `Toplam Fazla Mesai: ${totals.fmtOvertime} (${totals.overtimeHoursDecimal} Saat)`,
-      `Toplam Mola: ${totals.fmtBreak}`,
+      `${labels.totalNetHours}: ${totals.fmtNet} (${totals.netHoursDecimal} ${labels.hoursUnit})`,
+      `${labels.totalOvertime}: ${totals.fmtOvertime} (${totals.overtimeHoursDecimal} ${labels.hoursUnit})`,
+      `${labels.totalBreak}: ${totals.fmtBreak}`,
     ];
     if (totals.wage > 0) {
       lines.push(
-        `Normal Çalışma Ücreti: ₺${totals.regularPay.toFixed(2)}`,
-        `Fazla Mesai Ücreti (%${(overtimeMultiplier - 1) * 100} Zamlı): ₺${totals.overtimePay.toFixed(2)}`,
-        `TOPLAM HAKEDİŞ: ₺${totals.totalPay.toFixed(2)}`,
+        `${labels.regularPay}: ${totals.regularPay.toFixed(2)}`,
+        `${labels.overtimePay}: ${totals.overtimePay.toFixed(2)}`,
+        `${labels.totalPay}: ${totals.totalPay.toFixed(2)}`,
       );
     }
     navigator.clipboard.writeText(lines.join("\n"));
@@ -119,7 +121,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 rounded-2xl bg-slate-50 p-4 text-xs font-semibold">
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
-            Günlük Standart Mesai (Saat)
+            {labels.standardDailyHours}
           </label>
           <input
             type="number"
@@ -132,7 +134,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
 
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
-            Saatlik Ücret (₺) (Opsiyonel)
+            {labels.hourlyWage}
           </label>
           <input
             type="text"
@@ -145,30 +147,26 @@ export default function WorkHoursCalculator({ labels }: Props) {
 
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
-            Fazla Mesai Katsayısı
+            {labels.overtimeMultiplier}
           </label>
           <select
             value={overtimeMultiplier}
             onChange={(e) => setOvertimeMultiplier(Number(e.target.value))}
             className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
           >
-            <option value={1.5}>%50 Zamlı (1.5x) - Standart Yasal</option>
-            <option value={2.0}>%100 Zamlı (2.0x) - Hafta Tatili / Resmi</option>
-            <option value={1.0}>1.0x (Zamsız Düz Saat)</option>
+            <option value={1.5}>1.5x (150%)</option>
+            <option value={2.0}>2.0x (200%)</option>
+            <option value={1.0}>1.0x (100%)</option>
           </select>
         </div>
       </div>
 
       {/* Days Table (Responsive Cards on Mobile) */}
       <div className="space-y-2">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Haftalık Çalışma Günleri
-        </h4>
-
         <div className="space-y-2">
           {days.map((day, idx) => (
             <div
-              key={day.name}
+              key={day.key}
               className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border p-3 text-xs transition ${
                 day.enabled
                   ? "border-slate-200 bg-white shadow-2xs"
@@ -183,14 +181,14 @@ export default function WorkHoursCalculator({ labels }: Props) {
                   className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                 />
                 <span className={`font-bold ${day.enabled ? "text-slate-900" : "text-slate-400"}`}>
-                  {day.name}
+                  {labels.days[day.key]}
                 </span>
               </div>
 
-              {day.enabled ? (
+              {day.enabled && (
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">Giriş:</span>
+                    <span className="text-slate-400">{labels.startTime}:</span>
                     <input
                       type="time"
                       value={day.start}
@@ -199,7 +197,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
                     />
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">Çıkış:</span>
+                    <span className="text-slate-400">{labels.endTime}:</span>
                     <input
                       type="time"
                       value={day.end}
@@ -208,7 +206,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
                     />
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">Mola (dk):</span>
+                    <span className="text-slate-400">{labels.breakMinutes}:</span>
                     <input
                       type="number"
                       step={15}
@@ -218,8 +216,6 @@ export default function WorkHoursCalculator({ labels }: Props) {
                     />
                   </div>
                 </div>
-              ) : (
-                <span className="text-xs text-slate-400 italic">Tatil / İzinli Gün</span>
               )}
             </div>
           ))}
@@ -229,32 +225,31 @@ export default function WorkHoursCalculator({ labels }: Props) {
       {/* Summary Results Card */}
       <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/70 via-sky-50/30 to-white p-5 shadow-xs">
         <h4 className="text-sm font-bold uppercase tracking-wider text-blue-900 border-b border-blue-100/80 pb-2 mb-4">
-          Haftalık Toplam Döküm
+          {labels.summaryTitle}
         </h4>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 text-xs">
           <div className="space-y-1">
-            <span className="text-slate-500 font-medium">Net Çalışma Süresi</span>
+            <span className="text-slate-500 font-medium">{labels.totalNetHours}</span>
             <div className="text-lg font-extrabold text-slate-900">{totals.fmtNet}</div>
-            <div className="text-[11px] text-slate-400">{totals.netHoursDecimal} saat</div>
+            <div className="text-[11px] text-slate-400">{totals.netHoursDecimal} {labels.hoursUnit}</div>
           </div>
 
           <div className="space-y-1">
-            <span className="text-slate-500 font-medium">Fazla Mesai (Overtime)</span>
+            <span className="text-slate-500 font-medium">{labels.totalOvertime}</span>
             <div className="text-lg font-extrabold text-blue-600">{totals.fmtOvertime}</div>
-            <div className="text-[11px] text-blue-500/80">{totals.overtimeHoursDecimal} saat</div>
+            <div className="text-[11px] text-blue-500/80">{totals.overtimeHoursDecimal} {labels.hoursUnit}</div>
           </div>
 
           <div className="space-y-1">
-            <span className="text-slate-500 font-medium">Toplam Mola Süresi</span>
+            <span className="text-slate-500 font-medium">{labels.totalBreak}</span>
             <div className="text-lg font-extrabold text-slate-700">{totals.fmtBreak}</div>
           </div>
 
           {totals.wage > 0 && (
             <div className="space-y-1">
-              <span className="text-slate-500 font-medium">Toplam Hakediş</span>
-              <div className="text-lg font-extrabold text-emerald-600">₺{totals.totalPay.toFixed(2)}</div>
-              <div className="text-[11px] text-emerald-600/80">Mesai dahil</div>
+              <span className="text-slate-500 font-medium">{labels.totalPay}</span>
+              <div className="text-lg font-extrabold text-emerald-600">{totals.totalPay.toFixed(2)}</div>
             </div>
           )}
         </div>
@@ -265,7 +260,7 @@ export default function WorkHoursCalculator({ labels }: Props) {
             onClick={copySummary}
             className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95"
           >
-            {copied ? "✓ Döküm Kopyalandı!" : "📋 Özeti Panoya Kopyala"}
+            {copied ? `✓ ${labels.copied}` : `📋 ${labels.copySummary}`}
           </button>
         </div>
       </div>

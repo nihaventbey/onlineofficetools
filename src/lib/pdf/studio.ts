@@ -35,6 +35,7 @@ export async function buildStudioPdf(
   file: File,
   pages: StudioPageItem[],
   numbering?: PageNumberOptions,
+  pageWord: string = "Page",
 ): Promise<Uint8Array> {
   if (pages.length === 0) {
     throw new Error("EMPTY_PAGES");
@@ -82,10 +83,10 @@ export async function buildStudioPdf(
       let text = `${pageNum}`;
       switch (numbering.format) {
         case "page-x-of-y":
-          text = `Sayfa ${pageNum} / ${totalCount}`;
+          text = `${pageWord} ${pageNum} / ${totalCount}`;
           break;
         case "page-x":
-          text = `Sayfa ${pageNum}`;
+          text = `${pageWord} ${pageNum}`;
           break;
         case "x-of-y":
           text = `${pageNum} / ${totalCount}`;

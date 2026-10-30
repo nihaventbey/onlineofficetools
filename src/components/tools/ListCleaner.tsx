@@ -83,7 +83,7 @@ export default function ListCleaner({ labels }: Props) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "temizlenmis-liste.txt";
+    a.download = "clean-list.txt";
     a.click();
   }
 
@@ -94,7 +94,7 @@ export default function ListCleaner({ labels }: Props) {
         {/* Cleaning Options */}
         <div className="space-y-2">
           <span className="block font-bold text-slate-500 uppercase tracking-wider">
-            Temizleme Seçenekleri
+            {labels.cleanOptions}
           </span>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -103,7 +103,7 @@ export default function ListCleaner({ labels }: Props) {
               onChange={(e) => setRemoveDuplicates(e.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-blue-600"
             />
-            Mükerrerleri (Çiftleri) Sil
+            {labels.removeDuplicates}
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -112,7 +112,7 @@ export default function ListCleaner({ labels }: Props) {
               onChange={(e) => setRemoveEmpty(e.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-blue-600"
             />
-            Boş Satırları Kaldır
+            {labels.removeEmpty}
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -121,25 +121,25 @@ export default function ListCleaner({ labels }: Props) {
               onChange={(e) => setTrimWhitespace(e.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-blue-600"
             />
-            Kenar Boşluklarını Kırp
+            {labels.trimWhitespace}
           </label>
         </div>
 
         {/* Sort Options */}
         <div className="space-y-2">
           <span className="block font-bold text-slate-500 uppercase tracking-wider">
-            Sıralama Düzeni
+            {labels.sort}
           </span>
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as typeof sortOrder)}
             className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-2.5 text-xs text-slate-800 outline-none focus:border-blue-500"
           >
-            <option value="none">Sıralama Yapma (Orijinal)</option>
-            <option value="az">A'dan Z'ye Sırala</option>
-            <option value="za">Z'den A'ya Sırala</option>
-            <option value="length">Karakter Uzunluğuna Göre</option>
-            <option value="reverse">Tersine Çevir</option>
+            <option value="none">{labels.sortNone}</option>
+            <option value="az">{labels.sortAz}</option>
+            <option value="za">{labels.sortZa}</option>
+            <option value="length">{labels.sortLength}</option>
+            <option value="reverse">{labels.sortReverse}</option>
           </select>
 
           <label className="flex items-center gap-2 cursor-pointer pt-1">
@@ -149,31 +149,31 @@ export default function ListCleaner({ labels }: Props) {
               onChange={(e) => setCaseSensitive(e.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-blue-600"
             />
-            Büyük/Küçük Harf Duyarlı
+            {labels.caseSensitive}
           </label>
         </div>
 
         {/* Prefix / Numbers */}
         <div className="space-y-2">
           <span className="block font-bold text-slate-500 uppercase tracking-wider">
-            Madde & Numaralandırma
+            {labels.prefix}
           </span>
           <select
             value={prefixMode}
             onChange={(e) => setPrefixMode(e.target.value as typeof prefixMode)}
             className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-2.5 text-xs text-slate-800 outline-none focus:border-blue-500"
           >
-            <option value="none">Ön Ek Yok</option>
-            <option value="numbers">1., 2., 3. (Numaralı Liste)</option>
-            <option value="bullets">• Madde İmi</option>
-            <option value="dashes">- Çizgi</option>
+            <option value="none">{labels.prefixNone}</option>
+            <option value="numbers">{labels.prefixNumbers}</option>
+            <option value="bullets">{labels.prefixBullets}</option>
+            <option value="dashes">{labels.prefixDashes}</option>
           </select>
         </div>
 
         {/* Join / Single line */}
         <div className="space-y-2">
           <span className="block font-bold text-slate-500 uppercase tracking-wider">
-            Tek Satırda Birleştir
+            {labels.joinDelimiter}
           </span>
           <div className="flex items-center gap-1.5">
             <button
@@ -181,14 +181,14 @@ export default function ListCleaner({ labels }: Props) {
               onClick={() => setJoinDelimiter("")}
               className={`rounded-lg px-2.5 py-1.5 border ${joinDelimiter === "" ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 bg-white"}`}
             >
-              Satır Satır
+              {labels.joinNewline}
             </button>
             <button
               type="button"
               onClick={() => setJoinDelimiter(", ")}
               className={`rounded-lg px-2.5 py-1.5 border ${joinDelimiter === ", " ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 bg-white"}`}
             >
-              Virgüllü (,)
+              {labels.joinComma}
             </button>
           </div>
         </div>
@@ -199,19 +199,19 @@ export default function ListCleaner({ labels }: Props) {
         {/* Left: Input Textarea */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-bold text-slate-600">
-            <span>Giriş Listesi</span>
+            <span>{labels.totalLines} ({stats.totalCount})</span>
             <button
               type="button"
               onClick={() => setInput("")}
               className="text-slate-400 hover:text-rose-600"
             >
-              Temizle
+              {labels.clear}
             </button>
           </div>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Listenizi buraya yapıştırın (Her satıra bir öğe)..."
+            placeholder={labels.inputPlaceholder}
             rows={12}
             className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 p-3.5 font-mono text-xs text-slate-900 outline-none focus:border-blue-500 focus:bg-white"
           />
@@ -220,15 +220,14 @@ export default function ListCleaner({ labels }: Props) {
         {/* Right: Output Textarea */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-bold text-slate-600">
-            <span>Temizlenmiş Sonuç</span>
+            <span>{labels.uniqueLines}</span>
             <span className="text-blue-600 font-bold">
-              {stats.uniqueCount} Satır {stats.duplicatesRemoved > 0 ? `(${stats.duplicatesRemoved} çift silindi)` : ""}
+              {stats.uniqueCount} {labels.totalLines.toLowerCase()} {stats.duplicatesRemoved > 0 ? `(${stats.duplicatesRemoved} ${labels.duplicatesRemoved.toLowerCase()})` : ""}
             </span>
           </div>
           <textarea
             readOnly
             value={stats.outputText}
-            placeholder="İşlenmiş listeniz burada görünecek..."
             rows={12}
             className="w-full rounded-2xl border border-blue-100 bg-blue-50/20 p-3.5 font-mono text-xs text-slate-900 outline-none"
           />
@@ -239,14 +238,14 @@ export default function ListCleaner({ labels }: Props) {
       <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3 text-xs font-bold text-slate-700">
           <span className="rounded-lg bg-white px-2.5 py-1 border border-slate-200">
-            Orijinal: {stats.totalCount} satır
+            {labels.totalLines}: {stats.totalCount}
           </span>
           <span className="rounded-lg bg-emerald-50 px-2.5 py-1 text-emerald-700 border border-emerald-200">
-            Net: {stats.uniqueCount} satır
+            {labels.uniqueLines}: {stats.uniqueCount}
           </span>
           {stats.duplicatesRemoved > 0 && (
             <span className="rounded-lg bg-amber-50 px-2.5 py-1 text-amber-700 border border-amber-200">
-              Silinen: {stats.duplicatesRemoved} çift
+              {labels.duplicatesRemoved}: {stats.duplicatesRemoved}
             </span>
           )}
         </div>
@@ -258,7 +257,7 @@ export default function ListCleaner({ labels }: Props) {
             disabled={!stats.outputText}
             className="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95 disabled:opacity-40"
           >
-            {copied ? "✓ Kopyalandı!" : "📋 Panoya Kopyala"}
+            {copied ? `✓ ${labels.copied}` : `📋 ${labels.copyResult}`}
           </button>
           <button
             type="button"
@@ -266,7 +265,7 @@ export default function ListCleaner({ labels }: Props) {
             disabled={!stats.outputText}
             className="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 text-xs font-bold text-slate-700 shadow-2xs hover:bg-slate-50 active:scale-95 disabled:opacity-40"
           >
-            📥 .TXT İndir
+            📥 {labels.download}
           </button>
         </div>
       </div>

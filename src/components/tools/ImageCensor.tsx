@@ -228,7 +228,7 @@ export default function ImageCensor({ labels }: Props) {
   function handleDownload() {
     if (!canvasRef.current) return;
     const link = document.createElement("a");
-    link.download = `${fileName}-sansurlu.png`;
+    link.download = `${fileName}-censored.png`;
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
   }
@@ -256,13 +256,13 @@ export default function ImageCensor({ labels }: Props) {
           />
           <span className="text-4xl mb-2">🕶️</span>
           <span className="text-sm font-bold text-slate-800">
-            Sansürlemek istediğiniz görseli buraya sürükleyin
+            {labels.dropTitle}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            Ekran görüntüsü, kimlik, dekont, fiş veya fotoğraf (Sunucuya yüklenmez, %100 gizli)
+            {labels.dropSubtitle}
           </span>
           <span className="mt-4 inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
-            Görsel Seç
+            {labels.selectImage}
           </span>
         </label>
       ) : (
@@ -276,14 +276,14 @@ export default function ImageCensor({ labels }: Props) {
                 onClick={() => setToolMode("rect")}
                 className={`rounded-lg px-3 py-1.5 transition active:scale-95 ${toolMode === "rect" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
               >
-                ⬛ Dikdörtgen Seçim
+                ⬛ {labels.rectMode}
               </button>
               <button
                 type="button"
                 onClick={() => setToolMode("brush")}
                 className={`rounded-lg px-3 py-1.5 transition active:scale-95 ${toolMode === "brush" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
               >
-                🖌️ Fırça Modu
+                🖌️ {labels.brushMode}
               </button>
             </div>
 
@@ -294,21 +294,21 @@ export default function ImageCensor({ labels }: Props) {
                 onClick={() => setCensorType("pixelate")}
                 className={`rounded-lg px-3 py-1.5 transition active:scale-95 ${censorType === "pixelate" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
               >
-                ▦ Mozaik
+                ▦ {labels.pixelate}
               </button>
               <button
                 type="button"
                 onClick={() => setCensorType("blur")}
                 className={`rounded-lg px-3 py-1.5 transition active:scale-95 ${censorType === "blur" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
               >
-                🌫️ Buzlama
+                🌫️ {labels.blur}
               </button>
               <button
                 type="button"
                 onClick={() => setCensorType("black")}
                 className={`rounded-lg px-3 py-1.5 transition active:scale-95 ${censorType === "black" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
               >
-                ⬛ Siyah Şerit
+                ⬛ {labels.blackBar}
               </button>
             </div>
 
@@ -320,14 +320,14 @@ export default function ImageCensor({ labels }: Props) {
                 onClick={handleUndo}
                 className="inline-flex min-h-[36px] items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 shadow-2xs disabled:opacity-40"
               >
-                ↩ Geri Al
+                ↩ {labels.undo}
               </button>
               <button
                 type="button"
                 onClick={() => setSourceImg(null)}
                 className="text-xs text-rose-600 hover:underline px-2"
               >
-                Kapat
+                {labels.reset}
               </button>
             </div>
           </div>
@@ -335,7 +335,7 @@ export default function ImageCensor({ labels }: Props) {
           {/* Brush size option if brush mode is active */}
           {toolMode === "brush" && (
             <div className="flex items-center gap-3 px-2 text-xs font-semibold text-slate-600">
-              <span>Fırça Boyutu:</span>
+              <span>{labels.brushSize}:</span>
               <input
                 type="range"
                 min={10}
@@ -372,10 +372,7 @@ export default function ImageCensor({ labels }: Props) {
           <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-bold text-slate-800">
-                Görseliniz tarayıcınızda yerel olarak sansürlenir.
-              </p>
-              <p className="text-[11px] text-slate-500">
-                Hassas verileriniz asla sunuculara iletilmez.
+                {labels.privacyHint}
               </p>
             </div>
             <button
@@ -383,7 +380,7 @@ export default function ImageCensor({ labels }: Props) {
               onClick={handleDownload}
               className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95"
             >
-              📥 Sansürlenmiş Görseli İndir (PNG)
+              📥 {labels.download}
             </button>
           </div>
         </div>

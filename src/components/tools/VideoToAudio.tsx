@@ -19,7 +19,7 @@ export default function VideoToAudio({ labels }: Props) {
 
   function handleFile(f: File) {
     if (!f.type.startsWith("video/") && !/\.(mp4|webm|mov|mkv|avi)$/i.test(f.name)) {
-      setError("Lütfen geçerli bir video dosyası seçin (MP4, WebM, MOV).");
+      setError(labels.invalidFile);
       return;
     }
     setError("");
@@ -163,7 +163,7 @@ export default function VideoToAudio({ labels }: Props) {
       await audioCtx.close();
     } catch (err) {
       console.error(err);
-      setError("Videonun ses kanalı çözümlenemedi veya desteklenmeyen bir ses formatı.");
+      setError(labels.error);
     } finally {
       setBusy(false);
     }
@@ -192,13 +192,13 @@ export default function VideoToAudio({ labels }: Props) {
           />
           <span className="text-4xl mb-2">🎬</span>
           <span className="text-sm font-bold text-slate-800">
-            Videoyu buraya sürükleyin veya seçin
+            {labels.dropTitle}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            MP4, WebM, MOV formatları desteklenir (Tarayıcıda yerel dönüştürülür)
+            {labels.dropSubtitle}
           </span>
           <span className="mt-4 inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
-            Video Seç
+            {labels.selectVideo}
           </span>
         </label>
       ) : (
@@ -221,7 +221,7 @@ export default function VideoToAudio({ labels }: Props) {
               }}
               className="text-xs text-rose-600 hover:underline"
             >
-              Farklı Video Seç
+              {labels.changeVideo}
             </button>
           </div>
 
@@ -229,7 +229,7 @@ export default function VideoToAudio({ labels }: Props) {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 rounded-2xl bg-slate-50 p-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Ses Formatı
+                {labels.audioFormat}
               </label>
               <div className="grid grid-cols-2 gap-2 rounded-xl bg-slate-200/70 p-1 text-xs font-semibold">
                 <button
@@ -237,14 +237,14 @@ export default function VideoToAudio({ labels }: Props) {
                   onClick={() => setFormat("mp3")}
                   className={`rounded-lg py-2 transition active:scale-95 ${format === "mp3" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
                 >
-                  🎵 MP3 (Sıkıştırılmış)
+                  {labels.mp3Compressed}
                 </button>
                 <button
                   type="button"
                   onClick={() => setFormat("wav")}
                   className={`rounded-lg py-2 transition active:scale-95 ${format === "wav" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
                 >
-                  🎼 WAV (Kayıpsız)
+                  {labels.wavLossless}
                 </button>
               </div>
             </div>
@@ -252,7 +252,7 @@ export default function VideoToAudio({ labels }: Props) {
             {format === "mp3" && (
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  MP3 Kalitesi (Bitrate)
+                  {labels.qualityBitrate}
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
                   {[128, 192, 320].map((b) => (
@@ -274,7 +274,7 @@ export default function VideoToAudio({ labels }: Props) {
           {busy && (
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs font-semibold text-slate-600">
-                <span>Ses ayıklanıyor ve kodlanıyor...</span>
+                <span>{labels.processing}</span>
                 <span>%{progress}</span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
@@ -301,7 +301,7 @@ export default function VideoToAudio({ labels }: Props) {
                 onClick={handleConvert}
                 className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-500 active:scale-95 disabled:opacity-50"
               >
-                {busy ? "İşleniyor..." : "🎧 Sesi Videodan Ayıkla"}
+                {busy ? labels.processing : `🎧 ${labels.extractButton}`}
               </button>
             ) : (
               <a
@@ -309,7 +309,7 @@ export default function VideoToAudio({ labels }: Props) {
                 download={downloadName}
                 className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-emerald-600 px-7 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-500 active:scale-95"
               >
-                📥 {downloadName} İndir
+                📥 {labels.download} ({downloadName})
               </a>
             )}
           </div>

@@ -168,7 +168,7 @@ export default function FaviconGenerator({ labels }: Props) {
     a.click();
   }
 
-  const htmlCode = `<!-- Favicon & Web İkonları -->
+  const htmlCode = `<!-- Favicon & App Icons -->
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
@@ -206,13 +206,13 @@ export default function FaviconGenerator({ labels }: Props) {
           />
           <span className="text-4xl mb-2">🎨</span>
           <span className="text-sm font-bold text-slate-800">
-            Logonuzu veya görselinizi buraya sürükleyin
+            {labels.dropTitle}
           </span>
           <span className="text-xs text-slate-500 mt-1">
-            PNG, JPG, SVG veya WebP (Kare görsel önerilir)
+            {labels.dropSubtitle}
           </span>
           <span className="mt-4 inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
-            Görsel Seç
+            {labels.selectImage}
           </span>
         </label>
       ) : (
@@ -221,56 +221,56 @@ export default function FaviconGenerator({ labels }: Props) {
           <div className="grid grid-cols-1 gap-4 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
             {/* Shape selection */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Şekil</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{labels.shape}</label>
               <div className="grid grid-cols-3 gap-1 rounded-xl bg-slate-200/70 p-1 text-xs font-semibold">
                 <button
                   type="button"
                   onClick={() => setShape("square")}
                   className={`rounded-lg py-1.5 transition ${shape === "square" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
                 >
-                  Kare
+                  {labels.square}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShape("rounded")}
                   className={`rounded-lg py-1.5 transition ${shape === "rounded" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
                 >
-                  Yuvarlak
+                  {labels.rounded}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShape("circle")}
                   className={`rounded-lg py-1.5 transition ${shape === "circle" ? "bg-white text-blue-700 shadow-2xs" : "text-slate-600"}`}
                 >
-                  Daire
+                  {labels.circle}
                 </button>
               </div>
             </div>
 
             {/* Background Color */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Arka Plan Rengi</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">{labels.bgColor}</label>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setBgColor("transparent")}
                   className={`min-h-[36px] flex-1 rounded-xl border text-xs font-semibold transition ${bgColor === "transparent" ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 bg-white text-slate-700"}`}
                 >
-                  Şeffaf
+                  {labels.transparent}
                 </button>
                 <button
                   type="button"
                   onClick={() => setBgColor("#ffffff")}
                   className={`min-h-[36px] flex-1 rounded-xl border text-xs font-semibold transition ${bgColor === "#ffffff" ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 bg-white text-slate-700"}`}
                 >
-                  Beyaz
+                  {labels.white}
                 </button>
                 <input
                   type="color"
                   value={bgColor === "transparent" ? "#ffffff" : bgColor}
                   onChange={(e) => setBgColor(e.target.value)}
                   className="h-9 w-9 cursor-pointer rounded-xl border border-slate-200 p-0.5"
-                  title="Özel Renk"
+                  title={labels.custom}
                 />
               </div>
             </div>
@@ -278,7 +278,7 @@ export default function FaviconGenerator({ labels }: Props) {
             {/* Margin / Padding Slider */}
             <div>
               <div className="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
-                <span>İç Boşluk (Marjin)</span>
+                <span>{labels.padding}</span>
                 <span>%{padding}</span>
               </div>
               <input
@@ -296,14 +296,14 @@ export default function FaviconGenerator({ labels }: Props) {
           <div>
             <div className="flex items-center justify-between pb-3">
               <h4 className="text-sm font-bold text-slate-800">
-                Oluşturulan İkonlar ({icons.length + 1} Dosya)
+                {labels.preview} ({icons.length + 1})
               </h4>
               <button
                 type="button"
                 onClick={() => setSourceImg(null)}
                 className="text-xs text-rose-600 hover:underline"
               >
-                Görseli Değiştir
+                ✕
               </button>
             </div>
 
@@ -329,7 +329,7 @@ export default function FaviconGenerator({ labels }: Props) {
                     onClick={() => downloadSingle(icon)}
                     className="text-[11px] font-semibold text-blue-600 hover:underline"
                   >
-                    İndir
+                    {labels.download}
                   </button>
                 </div>
               ))}
@@ -340,10 +340,10 @@ export default function FaviconGenerator({ labels }: Props) {
           <div className="flex flex-col gap-3 rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h4 className="text-sm font-bold text-blue-950">
-                Tam Web Paketi (ZIP)
+                {labels.downloadZip}
               </h4>
               <p className="text-xs text-blue-700/80">
-                Tüm PNG boyutları, çok katmanlı <code>favicon.ico</code> ve <code>site.webmanifest</code> içerir.
+                favicon.ico, PNG (16x16, 32x32, 48x48, 180x180, 192x192, 512x512) & manifest.
               </p>
             </div>
             <button
@@ -352,7 +352,7 @@ export default function FaviconGenerator({ labels }: Props) {
               onClick={downloadZip}
               className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-500 active:scale-95 disabled:opacity-50"
             >
-              {busy ? "Paketleniyor..." : "📦 Tüm Paketi İndir (.ZIP)"}
+              {busy ? "..." : `📦 ${labels.downloadZip}`}
             </button>
           </div>
 
@@ -360,14 +360,14 @@ export default function FaviconGenerator({ labels }: Props) {
           <div className="rounded-2xl border border-slate-200 bg-slate-900 p-4 text-white">
             <div className="flex items-center justify-between pb-2">
               <span className="text-xs font-mono font-semibold text-slate-300">
-                HTML &lt;head&gt; Kodları
+                HTML &lt;head&gt;
               </span>
               <button
                 type="button"
                 onClick={copyHtml}
                 className="text-xs font-semibold text-blue-400 hover:text-blue-300"
               >
-                {copiedHtml ? "✓ Kopyalandı!" : "Kodu Kopyala"}
+                {copiedHtml ? `✓ ${labels.copied}` : labels.copyHtml}
               </button>
             </div>
             <pre className="overflow-x-auto text-[11px] text-slate-300 font-mono leading-relaxed">

@@ -150,7 +150,7 @@ export default function HeroInstantSearch({ locale, tools, dict }: Props) {
           <div className="px-2 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-600">
             {query.trim()
               ? `${activeList.length} ${dict.common.tools}`
-              : (dict.common.recentTools || "Hızlı Öneriler")}
+              : (dict.common.quickSuggestions || dict.common.recentTools || "Quick Suggestions")}
           </div>
           <ul className="space-y-1">
             {activeList.map((tool, idx) => {

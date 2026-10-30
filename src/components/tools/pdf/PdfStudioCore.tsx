@@ -38,6 +38,17 @@ type StudioLabels = {
   margin?: string;
   skipCover?: string;
   startAt?: string;
+  posBottomCenter?: string;
+  posBottomRight?: string;
+  posBottomLeft?: string;
+  posTopCenter?: string;
+  posTopRight?: string;
+  posTopLeft?: string;
+  fmtPageXofY?: string;
+  fmtPageX?: string;
+  fmtXofY?: string;
+  fmtXonly?: string;
+  pageWord?: string;
 };
 
 type Props = {
@@ -46,32 +57,43 @@ type Props = {
 };
 
 const DEFAULT_LABELS: Required<StudioLabels> = {
-  dropTitle: "PDF dosyasını buraya sürükleyin",
-  dropHint: "veya bilgisayarınızdan seçin",
-  selectFile: "PDF Dosyası Seç",
-  tooLarge: "Dosya boyutu çok büyük (Maks. 50MB)",
-  invalidFile: "Geçerli bir PDF dosyası seçin",
-  error: "İşlem sırasında bir hata oluştu",
-  success: "PDF başarıyla hazırlandı",
-  download: "Düzenlenmiş PDF'i İndir",
-  processing: "Sayfalar hazırlanıyor...",
-  pages: "Sayfa",
-  deletePage: "Sil",
-  rotatePage: "Döndür",
-  moveLeft: "Sola Taşı",
-  moveRight: "Sağa Taşı",
-  rotateAll: "Tümünü Döndür",
-  reverseAll: "Ters Çevir",
-  resetAll: "Sıfırla",
-  tabOrganize: "Sayfa Sırala & Sil",
-  tabNumbering: "Sayfa Numarası Ekle",
-  enableNumbering: "Sayfa Numaralarını Ekle",
-  numberPosition: "Konum",
+  dropTitle: "Drag & drop your PDF file here",
+  dropHint: "or browse from your device",
+  selectFile: "Select PDF File",
+  tooLarge: "File is too large (Max 50MB)",
+  invalidFile: "Please select a valid PDF file",
+  error: "An error occurred during processing",
+  success: "PDF prepared successfully",
+  download: "Download PDF",
+  processing: "Preparing pages…",
+  pages: "Pages",
+  deletePage: "Delete",
+  rotatePage: "Rotate",
+  moveLeft: "Move Left",
+  moveRight: "Move Right",
+  rotateAll: "Rotate All",
+  reverseAll: "Reverse Order",
+  resetAll: "Reset",
+  tabOrganize: "Reorder & Delete",
+  tabNumbering: "Add Page Numbers",
+  enableNumbering: "Add Page Numbers",
+  numberPosition: "Position",
   numberFormat: "Format",
-  fontSize: "Yazı Boyutu",
-  margin: "Kenar Boşluğu",
-  skipCover: "İlk sayfayı (Kapak) atla",
-  startAt: "Başlangıç Numarası",
+  fontSize: "Font Size",
+  margin: "Margin",
+  skipCover: "Skip first page (Cover)",
+  startAt: "Start Number",
+  posBottomCenter: "Bottom - Center",
+  posBottomRight: "Bottom - Right",
+  posBottomLeft: "Bottom - Left",
+  posTopCenter: "Top - Center",
+  posTopRight: "Top - Right",
+  posTopLeft: "Top - Left",
+  fmtPageXofY: "Page X / Y",
+  fmtPageX: "Page X",
+  fmtXofY: "X / Y",
+  fmtXonly: "X only",
+  pageWord: "Page",
 };
 
 export default function PdfStudioCore({
@@ -179,7 +201,7 @@ export default function PdfStudioCore({
 
   function deletePage(index: number) {
     if (pages.length <= 1) {
-      setError("En az 1 sayfa kalmalıdır.");
+      setError(labels.invalidFile);
       return;
     }
     setPages((prev) => prev.filter((_, i) => i !== index));
@@ -222,9 +244,9 @@ export default function PdfStudioCore({
     setError("");
 
     try {
-      const outBytes = await buildStudioPdf(file, pages, numbering);
+      const outBytes = await buildStudioPdf(file, pages, numbering, labels.pageWord);
       setProgress(100);
-      const outName = file.name.replace(/\.pdf$/i, "-duzenlenmis.pdf");
+      const outName = file.name.replace(/\.pdf$/i, "-organized.pdf");
       const blob = new Blob([outBytes.buffer as ArrayBuffer], { type: "application/pdf" });
       downloadBlob(blob, outName);
     } catch (err) {
@@ -319,7 +341,7 @@ export default function PdfStudioCore({
                 onClick={() => setFile(null)}
                 className="text-xs text-rose-600 hover:underline"
               >
-                Farklı PDF Seç
+                ✕ {labels.selectFile}
               </button>
             </div>
           )}
@@ -339,9 +361,6 @@ export default function PdfStudioCore({
                   />
                   {labels.enableNumbering}
                 </label>
-                <span className="text-xs text-blue-700 font-medium">
-                  {numbering.enabled ? "Numaralandırma Aktif" : "Devre Dışı"}
-                </span>
               </div>
 
               {numbering.enabled && (
@@ -360,12 +379,12 @@ export default function PdfStudioCore({
                       }
                       className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-xs text-slate-800 outline-none focus:border-blue-500"
                     >
-                      <option value="bottom-center">Alt - Orta</option>
-                      <option value="bottom-right">Alt - Sağ</option>
-                      <option value="bottom-left">Alt - Sol</option>
-                      <option value="top-center">Üst - Orta</option>
-                      <option value="top-right">Üst - Sağ</option>
-                      <option value="top-left">Üst - Sol</option>
+                      <option value="bottom-center">{labels.posBottomCenter}</option>
+                      <option value="bottom-right">{labels.posBottomRight}</option>
+                      <option value="bottom-left">{labels.posBottomLeft}</option>
+                      <option value="top-center">{labels.posTopCenter}</option>
+                      <option value="top-right">{labels.posTopRight}</option>
+                      <option value="top-left">{labels.posTopLeft}</option>
                     </select>
                   </div>
 
@@ -383,10 +402,10 @@ export default function PdfStudioCore({
                       }
                       className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-xs text-slate-800 outline-none focus:border-blue-500"
                     >
-                      <option value="page-x-of-y">Sayfa X / Y</option>
-                      <option value="page-x">Sayfa X</option>
-                      <option value="x-of-y">X / Y</option>
-                      <option value="x-only">Sadece X</option>
+                      <option value="page-x-of-y">{labels.fmtPageXofY}</option>
+                      <option value="page-x">{labels.fmtPageX}</option>
+                      <option value="x-of-y">{labels.fmtXofY}</option>
+                      <option value="x-only">{labels.fmtXonly}</option>
                     </select>
                   </div>
 
@@ -456,13 +475,13 @@ export default function PdfStudioCore({
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={thumbUrl}
-                        alt={`Sayfa ${index + 1}`}
+                        alt={`${labels.pages} ${index + 1}`}
                         style={{ transform: `rotate(${p.rotation}deg)` }}
                         className="max-h-[160px] w-auto max-w-full object-contain transition-transform duration-200"
                       />
                     ) : (
                       <div className="flex h-32 w-24 items-center justify-center border border-dashed text-slate-300 text-xs">
-                        Önizleme
+                        #{index + 1}
                       </div>
                     )}
                   </div>
@@ -514,11 +533,11 @@ export default function PdfStudioCore({
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-semibold text-slate-800">
-                  Hazır: {pages.length} sayfa
-                  {numbering.enabled ? " • Numaralandırma uygulanacak" : ""}
+                  {pages.length} {labels.pages}
+                  {numbering.enabled ? ` • ${labels.enableNumbering}` : ""}
                 </p>
                 <p className="text-[11px] text-slate-500">
-                  Dosyanız sunucuya yüklenmeden tarayıcınızda doğrudan işlenir.
+                  {labels.success}
                 </p>
               </div>
 

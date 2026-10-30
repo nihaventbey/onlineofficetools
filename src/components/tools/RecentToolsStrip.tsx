@@ -40,7 +40,7 @@ export default function RecentToolsStrip({ locale, tools, dict }: Props) {
     <div className="mx-auto mt-4 w-full max-w-2xl px-2 sm:px-0">
       <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
         <span className="shrink-0 font-medium text-slate-500">
-          {isPersonalized ? (dict.common.recentTools || "Son Kullanılanlar:") : "Popüler:"}
+          {isPersonalized ? (dict.common.recentTools || "Recently Used:") : (dict.common.popularTools || "Popular:")}
         </span>
         <div className="flex items-center gap-1.5">
           {displayTools.map((tool) => {

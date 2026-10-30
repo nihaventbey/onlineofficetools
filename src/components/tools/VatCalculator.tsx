@@ -12,7 +12,7 @@ export default function VatCalculator({ labels }: Props) {
   const [direction, setDirection] = useState<"exclusive" | "inclusive">("exclusive");
   const [vatRate, setVatRate] = useState<number>(20);
   const [customRate, setCustomRate] = useState<string>("");
-  const [tevkifatRate, setTevkifatRate] = useState<number>(0); // 0 means no withholding
+  const [tevkifatRate, setTevkifatRate] = useState<number>(0);
   const [copied, setCopied] = useState<boolean>(false);
 
   const effectiveRate = customRate !== "" ? parseFloat(customRate) || 0 : vatRate;
@@ -57,25 +57,25 @@ export default function VatCalculator({ labels }: Props) {
   }, [amount, direction, effectiveRate, tevkifatRate]);
 
   const fmt = (n: number) =>
-    new Intl.NumberFormat("tr-TR", {
+    new Intl.NumberFormat(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(n);
 
   function copySummary() {
     const lines = [
-      `Matrah (KDV Hariç): ₺${fmt(results.baseAmount)}`,
-      `KDV Oranı: %${effectiveRate}`,
-      `Hesaplanan KDV: ₺${fmt(results.vatAmount)}`,
+      `${labels.baseAmount}: ${fmt(results.baseAmount)}`,
+      `${labels.vatRate}: %${effectiveRate}`,
+      `${labels.vatAmount}: ${fmt(results.vatAmount)}`,
     ];
     if (tevkifatRate > 0) {
       lines.push(
-        `Tevkifat (${tevkifatRate}/10): ₺${fmt(results.withholdingAmount)}`,
-        `Tahsil Edilecek KDV: ₺${fmt(results.collectedVat)}`,
-        `Tahsil Edilecek Toplam: ₺${fmt(results.payableAmount)}`,
+        `${labels.withholdingAmount} (${tevkifatRate}/10): ${fmt(results.withholdingAmount)}`,
+        `${labels.collectedVat}: ${fmt(results.collectedVat)}`,
+        `${labels.payableAmount}: ${fmt(results.payableAmount)}`,
       );
     } else {
-      lines.push(`Genel Toplam (KDV Dahil): ₺${fmt(results.totalAmount)}`);
+      lines.push(`${labels.totalAmount}: ${fmt(results.totalAmount)}`);
     }
 
     navigator.clipboard.writeText(lines.join("\n"));
@@ -91,7 +91,7 @@ export default function VatCalculator({ labels }: Props) {
           {/* Direction Switcher (Exclusive vs Inclusive) */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-              Hesaplama Türü
+              {labels.calculationType}
             </label>
             <div className="grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1 text-xs font-semibold">
               <button
@@ -103,7 +103,7 @@ export default function VatCalculator({ labels }: Props) {
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                KDV Hariçten → Dahile
+                {labels.exclusive}
               </button>
               <button
                 type="button"
@@ -114,7 +114,7 @@ export default function VatCalculator({ labels }: Props) {
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                KDV Dahilden → Harice
+                {labels.inclusive}
               </button>
             </div>
           </div>
@@ -122,16 +122,15 @@ export default function VatCalculator({ labels }: Props) {
           {/* Amount Input */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-              {direction === "exclusive" ? "Matrah (KDV Hariç Tutar)" : "KDV Dahil Tutar"}
+              {direction === "exclusive" ? labels.baseAmount : labels.totalAmount}
             </label>
             <div className="relative flex items-center">
-              <span className="absolute left-4 font-bold text-slate-400">₺</span>
               <input
                 type="text"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                className="w-full min-h-[48px] rounded-2xl border border-slate-200 bg-white pl-9 pr-4 text-lg font-bold text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15"
+                className="w-full min-h-[48px] rounded-2xl border border-slate-200 bg-white px-4 text-lg font-bold text-slate-900 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15"
               />
             </div>
           </div>
@@ -139,7 +138,7 @@ export default function VatCalculator({ labels }: Props) {
           {/* VAT Rate Selection */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-              KDV Oranı
+              {labels.vatRate}
             </label>
             <div className="grid grid-cols-4 gap-2">
               {[1, 10, 20].map((rate) => (
@@ -162,7 +161,7 @@ export default function VatCalculator({ labels }: Props) {
               <div className="relative">
                 <input
                   type="number"
-                  placeholder="Özel %"
+                  placeholder={labels.customRate}
                   value={customRate}
                   onChange={(e) => setCustomRate(e.target.value)}
                   className={`w-full min-h-[42px] rounded-xl border px-2 text-center text-xs font-bold outline-none focus:border-blue-500 ${
@@ -177,24 +176,21 @@ export default function VatCalculator({ labels }: Props) {
 
           {/* Withholding (Tevkifat) Selection */}
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                KDV Tevkifatı (Opsiyonel)
-              </label>
-              <span className="text-[11px] text-slate-400">Fatura tevkifatı</span>
-            </div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              {labels.withholdingRate}
+            </label>
             <select
               value={tevkifatRate}
               onChange={(e) => setTevkifatRate(Number(e.target.value))}
               className="w-full min-h-[44px] rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-800 outline-none focus:border-blue-500"
             >
-              <option value={0}>Tevkifat Yok (0/10)</option>
-              <option value={2}>2/10 Tevkifat</option>
-              <option value={3}>3/10 Tevkifat</option>
-              <option value={4}>4/10 Tevkifat</option>
-              <option value={5}>5/10 Tevkifat (Yarı Yarıya)</option>
-              <option value={7}>7/10 Tevkifat</option>
-              <option value={9}>9/10 Tevkifat</option>
+              <option value={0}>{labels.noWithholding}</option>
+              <option value={2}>2/10</option>
+              <option value={3}>3/10</option>
+              <option value={4}>4/10</option>
+              <option value={5}>5/10 (50%)</option>
+              <option value={7}>7/10</option>
+              <option value={9}>9/10</option>
             </select>
           </div>
         </div>
@@ -203,29 +199,29 @@ export default function VatCalculator({ labels }: Props) {
         <div className="flex flex-col justify-between rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/70 via-sky-50/30 to-white p-5 shadow-xs">
           <div className="space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-blue-900 border-b border-blue-100/80 pb-2">
-              Hesaplama Özeti
+              {labels.copySummary}
             </h3>
 
             <div className="space-y-2.5 text-sm">
               <div className="flex items-center justify-between text-slate-600">
-                <span>Matrah (KDV Hariç):</span>
-                <span className="font-semibold text-slate-900">₺{fmt(results.baseAmount)}</span>
+                <span>{labels.baseAmount}:</span>
+                <span className="font-semibold text-slate-900">{fmt(results.baseAmount)}</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-600">
-                <span>Hesaplanan KDV (%{effectiveRate}):</span>
-                <span className="font-semibold text-blue-600">+₺{fmt(results.vatAmount)}</span>
+                <span>{labels.vatAmount} (%{effectiveRate}):</span>
+                <span className="font-semibold text-blue-600">+{fmt(results.vatAmount)}</span>
               </div>
 
               {tevkifatRate > 0 && (
                 <>
                   <div className="flex items-center justify-between text-amber-700">
-                    <span>Tevkif Edilen KDV ({tevkifatRate}/10):</span>
-                    <span className="font-semibold">-₺{fmt(results.withholdingAmount)}</span>
+                    <span>{labels.withholdingAmount} ({tevkifatRate}/10):</span>
+                    <span className="font-semibold">-{fmt(results.withholdingAmount)}</span>
                   </div>
                   <div className="flex items-center justify-between text-emerald-700">
-                    <span>Tahsil Edilecek KDV:</span>
-                    <span className="font-semibold">₺{fmt(results.collectedVat)}</span>
+                    <span>{labels.collectedVat}:</span>
+                    <span className="font-semibold">{fmt(results.collectedVat)}</span>
                   </div>
                 </>
               )}
@@ -233,16 +229,16 @@ export default function VatCalculator({ labels }: Props) {
               <div className="border-t border-slate-200/80 pt-3 flex items-baseline justify-between">
                 <div>
                   <div className="text-sm font-bold text-slate-900">
-                    {tevkifatRate > 0 ? "Tahsil Edilecek Tutar:" : "Genel Toplam (KDV Dahil):"}
+                    {tevkifatRate > 0 ? labels.payableAmount : labels.totalAmount}:
                   </div>
                   {tevkifatRate > 0 && (
                     <div className="text-[11px] text-slate-500">
-                      Fatura Toplamı: ₺{fmt(results.totalAmount)}
+                      {labels.totalAmount}: {fmt(results.totalAmount)}
                     </div>
                   )}
                 </div>
                 <div className="text-2xl font-extrabold text-blue-700">
-                  ₺{fmt(tevkifatRate > 0 ? results.payableAmount : results.totalAmount)}
+                  {fmt(tevkifatRate > 0 ? results.payableAmount : results.totalAmount)}
                 </div>
               </div>
             </div>
@@ -254,7 +250,7 @@ export default function VatCalculator({ labels }: Props) {
               onClick={copySummary}
               className="w-full inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95"
             >
-              {copied ? "✓ Sonuçlar Kopyalandı!" : "📋 Sonuçları Panoya Kopyala"}
+              {copied ? `✓ ${labels.copied}` : `📋 ${labels.copySummary}`}
             </button>
           </div>
         </div>
