@@ -5,9 +5,9 @@ import ToolSearch from "@/components/tools/ToolSearch";
 import HeroInstantSearch from "@/components/tools/HeroInstantSearch";
 import RecentToolsStrip from "@/components/tools/RecentToolsStrip";
 import ToolGrid from "@/components/tools/ToolGrid";
-import { getPublishedTools } from "@/lib/cms";
+import { getPublishedTools, getSiteSettings } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, languageAlternates } from "@/lib/site";
 import { categoryStyles, visibleCategories } from "@/lib/tools/categories";
 import { featuredTools } from "@/lib/tools/registry";
 
@@ -24,9 +24,47 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
+
+  const locale = lang as Locale;
+  const dict = await getDictionary(locale);
+  const siteSettings = await getSiteSettings(locale);
+  const siteName = siteSettings.siteName || dict.common.siteName;
+  const title = dict.home.title;
+  const description = dict.home.description;
+  const ogImageUrl = absoluteUrl("/og-default.png");
+
   return {
+    title: {
+      default: title,
+      template: `%s | ${siteName}`,
+    },
+    description,
+    alternates: {
+      canonical: absoluteUrl(`/${locale}`),
+      languages: languageAlternates("/"),
+    },
     openGraph: {
-      url: absoluteUrl(`/${lang}`),
+      type: "website",
+      locale,
+      url: absoluteUrl(`/${locale}`),
+      siteName,
+      title,
+      description,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          type: "image/png",
+          alt: siteName,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
     },
   };
 }
@@ -67,6 +105,12 @@ export default async function HomePage({ params }: PageProps) {
       "@type": "Organization",
       name: dict.common.siteName,
       url: absoluteUrl(`/${locale}`),
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/icon-512.png?v=2"),
+        width: 512,
+        height: 512,
+      },
     },
   };
 

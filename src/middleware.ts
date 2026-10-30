@@ -19,57 +19,9 @@ const AGENT_LINK_HEADER = [
  * Locale redirects + admin session refresh.
  * Cloudflare: CF-IPCountry. Vercel: x-vercel-ip-country.
  */
-const countryToLocale: Record<string, Locale> = {
-  TR: "tr",
-  CY: "tr",
-  DE: "de",
-  AT: "de",
-  CH: "de",
-  FR: "fr",
-  BE: "fr",
-  LU: "fr",
-  MC: "fr",
-  ES: "es",
-  MX: "es",
-  AR: "es",
-  CO: "es",
-  CL: "es",
-  PE: "es",
-  VE: "es",
-  EC: "es",
-  UY: "es",
-  IT: "it",
-  SM: "it",
-  PT: "pt",
-  BR: "pt",
-  AO: "pt",
-  MZ: "pt",
-  RU: "ru",
-  BY: "ru",
-  KZ: "ru",
-  KG: "ru",
-};
-
-function localeFromAcceptLanguage(header: string | null): Locale | null {
-  if (!header) return null;
-  const entries = header
-    .split(",")
-    .map((part) => {
-      const [tag, q] = part.trim().split(";q=");
-      return { tag: tag.toLowerCase(), q: q ? parseFloat(q) : 1 };
-    })
-    .sort((a, b) => b.q - a.q);
-
-  for (const { tag } of entries) {
-    const base = tag.split("-")[0];
-    if (isLocale(base)) return base;
-  }
-  return null;
-}
-
 function isCrawler(userAgent: string | null): boolean {
   if (!userAgent) return false;
-  return /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|twitterbot|linkedinbot|embedly|pinterest|redditbot|applebot|semrushbot|ahrefsbot|mj12bot|dotbot|bytespider|gptbot|claudebot|perplexity/i.test(
+  return /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|facebot|twitterbot|linkedinbot|embedly|pinterest|redditbot|applebot|semrushbot|ahrefsbot|mj12bot|dotbot|bytespider|gptbot|claudebot|perplexity|whatsapp|telegrambot|discordbot|slackbot|slack|skypeuripreview|viber|mastodon/i.test(
     userAgent,
   );
 }
@@ -78,22 +30,9 @@ function detectLocale(request: NextRequest): Locale {
   const cookie = request.cookies.get("NEXT_LOCALE")?.value;
   if (cookie && isLocale(cookie)) return cookie;
 
-  if (isCrawler(request.headers.get("user-agent"))) {
-    return defaultLocale;
-  }
-
-  const country = (
-    request.headers.get("cf-ipcountry") ??
-    request.headers.get("x-vercel-ip-country") ??
-    ""
-  ).toUpperCase();
-  const byCountry = countryToLocale[country];
-  if (byCountry) return byCountry;
-
-  return (
-    localeFromAcceptLanguage(request.headers.get("accept-language")) ??
-    defaultLocale
-  );
+  // The primary / canonical language of the site is English (defaultLocale = "en").
+  // Crawlers, social share bots, and root URL visits without a saved preference always get English.
+  return defaultLocale;
 }
 
 const ADMIN_LOGIN_PATH = "/admin/login";
