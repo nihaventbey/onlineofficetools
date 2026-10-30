@@ -53,6 +53,8 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "pptx-extract", category: "presentations", dictKey: "pptxExtract", icon: "P→T", emoji: "📋", keywords: ["pptx", "extract", "text"], badge: "new", featured: false, accepts: ["pptx"], outputs: ["txt"], nextSteps: ["word-counter", "text-to-pptx"] },
 
   // PDF
+  { slug: "pdf-organize", category: "pdf", dictKey: "pdfOrganize", icon: "🗂️", emoji: "🗂️", keywords: ["pdf", "organize", "reorder", "delete", "sırala", "sil", "düzenle"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-page-numberer", "pdf-merge", "pdf-split"] },
+  { slug: "pdf-page-numberer", category: "pdf", dictKey: "pdfPageNumberer", icon: "123", emoji: "🔢", keywords: ["pdf", "page", "number", "numara", "sayfa", "header", "footer"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-organize", "pdf-compress"] },
   { slug: "pdf-merge", category: "pdf", dictKey: "pdfMerge", icon: "⧉", emoji: "📎", keywords: ["pdf", "merge", "combine"], badge: "popular", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-compress", "pdf-split"] },
   { slug: "pdf-split", category: "pdf", dictKey: "pdfSplit", icon: "✂", emoji: "✂️", keywords: ["pdf", "split"], badge: null, featured: false, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-merge", "pdf-to-images"] },
   { slug: "pdf-rotate", category: "pdf", dictKey: "pdfRotate", icon: "↻", emoji: "🔄", keywords: ["pdf", "rotate"], badge: null, featured: false, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-compress", "pdf-merge"] },
@@ -105,6 +107,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "password-generator", category: "security", dictKey: "passwordGenerator", icon: "✱", emoji: "🔑", keywords: ["password", "secure"], badge: "popular", featured: true, nextSteps: ["uuid-generator", "base64"] },
 
   // Calculator
+  { slug: "vat-calculator", category: "calculator", dictKey: "vatCalculator", icon: "%", emoji: "🧮", keywords: ["kdv", "vat", "tax", "tevkifat", "vergi", "hesaplama", "fatura"], badge: "new", featured: true, nextSteps: ["unit-converter", "date-difference"] },
   { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", emoji: "⚖️", keywords: ["unit", "convert"], badge: null, featured: false, nextSteps: ["date-difference", "birthday-calculator"] },
   { slug: "date-difference", category: "calculator", dictKey: "dateDifference", icon: "📅", emoji: "📅", keywords: ["date", "difference"], badge: null, featured: false, nextSteps: ["birthday-calculator", "unit-converter"] },
   { slug: "birthday-calculator", category: "calculator", dictKey: "birthdayCalculator", icon: "🎂", emoji: "🎂", keywords: ["birthday", "age", "doğum", "yaş"], badge: "new", featured: true, nextSteps: ["date-difference", "area-calculator"] },

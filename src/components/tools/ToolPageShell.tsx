@@ -12,6 +12,7 @@ import AdSlot from "@/components/AdSlot";
 import ToolCard from "@/components/tools/ToolCard";
 import ToolFaqHowTo from "@/components/tools/ToolFaqHowTo";
 import ToolShareButtons from "@/components/tools/ToolShareButtons";
+import RelatedToolsBar from "@/components/tools/RelatedToolsBar";
 import { absoluteUrl } from "@/lib/site";
 
 type ToolPageShellProps = {
@@ -114,6 +115,14 @@ export default function ToolPageShell({
         <span>/</span>
         <span className="text-slate-800">{title}</span>
       </nav>
+
+      {/* 1-Click Related Category Tools Bar */}
+      <RelatedToolsBar
+        locale={locale}
+        dict={dict}
+        currentSlug={slug}
+        category={category}
+      />
 
       <header
         className={`relative overflow-hidden rounded-3xl border border-slate-200/80 ${styles.heroGradient} p-6 shadow-sm sm:p-8`}

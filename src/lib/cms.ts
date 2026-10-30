@@ -408,6 +408,24 @@ const FALLBACK_COPY: Record<
     enDesc: "Render PDF pages as PNG images.",
     trDesc: "PDF'den Görsellere işlemini ücretsiz ve doğrudan tarayıcınızda yapın.",
   },
+  "pdf-organize": {
+    en: "Organize & Reorder PDF Pages",
+    tr: "PDF Sayfalarını Düzenle & Sırala",
+    enDesc: "Reorder, delete and rotate PDF pages directly in your browser.",
+    trDesc: "PDF sayfalarının sırasını değiştirin, gereksiz sayfaları silin ve döndürün.",
+  },
+  "pdf-page-numberer": {
+    en: "Add Page Numbers to PDF",
+    tr: "PDF Sayfa Numarası Ekleme",
+    enDesc: "Add customizable page numbers and stamps to your PDF documents.",
+    trDesc: "PDF belgelerinize istediğiniz konum ve formatta sayfa numaraları ekleyin.",
+  },
+  "vat-calculator": {
+    en: "VAT & Tax Calculator",
+    tr: "KDV ve Tevkifat Hesaplayıcı",
+    enDesc: "Calculate VAT inclusive and exclusive prices with tax withholding rates.",
+    trDesc: "KDV dahil ve hariç tutarları, tevkifat oranlarını anında hesaplayın.",
+  },
   "image-resize": {
     en: "Image Resizer",
     tr: "Görsel Boyutlandırıcı",

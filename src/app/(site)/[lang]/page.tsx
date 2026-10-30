@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ToolSearch from "@/components/tools/ToolSearch";
+import HeroInstantSearch from "@/components/tools/HeroInstantSearch";
+import RecentToolsStrip from "@/components/tools/RecentToolsStrip";
 import ToolGrid from "@/components/tools/ToolGrid";
 import { getPublishedTools } from "@/lib/cms";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
@@ -123,16 +125,13 @@ export default async function HomePage({ params }: PageProps) {
             {dict.home.heroSubtitle}
           </p>
 
-          <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-center justify-center gap-3">
-            <Link
-              href={`/${locale}#tools`}
-              className="inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-500"
-            >
-              {dict.common.exploreCta}
-            </Link>
-          </div>
+          {/* 1-Click Instant Search in Hero */}
+          <HeroInstantSearch locale={locale} tools={tools} dict={dict} />
 
-          <ul className="mt-5 flex flex-wrap items-center justify-center gap-2">
+          {/* Quick Recent / Favorite Tools Strip */}
+          <RecentToolsStrip locale={locale} tools={tools} dict={dict} />
+
+          <ul className="mt-6 flex flex-wrap items-center justify-center gap-2">
             {[dict.common.trustPrivate, dict.common.trustFree].map((item) => (
               <li
                 key={item}

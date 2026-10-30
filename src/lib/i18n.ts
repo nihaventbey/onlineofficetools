@@ -439,6 +439,45 @@ export type Dictionary = {
       error: string;
       limitHint: string;
     };
+    pdfOrganize: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    pdfPageNumberer: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    vatCalculator: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
     imagesToPdf: ToolSharedLabels & {
       dropHint: string;
       selectHint: string;

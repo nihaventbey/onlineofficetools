@@ -96,6 +96,14 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/PdfCompress").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "pdf-organize": () =>
+    import("@/components/tools/pdf/PdfOrganizeTool").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "pdf-page-numberer": () =>
+    import("@/components/tools/pdf/PdfPageNumbererTool").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
   "images-to-pdf": () =>
     import("@/components/tools/ImagesToPdf").then((m) => ({
       default: m.default as ToolComponent,
@@ -246,6 +254,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     })),
   "date-difference": () =>
     import("@/components/tools/DateDifference").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "vat-calculator": () =>
+    import("@/components/tools/VatCalculator").then((m) => ({
       default: m.default as ToolComponent,
     })),
 };
