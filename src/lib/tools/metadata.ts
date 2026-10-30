@@ -28,6 +28,7 @@ export type ToolMeta = {
 export const toolMetaList: ToolMeta[] = [
   // Text
   { slug: "word-counter", category: "text", dictKey: "wordCounter", icon: "Aa", emoji: "🔢", keywords: ["word", "count", "character"], badge: "popular", featured: true, nextSteps: ["case-converter", "find-replace"] },
+  { slug: "list-cleaner", category: "text", dictKey: "listCleaner", icon: "≡", emoji: "📋", keywords: ["list", "clean", "duplicate", "sort", "dedupe", "liste", "mükerrer", "sırala"], badge: "new", featured: true, nextSteps: ["word-counter", "find-replace"] },
   { slug: "case-converter", category: "text", dictKey: "caseConverter", icon: "Aa⇄", emoji: "🔠", keywords: ["case", "upper", "lower"], badge: null, featured: false, nextSteps: ["word-counter", "find-replace"] },
   { slug: "lorem-ipsum", category: "text", dictKey: "loremIpsum", icon: "¶", emoji: "📜", keywords: ["lorem", "placeholder"], badge: null, featured: false, nextSteps: ["word-counter", "text-to-pdf"] },
   { slug: "text-diff", category: "text", dictKey: "textDiff", icon: "≠", emoji: "📝", keywords: ["diff", "compare"], badge: null, featured: false, nextSteps: ["find-replace", "docx-diff"] },
@@ -65,6 +66,8 @@ export const toolMetaList: ToolMeta[] = [
 
   // Image
   { slug: "image-resize", category: "image", dictKey: "imageResize", icon: "↔", emoji: "📐", keywords: ["resize", "scale", "dimensions"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["image-compress", "image-crop"] },
+  { slug: "favicon-generator", category: "image", dictKey: "faviconGenerator", icon: "ICO", emoji: "🎨", keywords: ["favicon", "icon", "app", "manifest", "ico", "png", "web"], badge: "new", featured: true, accepts: ["png", "jpg", "svg", "webp"], outputs: ["ico", "png", "zip"], nextSteps: ["image-resize", "image-convert"] },
+  { slug: "image-blur", category: "image", dictKey: "imageBlur", icon: "🕶️", emoji: "🕶️", keywords: ["blur", "censor", "pixelate", "sansür", "mozaik", "buzlama", "gizle"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], outputs: ["png"], nextSteps: ["image-crop", "watermark"] },
   { slug: "image-compress", category: "image", dictKey: "imageCompress", icon: "↓▣", emoji: "🗜️", keywords: ["compress", "optimize"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["image-resize", "image-convert"] },
   { slug: "image-crop", category: "image", dictKey: "imageCrop", icon: "✂▣", emoji: "✂️", keywords: ["crop", "rotate", "flip"], badge: "new", featured: true, accepts: ["png", "jpg", "webp"], nextSteps: ["video-crop", "watermark"] },
   { slug: "image-convert", category: "image", dictKey: "imageConvert", icon: "⇄▣", emoji: "🔃", keywords: ["convert", "jpg", "png", "webp"], badge: "new", featured: false, accepts: ["png", "jpg", "webp", "gif"], nextSteps: ["image-adjust", "image-compress"] },
@@ -93,6 +96,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-resize"] },
 
   // Audio
+  { slug: "video-to-audio", category: "audio", dictKey: "videoToAudio", icon: "V→A", emoji: "🎧", keywords: ["video", "audio", "mp3", "wav", "extract", "sound", "ses", "ayıkla"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["mp3", "wav"], nextSteps: ["audio-editor", "video-trim"] },
   { slug: "audio-editor", category: "audio", dictKey: "audioEditor", icon: "♪", emoji: "🎵", keywords: ["audio", "trim", "cut", "waveform", "convert", "wav", "webm", "mp3", "ses", "kırp", "dalga"], badge: "new", featured: true, accepts: ["mp3", "wav", "ogg", "m4a", "webm", "flac"], outputs: ["wav", "mp3", "webm", "ogg"], nextSteps: ["video-trim", "zip-create"] },
 
   // Developer
@@ -107,7 +111,8 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "password-generator", category: "security", dictKey: "passwordGenerator", icon: "✱", emoji: "🔑", keywords: ["password", "secure"], badge: "popular", featured: true, nextSteps: ["uuid-generator", "base64"] },
 
   // Calculator
-  { slug: "vat-calculator", category: "calculator", dictKey: "vatCalculator", icon: "%", emoji: "🧮", keywords: ["kdv", "vat", "tax", "tevkifat", "vergi", "hesaplama", "fatura"], badge: "new", featured: true, nextSteps: ["unit-converter", "date-difference"] },
+  { slug: "vat-calculator", category: "calculator", dictKey: "vatCalculator", icon: "%", emoji: "🧮", keywords: ["kdv", "vat", "tax", "tevkifat", "vergi", "hesaplama", "fatura"], badge: "new", featured: true, nextSteps: ["work-hours-calculator", "unit-converter"] },
+  { slug: "work-hours-calculator", category: "calculator", dictKey: "workHoursCalculator", icon: "⏱️", emoji: "⏰", keywords: ["work", "hours", "overtime", "mesai", "çalışma", "saat", "ücret", "puantaj"], badge: "new", featured: true, nextSteps: ["vat-calculator", "date-difference"] },
   { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", emoji: "⚖️", keywords: ["unit", "convert"], badge: null, featured: false, nextSteps: ["date-difference", "birthday-calculator"] },
   { slug: "date-difference", category: "calculator", dictKey: "dateDifference", icon: "📅", emoji: "📅", keywords: ["date", "difference"], badge: null, featured: false, nextSteps: ["birthday-calculator", "unit-converter"] },
   { slug: "birthday-calculator", category: "calculator", dictKey: "birthdayCalculator", icon: "🎂", emoji: "🎂", keywords: ["birthday", "age", "doğum", "yaş"], badge: "new", featured: true, nextSteps: ["date-difference", "area-calculator"] },

@@ -426,6 +426,36 @@ const FALLBACK_COPY: Record<
     enDesc: "Calculate VAT inclusive and exclusive prices with tax withholding rates.",
     trDesc: "KDV dahil ve hariç tutarları, tevkifat oranlarını anında hesaplayın.",
   },
+  "favicon-generator": {
+    en: "Favicon & App Icon Generator",
+    tr: "Favicon ve İkon Paketi Üretici",
+    enDesc: "Generate multi-size favicons, .ico files, and web manifest from a single image.",
+    trDesc: "Tek bir görselden tüm favicon boyutlarını, .ico dosyasını ve manifesti oluşturun.",
+  },
+  "image-blur": {
+    en: "Image Blur & Censor",
+    tr: "Görsel Sansürleme & Buzlama",
+    enDesc: "Pixelate, blur or black out sensitive information in images securely in your browser.",
+    trDesc: "Görsellerdeki hassas bilgileri tarayıcınızda güvenle mozaikleyin veya buzlayın.",
+  },
+  "video-to-audio": {
+    en: "Extract Audio from Video",
+    tr: "Videodan Ses Çıkarma",
+    enDesc: "Extract MP3 or WAV audio tracks from MP4 and WebM videos.",
+    trDesc: "Videolardaki ses kanalını MP3 veya WAV olarak ayıklayın ve indirin.",
+  },
+  "list-cleaner": {
+    en: "List Cleaner & Deduplicator",
+    tr: "Liste Temizleme & Tekrarları Silme",
+    enDesc: "Remove duplicate lines, sort alphabetically, and format lists instantly.",
+    trDesc: "Mükerrer satırları temizleyin, alfabetik sıralayın ve listenizi biçimlendirin.",
+  },
+  "work-hours-calculator": {
+    en: "Work Hours & Overtime Calculator",
+    tr: "Çalışma Saati & Mesai Hesaplayıcı",
+    enDesc: "Calculate daily/weekly work hours, breaks, and overtime pay accurately.",
+    trDesc: "Haftalık net çalışma süresini, molaları ve fazla mesai ücretini hesaplayın.",
+  },
   "image-resize": {
     en: "Image Resizer",
     tr: "Görsel Boyutlandırıcı",

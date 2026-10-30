@@ -478,6 +478,71 @@ export type Dictionary = {
       error: string;
       limitHint: string;
     };
+    faviconGenerator: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    imageBlur: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    videoToAudio: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    listCleaner: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
+    workHoursCalculator: ToolSharedLabels & {
+      dropHint: string;
+      selectHint: string;
+      remove: string;
+      download: string;
+      processing: string;
+      allPages: string;
+      invalidFile: string;
+      tooLarge: string;
+      encrypted: string;
+      error: string;
+      limitHint: string;
+    };
     imagesToPdf: ToolSharedLabels & {
       dropHint: string;
       selectHint: string;

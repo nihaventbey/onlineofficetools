@@ -12,6 +12,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/WordCounter").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "list-cleaner": () =>
+    import("@/components/tools/ListCleaner").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
   "case-converter": () =>
     import("@/components/tools/CaseConverter").then((m) => ({
       default: m.default as ToolComponent,
@@ -120,6 +124,14 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/ImageResize").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "favicon-generator": () =>
+    import("@/components/tools/FaviconGenerator").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "image-blur": () =>
+    import("@/components/tools/ImageCensor").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
   "image-compress": () =>
     import("@/components/tools/ImageCompress").then((m) => ({
       default: m.default as ToolComponent,
@@ -200,6 +212,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/AudioEditor").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "video-to-audio": () =>
+    import("@/components/tools/VideoToAudio").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
   "birthday-calculator": () =>
     import("@/components/tools/BirthdayCalculator").then((m) => ({
       default: m.default as ToolComponent,
@@ -258,6 +274,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     })),
   "vat-calculator": () =>
     import("@/components/tools/VatCalculator").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "work-hours-calculator": () =>
+    import("@/components/tools/WorkHoursCalculator").then((m) => ({
       default: m.default as ToolComponent,
     })),
 };

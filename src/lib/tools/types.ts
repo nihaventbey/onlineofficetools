@@ -66,6 +66,11 @@ export const toolDictKeys = [
   "detsis",
   "belgenetHtml",
   "belgenetPrep",
+  "faviconGenerator",
+  "imageBlur",
+  "videoToAudio",
+  "listCleaner",
+  "workHoursCalculator",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];
