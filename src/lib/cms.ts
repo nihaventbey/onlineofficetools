@@ -611,7 +611,14 @@ export async function getPublishedTools(locale: Locale): Promise<CmsToolCard[]> 
     } satisfies CmsToolCard;
   });
 
-  return cards.sort((a, b) => {
+  // Merge DB published tools with local code registry tools that haven't been seeded into DB yet
+  const dbSlugs = new Set(cards.map((c) => c.slug));
+  const localTools = (await fallbackTools(locale)).filter(
+    (local) => !dbSlugs.has(local.slug),
+  );
+  const allCards = [...cards, ...localTools];
+
+  return allCards.sort((a, b) => {
     if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
     return a.title.localeCompare(b.title);
   });
@@ -644,8 +651,14 @@ export async function getPublishedTool(
     return offlineTool(slug, locale);
   }
 
-  if (!data || (data as unknown as PublishedTool).status !== "published") {
-    // Supabase is reachable and authoritative: drafts/missing tools are not published.
+  // If the tool doesn't exist in Supabase DB yet, fall back to the registered local tool
+  // so newly developed codebase tools never 404!
+  if (!data) {
+    return offlineTool(slug, locale);
+  }
+
+  if ((data as unknown as PublishedTool).status !== "published") {
+    // Supabase is reachable and authoritative: drafts are not published.
     return null;
   }
 
@@ -853,10 +866,12 @@ export async function getPublishedSlugs(): Promise<string[]> {
     return toolRegistry.map((t) => t.slug);
   }
 
-  // Tool executables live in the registry; CMS cannot invent unknown slugs.
-  return (data as { slug: string }[])
+  // Tool executables live in the registry; merge DB slugs with registry slugs
+  const dbSlugs = (data as { slug: string }[])
     .map((row) => row.slug)
     .filter(isRegisteredSlug);
+
+  return Array.from(new Set([...dbSlugs, ...toolRegistry.map((t) => t.slug)]));
 }
 
 /**
