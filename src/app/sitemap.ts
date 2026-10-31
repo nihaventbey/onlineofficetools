@@ -8,8 +8,8 @@ import { isToolAvailableInLocale } from "@/lib/tools/registry";
 export const revalidate = 86400;
 
 const LEGAL = ["privacy", "terms", "about", "contact"] as const;
-// Stable baseline timestamp to prevent Googlebot crawl storms caused by dynamic 'now' timestamps.
-const STABLE_LAST_MODIFIED = new Date("2026-08-01T00:00:00.000Z");
+// Updated release timestamp indicating the latest toolset additions (October 2026).
+const STABLE_LAST_MODIFIED = new Date("2026-10-31T00:00:00.000Z");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getPublishedSlugs();

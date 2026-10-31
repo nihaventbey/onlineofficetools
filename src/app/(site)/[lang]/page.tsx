@@ -75,6 +75,8 @@ export default async function HomePage({ params }: PageProps) {
 
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
+  const siteSettings = await getSiteSettings(locale);
+  const siteName = siteSettings.siteName || dict.common.siteName;
   const tools = await getPublishedTools(locale);
   const featuredSlugs = new Set(featuredTools().map((t) => t.slug));
   const popular = [
@@ -255,6 +257,41 @@ export default async function HomePage({ params }: PageProps) {
           </section>
         );
       })}
+
+      {/* Structured data for Google WebSite and SearchAction */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": `${absoluteUrl(`/${locale}`)}#website`,
+                url: absoluteUrl(`/${locale}`),
+                name: siteName,
+                description: dict.home.description,
+                inLanguage: locale,
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: {
+                    "@type": "EntryPoint",
+                    urlTemplate: `${absoluteUrl(`/${locale}`)}?q={search_term_string}#tools`,
+                  },
+                  "query-input": "required name=search_term_string",
+                },
+              },
+              {
+                "@type": "Organization",
+                "@id": `${absoluteUrl("/")}#organization`,
+                name: siteName,
+                url: absoluteUrl("/"),
+                logo: absoluteUrl("/icon-512.png"),
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

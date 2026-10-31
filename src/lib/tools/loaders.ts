@@ -7,6 +7,7 @@ export type ToolComponent = ComponentType<{ labels: AnyToolLabels }>;
 
 const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "word-counter": () => import("@/components/tools/WordCounter").then((m) => ({ default: m.default as ToolComponent })),
+  "whatsapp-cleaner": () => import("@/components/tools/WhatsappCleaner").then((m) => ({ default: m.default as ToolComponent })),
   "list-cleaner": () => import("@/components/tools/ListCleaner").then((m) => ({ default: m.default as ToolComponent })),
   "case-converter": () => import("@/components/tools/CaseConverter").then((m) => ({ default: m.default as ToolComponent })),
   "lorem-ipsum": () => import("@/components/tools/LoremIpsum").then((m) => ({ default: m.default as ToolComponent })),

@@ -70,6 +70,7 @@ export const toolDictKeys = [
   "imageBlur",
   "videoToAudio",
   "listCleaner",
+  "whatsappCleaner",
   "workHoursCalculator",
 ] as const;
 

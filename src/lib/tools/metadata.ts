@@ -28,7 +28,8 @@ export type ToolMeta = {
 export const toolMetaList: ToolMeta[] = [
   // Text
   { slug: "word-counter", category: "text", dictKey: "wordCounter", icon: "Aa", emoji: "🔢", keywords: ["word", "count", "character"], badge: "popular", featured: true, nextSteps: ["case-converter", "find-replace"] },
-  { slug: "list-cleaner", category: "text", dictKey: "listCleaner", icon: "≡", emoji: "📋", keywords: ["list", "clean", "duplicate", "sort", "dedupe", "liste", "mükerrer", "sırala"], badge: "new", featured: true, nextSteps: ["word-counter", "find-replace"] },
+  { slug: "whatsapp-cleaner", category: "text", dictKey: "whatsappCleaner", icon: "💬", emoji: "💬", keywords: ["whatsapp", "chat", "clean", "format", "export", "sohbet", "konuşma", "temizleyici", "mesaj"], badge: "new", featured: true, accepts: ["txt"], outputs: ["txt"], nextSteps: ["list-cleaner", "word-counter", "text-to-pdf"] },
+  { slug: "list-cleaner", category: "text", dictKey: "listCleaner", icon: "≡", emoji: "📋", keywords: ["list", "clean", "duplicate", "sort", "dedupe", "liste", "mükerrer", "sırala"], badge: "new", featured: true, nextSteps: ["whatsapp-cleaner", "word-counter", "find-replace"] },
   { slug: "case-converter", category: "text", dictKey: "caseConverter", icon: "Aa⇄", emoji: "🔠", keywords: ["case", "upper", "lower"], badge: null, featured: false, nextSteps: ["word-counter", "find-replace"] },
   { slug: "lorem-ipsum", category: "text", dictKey: "loremIpsum", icon: "¶", emoji: "📜", keywords: ["lorem", "placeholder"], badge: null, featured: false, nextSteps: ["word-counter", "text-to-pdf"] },
   { slug: "text-diff", category: "text", dictKey: "textDiff", icon: "≠", emoji: "📝", keywords: ["diff", "compare"], badge: null, featured: false, nextSteps: ["find-replace", "docx-diff"] },

@@ -618,6 +618,35 @@ export type Dictionary = {
       copied: string;
       download: string;
     };
+    whatsappCleaner: ToolSharedLabels & {
+      formatModeLabel: string;
+      modeHeaderLines: string;
+      modeHeaderParagraph: string;
+      modeInlineEach: string;
+      modeMessagesOnly: string;
+      cleanOptionsLabel: string;
+      removeTimestamps: string;
+      removeSystemMessages: string;
+      stripEditedTag: string;
+      sourceActionsLabel: string;
+      sampleButton: string;
+      uploadTxtButton: string;
+      speakersHeading: string;
+      speakersHint: string;
+      toggleSpeaker: string;
+      inputLabel: string;
+      inputPlaceholder: string;
+      outputLabel: string;
+      outputPlaceholder: string;
+      messagesUnit: string;
+      speakersUnit: string;
+      statsMessages: string;
+      statsSpeakers: string;
+      statsGroups: string;
+      copyResult: string;
+      downloadTxt: string;
+      sampleChat: string;
+    };
     workHoursCalculator: ToolSharedLabels & {
       days: {
         mon: string;
