@@ -12,6 +12,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/WordCounter").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "whatsapp-cleaner": () =>
+    import("@/components/tools/WhatsappCleaner").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
   "list-cleaner": () =>
     import("@/components/tools/ListCleaner").then((m) => ({
       default: m.default as ToolComponent,
