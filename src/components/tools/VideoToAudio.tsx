@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
+import { useClipboardPaste } from "@/lib/hooks/useClipboardPaste";
 
 type Props = {
   labels: Dictionary["tools"]["videoToAudio"];
@@ -26,6 +27,14 @@ export default function VideoToAudio({ labels }: Props) {
     setFile(f);
     setDownloadUrl(null);
   }
+
+  // Clipboard paste support (Ctrl+V / Cmd+V)
+  useClipboardPaste({
+    accept: "video/*,.mp4,.webm,.mov,.mkv",
+    onFiles: (files) => {
+      if (files[0]) handleFile(files[0]);
+    },
+  });
 
   // Convert AudioBuffer to WAV Uint8Array
   function audioBufferToWav(buffer: AudioBuffer): Uint8Array {
@@ -197,9 +206,14 @@ export default function VideoToAudio({ labels }: Props) {
           <span className="text-xs text-slate-500 mt-1">
             {labels.dropSubtitle}
           </span>
-          <span className="mt-4 inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
-            {labels.selectVideo}
-          </span>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
+              {labels.selectVideo}
+            </span>
+            <span className="inline-flex min-h-[28px] items-center gap-1 rounded-lg border border-slate-200 bg-white/80 px-2 py-0.5 text-[11px] font-medium text-slate-500 shadow-2xs backdrop-blur-xs">
+              <kbd className="font-sans font-semibold text-slate-700">Ctrl</kbd>+<kbd className="font-sans font-semibold text-slate-700">V</kbd>
+            </span>
+          </div>
         </label>
       ) : (
         <div className="space-y-6">

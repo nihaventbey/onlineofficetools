@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
 import { useToolDraft } from "@/lib/state/useToolDraft";
+import { useClipboardPaste } from "@/lib/hooks/useClipboardPaste";
 
 type Props = { labels: Dictionary["tools"]["ocr"] };
 type OcrLang = "eng" | "tur" | "deu" | "fra" | "spa" | "ita" | "por" | "rus";
@@ -55,6 +56,14 @@ export default function OcrTool({ labels }: Props) {
     void runOcr(file);
   }
 
+  // Clipboard paste support (Ctrl+V / Cmd+V)
+  useClipboardPaste({
+    accept: "image/*",
+    onFiles: (files) => {
+      if (files[0]) onFile(files[0]);
+    },
+  });
+
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(draft.text);
@@ -103,7 +112,12 @@ export default function OcrTool({ labels }: Props) {
         onClick={() => inputRef.current?.click()}
       >
         <p className="text-sm font-medium text-slate-700">{labels.dropHint}</p>
-        <p className="mt-1 text-xs text-slate-500">{labels.selectImage}</p>
+        <div className="mt-1 flex flex-wrap items-center justify-center gap-2">
+          <p className="text-xs text-slate-500">{labels.selectImage}</p>
+          <span className="inline-flex min-h-[22px] items-center gap-1 rounded-md border border-slate-200 bg-white/90 px-1.5 py-0.5 text-[10px] font-medium text-slate-500 shadow-2xs">
+            <kbd className="font-sans font-semibold text-slate-700">Ctrl</kbd>+<kbd className="font-sans font-semibold text-slate-700">V</kbd>
+          </span>
+        </div>
         <input
           ref={inputRef}
           type="file"

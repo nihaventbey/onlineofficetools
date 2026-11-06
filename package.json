@@ -18,6 +18,7 @@
     "test:arz-rica": "node --experimental-strip-types scripts/test-arz-relation.mjs"
   },
   "dependencies": {
+    "@next/env": "^16.4.5",
     "@opennextjs/cloudflare": "^1.20.2",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.50.0",

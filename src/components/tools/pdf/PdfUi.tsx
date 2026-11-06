@@ -6,6 +6,7 @@ import {
   MAX_FILE_BYTES,
   MAX_MERGE_TOTAL_BYTES,
 } from "@/lib/pdf/utils";
+import { useClipboardPaste } from "@/lib/hooks/useClipboardPaste";
 
 type FileDropZoneProps = {
   accept: string;
@@ -14,6 +15,7 @@ type FileDropZoneProps = {
   selectHint?: string;
   onFiles: (files: File[]) => void;
   disabled?: boolean;
+  enablePaste?: boolean;
 };
 
 export function FileDropZone({
@@ -23,6 +25,7 @@ export function FileDropZone({
   selectHint,
   onFiles,
   disabled,
+  enablePaste = true,
 }: FileDropZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -34,6 +37,16 @@ export function FileDropZone({
     },
     [onFiles],
   );
+
+  // Enable clipboard paste (Ctrl+V / Cmd+V)
+  useClipboardPaste({
+    accept,
+    disabled: disabled || !enablePaste,
+    onFiles: (files) => {
+      if (!files.length) return;
+      onFiles(multiple ? files : [files[0]!]);
+    },
+  });
 
   return (
     <label
@@ -47,14 +60,21 @@ export function FileDropZone({
         setDragging(false);
         if (!disabled) handle(e.dataTransfer.files);
       }}
-      className={`flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-4 py-8 text-center transition focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-500/15 ${
+      className={`group relative flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-4 py-8 text-center transition focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-500/15 ${
         dragging
           ? "border-blue-400 bg-blue-50/60"
           : "border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-blue-50/40"
       } ${disabled ? "pointer-events-none opacity-50" : ""}`}
     >
       <p className="text-sm font-medium text-slate-700">{dropHint}</p>
-      <p className="mt-1 text-xs text-slate-500">{selectHint}</p>
+      <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5 text-xs text-slate-500">
+        {selectHint ? <span>{selectHint}</span> : null}
+        {enablePaste && (
+          <span className="inline-flex items-center gap-1 rounded-md bg-slate-200/60 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-slate-600 transition group-hover:bg-blue-100 group-hover:text-blue-700">
+            <kbd className="font-sans font-semibold">Ctrl</kbd>+<kbd className="font-sans font-semibold">V</kbd>
+          </span>
+        )}
+      </div>
       <input
         ref={inputRef}
         type="file"

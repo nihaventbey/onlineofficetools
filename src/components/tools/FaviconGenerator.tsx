@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createIcoFromPngs } from "@/lib/files/ico";
 import type { Dictionary } from "@/lib/i18n";
+import { useClipboardPaste } from "@/lib/hooks/useClipboardPaste";
 
 type GeneratedIcon = {
   name: string;
@@ -40,6 +41,14 @@ export default function FaviconGenerator({ labels }: Props) {
     };
     reader.readAsDataURL(file);
   }
+
+  // Enable clipboard paste (Ctrl+V / Cmd+V)
+  useClipboardPaste({
+    accept: "image/*",
+    onFiles: (files) => {
+      if (files[0]) handleFile(files[0]);
+    },
+  });
 
   // Generate icons whenever source, shape, padding or bgColor changes
   useEffect(() => {
@@ -208,8 +217,11 @@ export default function FaviconGenerator({ labels }: Props) {
           <span className="text-sm font-bold text-slate-800">
             {labels.dropTitle}
           </span>
-          <span className="text-xs text-slate-500 mt-1">
-            {labels.dropSubtitle}
+          <span className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+            <span>{labels.dropSubtitle}</span>
+            <span className="rounded bg-slate-200/70 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-slate-700">
+              Ctrl+V
+            </span>
           </span>
           <span className="mt-4 inline-flex min-h-[38px] items-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md shadow-blue-500/20">
             {labels.selectImage}
