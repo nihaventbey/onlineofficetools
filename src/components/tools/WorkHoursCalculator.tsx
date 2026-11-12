@@ -18,18 +18,21 @@ type DayRow = {
 };
 
 const INITIAL_DAYS: DayRow[] = [
-  { key: "mon", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { key: "tue", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { key: "wed", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { key: "thu", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
-  { key: "fri", enabled: true, start: "08:30", end: "18:00", breakMin: 60 },
+  { key: "mon", enabled: true, start: "09:00", end: "17:30", breakMin: 60 },
+  { key: "tue", enabled: true, start: "09:00", end: "17:30", breakMin: 60 },
+  { key: "wed", enabled: true, start: "09:00", end: "17:30", breakMin: 60 },
+  { key: "thu", enabled: true, start: "09:00", end: "17:30", breakMin: 60 },
+  { key: "fri", enabled: true, start: "09:00", end: "17:30", breakMin: 60 },
   { key: "sat", enabled: false, start: "09:00", end: "14:00", breakMin: 30 },
   { key: "sun", enabled: false, start: "09:00", end: "18:00", breakMin: 60 },
 ];
 
+const CURRENCIES = ["$", "€", "£", "₺", "₹", "¥", "A$", "C$"];
+
 export default function WorkHoursCalculator({ labels }: Props) {
   const [days, setDays] = useState<DayRow[]>(INITIAL_DAYS);
-  const [standardDailyHours, setStandardDailyHours] = useState<number>(8.5);
+  const [standardDailyHours, setStandardDailyHours] = useState<number>(8.0);
+  const [currency, setCurrency] = useState<string>("$");
   const [hourlyWage, setHourlyWage] = useState<string>("0");
   const [overtimeMultiplier, setOvertimeMultiplier] = useState<number>(1.5);
   const [copied, setCopied] = useState<boolean>(false);
@@ -105,9 +108,9 @@ export default function WorkHoursCalculator({ labels }: Props) {
     ];
     if (totals.wage > 0) {
       lines.push(
-        `${labels.regularPay}: ${totals.regularPay.toFixed(2)}`,
-        `${labels.overtimePay}: ${totals.overtimePay.toFixed(2)}`,
-        `${labels.totalPay}: ${totals.totalPay.toFixed(2)}`,
+        `${labels.regularPay}: ${currency} ${totals.regularPay.toFixed(2)}`,
+        `${labels.overtimePay}: ${currency} ${totals.overtimePay.toFixed(2)}`,
+        `${labels.totalPay}: ${currency} ${totals.totalPay.toFixed(2)}`,
       );
     }
     navigator.clipboard.writeText(lines.join("\n"));
@@ -118,33 +121,83 @@ export default function WorkHoursCalculator({ labels }: Props) {
   return (
     <div className="space-y-6 rounded-3xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-7">
       {/* Configuration Settings */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 rounded-2xl bg-slate-50 p-4 text-xs font-semibold">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 rounded-2xl bg-slate-50 p-4 text-xs font-semibold">
+        {/* Preset & Daily Hours */}
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
             {labels.standardDailyHours}
           </label>
-          <input
-            type="number"
-            step="0.5"
-            value={standardDailyHours}
-            onChange={(e) => setStandardDailyHours(Number(e.target.value))}
-            className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
-          />
+          <div className="flex items-center gap-1.5">
+            <input
+              type="number"
+              step="0.5"
+              value={standardDailyHours}
+              onChange={(e) => setStandardDailyHours(Number(e.target.value))}
+              className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
+            />
+            <div className="flex gap-1 shrink-0">
+              <button
+                type="button"
+                onClick={() => setStandardDailyHours(8)}
+                className={`rounded-lg px-2 py-1.5 text-[10px] font-bold border transition ${
+                  standardDailyHours === 8 ? "bg-blue-600 text-white border-blue-600" : "bg-white text-slate-600 border-slate-200"
+                }`}
+                title="40 hours / week (Standard)"
+              >
+                40h
+              </button>
+              <button
+                type="button"
+                onClick={() => setStandardDailyHours(7)}
+                className={`rounded-lg px-2 py-1.5 text-[10px] font-bold border transition ${
+                  standardDailyHours === 7 ? "bg-blue-600 text-white border-blue-600" : "bg-white text-slate-600 border-slate-200"
+                }`}
+                title="35 hours / week (FR/EU)"
+              >
+                35h
+              </button>
+            </div>
+          </div>
         </div>
 
+        {/* Currency Selector */}
+        <div>
+          <label className="block text-slate-700 font-bold mb-1.5">
+            Currency
+          </label>
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
+          >
+            {CURRENCIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Hourly Wage */}
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
             {labels.hourlyWage}
           </label>
-          <input
-            type="text"
-            value={hourlyWage}
-            onChange={(e) => setHourlyWage(e.target.value)}
-            placeholder="0.00"
-            className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
-          />
+          <div className="relative flex items-center">
+            <span className="pointer-events-none absolute left-3 text-slate-400 font-bold">
+              {currency}
+            </span>
+            <input
+              type="text"
+              value={hourlyWage}
+              onChange={(e) => setHourlyWage(e.target.value)}
+              placeholder="0.00"
+              className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white pl-8 pr-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
+            />
+          </div>
         </div>
 
+        {/* Overtime Multiplier */}
         <div>
           <label className="block text-slate-700 font-bold mb-1.5">
             {labels.overtimeMultiplier}
@@ -154,115 +207,143 @@ export default function WorkHoursCalculator({ labels }: Props) {
             onChange={(e) => setOvertimeMultiplier(Number(e.target.value))}
             className="w-full min-h-[38px] rounded-xl border border-slate-200 bg-white px-3 text-slate-800 outline-none focus:border-blue-500 font-bold"
           >
-            <option value={1.5}>1.5x (150%)</option>
-            <option value={2.0}>2.0x (200%)</option>
-            <option value={1.0}>1.0x (100%)</option>
+            <option value={1.5}>1.5x (150% - Standard)</option>
+            <option value={2.0}>2.0x (200% - Double)</option>
+            <option value={1.25}>1.25x (125%)</option>
+            <option value={1.0}>1.0x (100% - Normal)</option>
           </select>
         </div>
       </div>
 
-      {/* Days Table (Responsive Cards on Mobile) */}
-      <div className="space-y-2">
-        <div className="space-y-2">
-          {days.map((day, idx) => (
-            <div
-              key={day.key}
-              className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border p-3 text-xs transition ${
-                day.enabled
-                  ? "border-slate-200 bg-white shadow-2xs"
-                  : "border-slate-100 bg-slate-50/50 opacity-60"
-              }`}
-            >
-              <div className="flex items-center gap-3 min-w-[130px]">
-                <input
-                  type="checkbox"
-                  checked={day.enabled}
-                  onChange={(e) => updateDay(idx, { enabled: e.target.checked })}
-                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                />
-                <span className={`font-bold ${day.enabled ? "text-slate-900" : "text-slate-400"}`}>
-                  {labels.days[day.key]}
-                </span>
-              </div>
-
-              {day.enabled && (
-                <div className="flex flex-wrap items-center gap-3">
+      {/* Daily Time Grid */}
+      <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
+        <table className="w-full text-left text-xs text-slate-700">
+          <thead className="bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/80">
+            <tr>
+              <th className="p-3 w-12 text-center">✓</th>
+              <th className="p-3">Day</th>
+              <th className="p-3">{labels.startTime}</th>
+              <th className="p-3">{labels.endTime}</th>
+              <th className="p-3">{labels.breakMinutes}</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 font-medium">
+            {days.map((row, idx) => (
+              <tr
+                key={row.key}
+                className={`transition ${row.enabled ? "hover:bg-slate-50/70" : "bg-slate-50/40 opacity-50"}`}
+              >
+                <td className="p-3 text-center">
+                  <input
+                    type="checkbox"
+                    checked={row.enabled}
+                    onChange={(e) => updateDay(idx, { enabled: e.target.checked })}
+                    className="h-4 w-4 rounded-sm border-slate-300 text-blue-600 focus:ring-blue-500"
+                  />
+                </td>
+                <td className="p-3 font-bold text-slate-800">
+                  {labels.days[row.key]}
+                </td>
+                <td className="p-3">
+                  <input
+                    type="time"
+                    disabled={!row.enabled}
+                    value={row.start}
+                    onChange={(e) => updateDay(idx, { start: e.target.value })}
+                    className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-blue-500 disabled:bg-slate-100"
+                  />
+                </td>
+                <td className="p-3">
+                  <input
+                    type="time"
+                    disabled={!row.enabled}
+                    value={row.end}
+                    onChange={(e) => updateDay(idx, { end: e.target.value })}
+                    className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-blue-500 disabled:bg-slate-100"
+                  />
+                </td>
+                <td className="p-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">{labels.startTime}:</span>
-                    <input
-                      type="time"
-                      value={day.start}
-                      onChange={(e) => updateDay(idx, { start: e.target.value })}
-                      className="rounded-lg border border-slate-200 px-2 py-1 font-mono font-bold text-slate-800"
-                    />
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">{labels.endTime}:</span>
-                    <input
-                      type="time"
-                      value={day.end}
-                      onChange={(e) => updateDay(idx, { end: e.target.value })}
-                      className="rounded-lg border border-slate-200 px-2 py-1 font-mono font-bold text-slate-800"
-                    />
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400">{labels.breakMinutes}:</span>
                     <input
                       type="number"
-                      step={15}
-                      value={day.breakMin}
+                      step="5"
+                      min="0"
+                      max="300"
+                      disabled={!row.enabled}
+                      value={row.breakMin}
                       onChange={(e) => updateDay(idx, { breakMin: Number(e.target.value) })}
-                      className="w-16 rounded-lg border border-slate-200 px-2 py-1 font-mono font-bold text-slate-800 text-center"
+                      className="w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-blue-500 disabled:bg-slate-100"
                     />
+                    <span className="text-[11px] text-slate-400">
+                      {labels.minsUnit}
+                    </span>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            {labels.totalNetHours}
+          </p>
+          <p className="mt-1 text-lg font-extrabold text-slate-900">
+            {totals.fmtNet}
+          </p>
+          <p className="text-[11px] font-semibold text-slate-500">
+            {totals.netHoursDecimal} {labels.hoursUnit}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-amber-100 bg-amber-50/50 p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-amber-700">
+            {labels.totalOvertime}
+          </p>
+          <p className="mt-1 text-lg font-extrabold text-amber-900">
+            {totals.fmtOvertime}
+          </p>
+          <p className="text-[11px] font-semibold text-amber-700/80">
+            {totals.overtimeHoursDecimal} {labels.hoursUnit}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            {labels.totalBreak}
+          </p>
+          <p className="mt-1 text-lg font-extrabold text-slate-700">
+            {totals.fmtBreak}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-blue-700">
+            {labels.totalPay}
+          </p>
+          <p className="mt-1 text-xl font-black text-blue-700">
+            {currency} {totals.totalPay.toFixed(2)}
+          </p>
+          {totals.wage > 0 && (
+            <p className="text-[10px] text-blue-600/80">
+              {labels.regularPay}: {currency} {totals.regularPay.toFixed(2)} · {labels.overtimePay}: {currency} {totals.overtimePay.toFixed(2)}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Summary Results Card */}
-      <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/70 via-sky-50/30 to-white p-5 shadow-xs">
-        <h4 className="text-sm font-bold uppercase tracking-wider text-blue-900 border-b border-blue-100/80 pb-2 mb-4">
-          {labels.summaryTitle}
-        </h4>
-
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 text-xs">
-          <div className="space-y-1">
-            <span className="text-slate-500 font-medium">{labels.totalNetHours}</span>
-            <div className="text-lg font-extrabold text-slate-900">{totals.fmtNet}</div>
-            <div className="text-[11px] text-slate-400">{totals.netHoursDecimal} {labels.hoursUnit}</div>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-slate-500 font-medium">{labels.totalOvertime}</span>
-            <div className="text-lg font-extrabold text-blue-600">{totals.fmtOvertime}</div>
-            <div className="text-[11px] text-blue-500/80">{totals.overtimeHoursDecimal} {labels.hoursUnit}</div>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-slate-500 font-medium">{labels.totalBreak}</span>
-            <div className="text-lg font-extrabold text-slate-700">{totals.fmtBreak}</div>
-          </div>
-
-          {totals.wage > 0 && (
-            <div className="space-y-1">
-              <span className="text-slate-500 font-medium">{labels.totalPay}</span>
-              <div className="text-lg font-extrabold text-emerald-600">{totals.totalPay.toFixed(2)}</div>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-5 flex justify-end">
-          <button
-            type="button"
-            onClick={copySummary}
-            className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95"
-          >
-            {copied ? `✓ ${labels.copied}` : `📋 ${labels.copySummary}`}
-          </button>
-        </div>
+      {/* Copy Summary Button */}
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={copySummary}
+          className="inline-flex min-h-[42px] items-center gap-2 rounded-xl bg-blue-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-500 active:scale-95"
+        >
+          {copied ? `✓ ${labels.copied}` : `📋 ${labels.copySummary}`}
+        </button>
       </div>
     </div>
   );

@@ -510,6 +510,30 @@ const FALLBACK_COPY: Record<
     enDesc: "Create colorful audio visualizers with transparent background for video editors — from audio only or overlaid on video.",
     trDesc: "Video editörler için şeffaf arka planlı renkli ses görselleştirici — yalnızca ses veya videonun üzerine.",
   },
+  "pdf-sign": {
+    en: "PDF Sign & Stamp",
+    tr: "PDF İmzalama & Kaşe",
+    enDesc: "Sign PDF documents online with freehand drawing, typed Unicode name, or uploaded stamp. 100% private in browser.",
+    trDesc: "PDF belgelerinizi el çizimi, isim yazarak veya kaşe yükleyerek tarayıcınızda güvenle imzalayın.",
+  },
+  "loan-calculator": {
+    en: "Loan & Amortization Calculator",
+    tr: "Kredi & Amortisman Hesaplayıcı",
+    enDesc: "Calculate monthly payments, interest, and full amortization schedule for any currency. Export CSV.",
+    trDesc: "Aylık taksit, toplam faiz ve detaylı itfa tablosunu tüm para birimlerinde hesaplayın. CSV indirin.",
+  },
+  "file-hash": {
+    en: "File Hash & Checksum Verifier",
+    tr: "Dosya Hash & Doğrulama",
+    enDesc: "Compute SHA-256, SHA-512, and MD5 hashes locally with Web Crypto. Compare two files instantly.",
+    trDesc: "Web Crypto ile SHA-256, SHA-512 ve MD5 dosya karmalarını hesaplayın. İki dosyayı anında karşılaştırın.",
+  },
+  "image-color-picker": {
+    en: "Image Color Picker & Palette",
+    tr: "Görsel Renk Seçici & Palet",
+    enDesc: "Pick pixel colors from images with 8x magnifying loupe. Get HEX, RGB, HSL, CMYK, and WCAG contrast.",
+    trDesc: "Büyüteçli damlalıkla görselden piksel renklerini seçin. HEX, RGB, HSL, CMYK ve kontrast analizini görün.",
+  },
 };
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {

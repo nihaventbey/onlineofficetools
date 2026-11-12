@@ -284,6 +284,22 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
     import("@/components/tools/WorkHoursCalculator").then((m) => ({
       default: m.default as ToolComponent,
     })),
+  "pdf-sign": () =>
+    import("@/components/tools/pdf/PdfSignTool").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "loan-calculator": () =>
+    import("@/components/tools/LoanCalculator").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "file-hash": () =>
+    import("@/components/tools/FileHashTool").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
+  "image-color-picker": () =>
+    import("@/components/tools/ImageColorPicker").then((m) => ({
+      default: m.default as ToolComponent,
+    })),
 };
 
 export function hasClientToolLoader(slug: string): boolean {

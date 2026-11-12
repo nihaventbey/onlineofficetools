@@ -53,6 +53,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "pptx-extract", category: "presentations", dictKey: "pptxExtract", icon: "P→T", emoji: "📋", keywords: ["pptx", "extract", "text"], badge: "new", featured: false, accepts: ["pptx"], outputs: ["txt"], nextSteps: ["word-counter", "text-to-pptx"] },
 
   // PDF
+  { slug: "pdf-sign", category: "pdf", dictKey: "pdfSign", icon: "✍️", emoji: "✍️", keywords: ["pdf", "sign", "signature", "stamp", "e-sign", "imza", "imzala", "kaşe", "paraf", "mühür"], badge: "popular", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-to-text", "pdf-watermark"] },
   { slug: "pdf-to-text", category: "pdf", dictKey: "pdfToText", icon: "TXT", emoji: "📃", keywords: ["pdf", "extract", "text", "metin", "yazı", "aktar", "çıkar", "ocr", "dönüştür", "tara"], badge: "popular", featured: true, accepts: ["pdf"], outputs: ["txt", "md"], nextSteps: ["word-counter", "text-to-pdf", "whatsapp-cleaner"] },
   { slug: "text-to-pdf", category: "pdf", dictKey: "textToPdf", icon: "T→P", emoji: "📑", keywords: ["text", "pdf", "metin", "yazı", "dönüştür"], badge: "new", featured: false, accepts: ["txt"], outputs: ["pdf"], nextSteps: ["pdf-merge", "pdf-compress"] },
   { slug: "pdf-organize", category: "pdf", dictKey: "pdfOrganize", icon: "🗂️", emoji: "🗂️", keywords: ["pdf", "organize", "reorder", "delete", "sırala", "sil", "düzenle"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-page-numberer", "pdf-merge", "pdf-split"] },
@@ -80,6 +81,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "ocr", category: "image", dictKey: "ocr", icon: "OCR", emoji: "👁️", keywords: ["ocr", "text", "image"], badge: null, featured: false, nextSteps: ["word-counter", "pdf-to-text"] },
   { slug: "qr-generator", category: "image", dictKey: "qrGenerator", icon: "QR", emoji: "🔳", keywords: ["qr", "code"], badge: null, featured: false, nextSteps: ["url-encoder", "color-converter"] },
   { slug: "color-converter", category: "image", dictKey: "colorConverter", icon: "◈", emoji: "🎨", keywords: ["color", "hex", "rgb"], badge: null, featured: false, nextSteps: ["qr-generator", "html-editor"] },
+  { slug: "image-color-picker", category: "image", dictKey: "imageColorPicker", icon: "🎨", emoji: "🎯", keywords: ["color", "picker", "palette", "eyedropper", "loupe", "hex", "rgb", "hsl", "renk", "damlalık", "palet"], badge: "popular", featured: true, accepts: ["png", "jpg", "webp", "svg"], nextSteps: ["color-converter", "image-adjust"] },
 
   // Archive / ZIP
   { slug: "zip-create", category: "archive", dictKey: "zipCreate", icon: "ZIP", emoji: "📦", keywords: ["zip", "archive", "compress", "pack"], badge: "new", featured: true, outputs: ["zip"], nextSteps: ["zip-extract", "zip-viewer"] },
@@ -109,9 +111,11 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "uuid-generator", category: "developer", dictKey: "uuidGenerator", icon: "ID", emoji: "🆔", keywords: ["uuid"], badge: null, featured: false, nextSteps: ["password-generator", "json-formatter"] },
 
   // Security
+  { slug: "file-hash", category: "security", dictKey: "fileHash", icon: "#", emoji: "🛡️", keywords: ["hash", "checksum", "sha256", "sha512", "md5", "verify", "integrity", "doğrula", "sağlama", "özet"], badge: "popular", featured: true, accepts: ["*"], nextSteps: ["password-generator", "base64"] },
   { slug: "password-generator", category: "security", dictKey: "passwordGenerator", icon: "✱", emoji: "🔑", keywords: ["password", "secure"], badge: "popular", featured: true, nextSteps: ["uuid-generator", "base64"] },
 
   // Calculator
+  { slug: "loan-calculator", category: "calculator", dictKey: "loanCalculator", icon: "💳", emoji: "🏦", keywords: ["loan", "mortgage", "amortization", "interest", "payment", "kredi", "taksit", "faiz", "itfa", "borç"], badge: "popular", featured: true, nextSteps: ["vat-calculator", "work-hours-calculator"] },
   { slug: "vat-calculator", category: "calculator", dictKey: "vatCalculator", icon: "%", emoji: "🧮", keywords: ["kdv", "vat", "tax", "tevkifat", "vergi", "hesaplama", "fatura"], badge: "new", featured: true, nextSteps: ["work-hours-calculator", "unit-converter"] },
   { slug: "work-hours-calculator", category: "calculator", dictKey: "workHoursCalculator", icon: "⏱️", emoji: "⏰", keywords: ["work", "hours", "overtime", "mesai", "çalışma", "saat", "ücret", "puantaj"], badge: "new", featured: true, nextSteps: ["vat-calculator", "date-difference"] },
   { slug: "unit-converter", category: "calculator", dictKey: "unitConverter", icon: "⇄", emoji: "⚖️", keywords: ["unit", "convert"], badge: null, featured: false, nextSteps: ["date-difference", "birthday-calculator"] },

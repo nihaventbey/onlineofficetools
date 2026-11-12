@@ -72,6 +72,10 @@ export const toolDictKeys = [
   "listCleaner",
   "whatsappCleaner",
   "workHoursCalculator",
+  "pdfSign",
+  "loanCalculator",
+  "fileHash",
+  "imageColorPicker",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];

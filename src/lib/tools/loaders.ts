@@ -75,6 +75,10 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "password-generator": () => import("@/components/tools/PasswordGenerator").then((m) => ({ default: m.default as ToolComponent })),
   "unit-converter": () => import("@/components/tools/UnitConverter").then((m) => ({ default: m.default as ToolComponent })),
   "date-difference": () => import("@/components/tools/DateDifference").then((m) => ({ default: m.default as ToolComponent })),
+  "pdf-sign": () => import("@/components/tools/pdf/PdfSignTool").then((m) => ({ default: m.default as ToolComponent })),
+  "loan-calculator": () => import("@/components/tools/LoanCalculator").then((m) => ({ default: m.default as ToolComponent })),
+  "file-hash": () => import("@/components/tools/FileHashTool").then((m) => ({ default: m.default as ToolComponent })),
+  "image-color-picker": () => import("@/components/tools/ImageColorPicker").then((m) => ({ default: m.default as ToolComponent })),
 };
 
 export async function loadToolComponent(
