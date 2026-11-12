@@ -36,12 +36,10 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "find-replace", category: "text", dictKey: "findReplace", icon: "⌕", emoji: "🔍", keywords: ["find", "replace", "whitespace"], badge: "new", featured: false, nextSteps: ["word-counter", "text-diff"] },
 
   // Documents / Word
-  { slug: "pdf-to-text", category: "documents", dictKey: "pdfToText", icon: "TXT", emoji: "📃", keywords: ["pdf", "extract", "text"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["txt"], nextSteps: ["word-counter", "text-to-pdf"] },
   { slug: "docx-viewer", category: "documents", dictKey: "docxViewer", icon: "W", emoji: "📄", keywords: ["word", "docx", "view"], badge: "new", featured: true, accepts: ["docx"], outputs: ["html", "txt"], nextSteps: ["docx-to-html", "docx-diff"] },
   { slug: "docx-to-html", category: "documents", dictKey: "docxToHtml", icon: "W→", emoji: "🔄", keywords: ["docx", "html", "convert"], badge: "new", featured: false, accepts: ["docx"], outputs: ["html"], nextSteps: ["html-editor", "html-to-docx"] },
   { slug: "html-to-docx", category: "documents", dictKey: "htmlToDocx", icon: "→W", emoji: "📝", keywords: ["html", "docx", "word"], badge: "new", featured: false, accepts: ["html", "txt"], outputs: ["docx"], nextSteps: ["docx-viewer", "html-editor"] },
   { slug: "docx-diff", category: "documents", dictKey: "docxDiff", icon: "W≠", emoji: "⚖️", keywords: ["docx", "compare", "diff"], badge: "new", featured: false, accepts: ["docx"], nextSteps: ["docx-viewer", "text-diff"] },
-  { slug: "text-to-pdf", category: "documents", dictKey: "textToPdf", icon: "T→P", emoji: "📑", keywords: ["text", "pdf"], badge: "new", featured: false, outputs: ["pdf"], nextSteps: ["pdf-merge", "pdf-compress"] },
 
   // Spreadsheets / Excel
   { slug: "xlsx-viewer", category: "spreadsheets", dictKey: "xlsxViewer", icon: "X", emoji: "📊", keywords: ["excel", "xlsx", "sheet"], badge: "new", featured: true, accepts: ["xlsx", "xls"], nextSteps: ["xlsx-to-csv", "csv-editor"] },
@@ -55,6 +53,8 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "pptx-extract", category: "presentations", dictKey: "pptxExtract", icon: "P→T", emoji: "📋", keywords: ["pptx", "extract", "text"], badge: "new", featured: false, accepts: ["pptx"], outputs: ["txt"], nextSteps: ["word-counter", "text-to-pptx"] },
 
   // PDF
+  { slug: "pdf-to-text", category: "pdf", dictKey: "pdfToText", icon: "TXT", emoji: "📃", keywords: ["pdf", "extract", "text", "metin", "yazı", "aktar", "çıkar", "ocr", "dönüştür", "tara"], badge: "popular", featured: true, accepts: ["pdf"], outputs: ["txt", "md"], nextSteps: ["word-counter", "text-to-pdf", "whatsapp-cleaner"] },
+  { slug: "text-to-pdf", category: "pdf", dictKey: "textToPdf", icon: "T→P", emoji: "📑", keywords: ["text", "pdf", "metin", "yazı", "dönüştür"], badge: "new", featured: false, accepts: ["txt"], outputs: ["pdf"], nextSteps: ["pdf-merge", "pdf-compress"] },
   { slug: "pdf-organize", category: "pdf", dictKey: "pdfOrganize", icon: "🗂️", emoji: "🗂️", keywords: ["pdf", "organize", "reorder", "delete", "sırala", "sil", "düzenle"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-page-numberer", "pdf-merge", "pdf-split"] },
   { slug: "pdf-page-numberer", category: "pdf", dictKey: "pdfPageNumberer", icon: "123", emoji: "🔢", keywords: ["pdf", "page", "number", "numara", "sayfa", "header", "footer"], badge: "new", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-organize", "pdf-compress"] },
   { slug: "pdf-merge", category: "pdf", dictKey: "pdfMerge", icon: "⧉", emoji: "📎", keywords: ["pdf", "merge", "combine"], badge: "popular", featured: true, accepts: ["pdf"], outputs: ["pdf"], nextSteps: ["pdf-compress", "pdf-split"] },

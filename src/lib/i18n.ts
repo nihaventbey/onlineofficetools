@@ -697,7 +697,20 @@ export type Dictionary = {
       dedupe: string;
       sort: string;
     };
-    pdfToText: ToolFileLabels & { empty: string; pages: string };
+    pdfToText: ToolFileLabels & {
+      empty: string;
+      pages: string;
+      downloadTxt?: string;
+      downloadMd?: string;
+      allPages?: string;
+      words?: string;
+      chars?: string;
+      searchPlaceholder?: string;
+      noMatches?: string;
+      ocrScan?: string;
+      ocrProcessing?: string;
+      scannedNotice?: string;
+    };
     docxViewer: ToolFileLabels & { extract: string };
     docxToHtml: ToolFileLabels;
     htmlToDocx: ToolSharedLabels & {
