@@ -82,6 +82,7 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "qr-generator", category: "image", dictKey: "qrGenerator", icon: "QR", emoji: "🔳", keywords: ["qr", "code"], badge: null, featured: false, nextSteps: ["url-encoder", "color-converter"] },
   { slug: "color-converter", category: "image", dictKey: "colorConverter", icon: "◈", emoji: "🎨", keywords: ["color", "hex", "rgb"], badge: null, featured: false, nextSteps: ["qr-generator", "html-editor"] },
   { slug: "image-color-picker", category: "image", dictKey: "imageColorPicker", icon: "🎨", emoji: "🎯", keywords: ["color", "picker", "palette", "eyedropper", "loupe", "hex", "rgb", "hsl", "renk", "damlalık", "palet"], badge: "popular", featured: true, accepts: ["png", "jpg", "webp", "svg"], nextSteps: ["color-converter", "image-adjust"] },
+  { slug: "youtube-thumbnail-downloader", category: "image", dictKey: "youtubeThumbnailDownloader", icon: "YT", emoji: "🖼️", keywords: ["youtube", "thumbnail", "cover", "4k", "1080p", "kapak", "indir"], badge: "popular", featured: true, outputs: ["jpg"], nextSteps: ["image-resize", "image-convert"] },
 
   // Archive / ZIP
   { slug: "zip-create", category: "archive", dictKey: "zipCreate", icon: "ZIP", emoji: "📦", keywords: ["zip", "archive", "compress", "pack"], badge: "new", featured: true, outputs: ["zip"], nextSteps: ["zip-extract", "zip-viewer"] },
@@ -89,6 +90,11 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "zip-viewer", category: "archive", dictKey: "zipViewer", icon: "Z", emoji: "🗂️", keywords: ["zip", "view", "inspect", "list"], badge: "new", featured: false, accepts: ["zip"], nextSteps: ["zip-extract", "zip-create"] },
 
   // Video
+  { slug: "subtitle-editor", category: "video", dictKey: "subtitleEditor", icon: "SUB", emoji: "💬", keywords: ["subtitle", "srt", "vtt", "captions", "editor", "sync", "altyazı", "zamanlama"], badge: "popular", featured: true, accepts: ["srt", "vtt", "mp4", "webm"], outputs: ["srt", "vtt"], nextSteps: ["video-trim", "video-mute"] },
+  { slug: "video-mute", category: "video", dictKey: "videoMute", icon: "🔇", emoji: "🔇", keywords: ["video", "mute", "remove audio", "strip sound", "ses sil", "sessiz"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-trim", "video-crop"] },
+  { slug: "tiktok-downloader", category: "video", dictKey: "tiktokDownloader", icon: "TT", emoji: "📱", keywords: ["tiktok", "downloader", "no watermark", "hd", "mp4", "mp3", "indir", "filigransız"], badge: "popular", featured: true, outputs: ["mp4", "mp3"], nextSteps: ["instagram-downloader", "x-video-downloader"] },
+  { slug: "instagram-downloader", category: "video", dictKey: "instagramDownloader", icon: "IG", emoji: "📸", keywords: ["instagram", "reels", "downloader", "video", "post", "indir"], badge: "popular", featured: true, outputs: ["mp4", "jpg"], nextSteps: ["tiktok-downloader", "x-video-downloader"] },
+  { slug: "x-video-downloader", category: "video", dictKey: "xVideoDownloader", icon: "𝕏", emoji: "🐦", keywords: ["twitter", "x", "video", "gif", "downloader", "mp4", "indir"], badge: "new", featured: true, outputs: ["mp4"], nextSteps: ["tiktok-downloader", "instagram-downloader"] },
   { slug: "video-frame-extractor", category: "video", dictKey: "videoFrames", icon: "▣", emoji: "🎞️", keywords: ["video", "frame", "screenshot", "png"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["png", "zip"], nextSteps: ["video-to-gif", "video-watermark"] },
   { slug: "video-to-gif", category: "video", dictKey: "videoToGif", icon: "GIF", emoji: "🎬", keywords: ["video", "gif", "convert", "animate"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["gif"], nextSteps: ["video-frame-extractor", "video-trim"] },
   { slug: "video-trim", category: "video", dictKey: "videoTrim", icon: "✂V", emoji: "✂️", keywords: ["video", "trim", "cut", "mute", "webm"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], outputs: ["webm"], nextSteps: ["video-watermark", "video-crop"] },
@@ -99,10 +105,12 @@ export const toolMetaList: ToolMeta[] = [
   { slug: "video-metadata", category: "video", dictKey: "videoInfo", icon: "ℹV", emoji: "ℹ️", keywords: ["video", "metadata", "info", "duration"], badge: "new", featured: false, accepts: ["mp4", "webm", "mov"], nextSteps: ["video-trim", "video-resize"] },
 
   // Audio
+  { slug: "voice-recorder", category: "audio", dictKey: "voiceRecorder", icon: "🎙️", emoji: "🎙️", keywords: ["voice", "recorder", "microphone", "audio", "dictation", "ses kaydı", "mikrofon"], badge: "popular", featured: true, outputs: ["wav", "webm"], nextSteps: ["audio-editor", "video-to-audio"] },
   { slug: "video-to-audio", category: "audio", dictKey: "videoToAudio", icon: "V→A", emoji: "🎧", keywords: ["video", "audio", "mp3", "wav", "extract", "sound", "ses", "ayıkla"], badge: "new", featured: true, accepts: ["mp4", "webm", "mov"], outputs: ["mp3", "wav"], nextSteps: ["audio-editor", "video-trim"] },
   { slug: "audio-editor", category: "audio", dictKey: "audioEditor", icon: "♪", emoji: "🎵", keywords: ["audio", "trim", "cut", "waveform", "convert", "wav", "webm", "mp3", "ses", "kırp", "dalga"], badge: "new", featured: true, accepts: ["mp3", "wav", "ogg", "m4a", "webm", "flac"], outputs: ["wav", "mp3", "webm", "ogg"], nextSteps: ["video-trim", "zip-create"] },
 
   // Developer
+  { slug: "json-csv-converter", category: "developer", dictKey: "jsonCsvConverter", icon: "{}⇄", emoji: "📊", keywords: ["json", "csv", "excel", "convert", "table", "dönüştür", "tablo"], badge: "popular", featured: true, accepts: ["json", "csv"], outputs: ["csv", "xlsx", "json"], nextSteps: ["json-formatter", "csv-editor"] },
   { slug: "json-formatter", category: "developer", dictKey: "jsonFormatter", icon: "{}", emoji: "🧩", keywords: ["json", "format"], badge: "popular", featured: true, nextSteps: ["base64", "uuid-generator"] },
   { slug: "base64", category: "developer", dictKey: "base64", icon: "64", emoji: "🔐", keywords: ["base64"], badge: null, featured: false, nextSteps: ["url-encoder", "json-formatter"] },
   { slug: "html-editor", category: "developer", dictKey: "htmlEditor", icon: "</>", emoji: "💻", keywords: ["html", "editor", "wysiwyg"], badge: "popular", featured: true, nextSteps: ["markdown-preview", "html-to-docx"] },

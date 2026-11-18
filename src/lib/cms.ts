@@ -534,6 +534,54 @@ const FALLBACK_COPY: Record<
     enDesc: "Pick pixel colors from images with 8x magnifying loupe. Get HEX, RGB, HSL, CMYK, and WCAG contrast.",
     trDesc: "Büyüteçli damlalıkla görselden piksel renklerini seçin. HEX, RGB, HSL, CMYK ve kontrast analizini görün.",
   },
+  "subtitle-editor": {
+    en: "Subtitle Editor & SRT/VTT Exporter",
+    tr: "Altyazı Editörü & SRT/VTT İhracatçısı",
+    enDesc: "Create, edit, and sync video subtitles with timeline cues. Export to .SRT and .VTT format with time-shift.",
+    trDesc: "Zaman damgalı video altyazıları oluşturun, düzenleyin ve senkronize edin. SRT ve VTT olarak indirin.",
+  },
+  "video-mute": {
+    en: "Mute Video (Remove Audio)",
+    tr: "Videodan Sesi Silme / Sessizleştirme",
+    enDesc: "Remove sound or copyrighted music from any video file 100% inside your browser. No server upload.",
+    trDesc: "Videolardan arka plan sesini veya telifli müziği tarayıcınızda anında silin. Sunucuya yükleme gerektirmez.",
+  },
+  "tiktok-downloader": {
+    en: "TikTok Video Downloader (No Watermark)",
+    tr: "TikTok Filigransız Video İndirici",
+    enDesc: "Download high quality TikTok videos without watermarks or save original MP3 audio directly.",
+    trDesc: "TikTok videolarını filigransız (logosuz) HD kalitede MP4 olarak indirin veya MP3 sesini kaydedin.",
+  },
+  "instagram-downloader": {
+    en: "Instagram Reels & Video Downloader",
+    tr: "Instagram Reels & Video İndirici",
+    enDesc: "Download public Instagram Reels, videos, and post photos directly in full original quality.",
+    trDesc: "Instagram Reels, video ve gönderi fotoğraflarını orijinal yüksek kalitede anında indirin.",
+  },
+  "youtube-thumbnail-downloader": {
+    en: "YouTube 4K & HD Thumbnail Downloader",
+    tr: "YouTube 4K & HD Thumbnail İndirici",
+    enDesc: "Download YouTube cover images in Ultra HD (1080p/4K), HD, and SD resolution directly from CDN.",
+    trDesc: "YouTube video kapak resimlerini Ultra HD 1080p/4K, HD ve SD kalitede tek tıkla indirin.",
+  },
+  "x-video-downloader": {
+    en: "X (Twitter) Video & GIF Downloader",
+    tr: "X (Twitter) Video & GIF İndirici",
+    enDesc: "Download videos and animations from X / Twitter posts directly in high definition MP4 format.",
+    trDesc: "X (Twitter) paylaşımlarındaki video ve GIF animasyonlarını doğrudan yüksek kaliteli MP4 olarak indirin.",
+  },
+  "json-csv-converter": {
+    en: "JSON ⇄ CSV & Excel Converter",
+    tr: "JSON ⇄ CSV & Excel Dönüştürücü",
+    enDesc: "Bidirectional converter between JSON arrays and CSV/Excel tables. Flatten nested objects and export instantly.",
+    trDesc: "JSON ile CSV ve Excel tabloları arasında çift yönlü dönüştürme yapın. İç içe objeleri düzleştirin ve indirin.",
+  },
+  "voice-recorder": {
+    en: "Online Voice & Audio Recorder",
+    tr: "Tarayıcı İçi Ses & Dikte Kaydedici",
+    enDesc: "Record voice notes, dictation, and meetings directly in browser with live waveform. Export to WAV or WebM.",
+    trDesc: "Mikrofonla tarayıcınızda canlı dalga boyu önizlemeli ses kaydı yapın. Kayıpsız WAV veya WebM olarak indirin.",
+  },
 };
 
 async function fallbackTools(locale: Locale): Promise<CmsToolCard[]> {

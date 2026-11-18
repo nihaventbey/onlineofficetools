@@ -79,6 +79,14 @@ const loaders: Record<string, () => Promise<{ default: ToolComponent }>> = {
   "loan-calculator": () => import("@/components/tools/LoanCalculator").then((m) => ({ default: m.default as ToolComponent })),
   "file-hash": () => import("@/components/tools/FileHashTool").then((m) => ({ default: m.default as ToolComponent })),
   "image-color-picker": () => import("@/components/tools/ImageColorPicker").then((m) => ({ default: m.default as ToolComponent })),
+  "subtitle-editor": () => import("@/components/tools/video/SubtitleEditor").then((m) => ({ default: m.default as ToolComponent })),
+  "video-mute": () => import("@/components/tools/video/VideoMute").then((m) => ({ default: m.default as ToolComponent })),
+  "tiktok-downloader": () => import("@/components/tools/social/TiktokDownloader").then((m) => ({ default: m.default as ToolComponent })),
+  "instagram-downloader": () => import("@/components/tools/social/InstagramDownloader").then((m) => ({ default: m.default as ToolComponent })),
+  "youtube-thumbnail-downloader": () => import("@/components/tools/social/YoutubeThumbnailDownloader").then((m) => ({ default: m.default as ToolComponent })),
+  "x-video-downloader": () => import("@/components/tools/social/XVideoDownloader").then((m) => ({ default: m.default as ToolComponent })),
+  "json-csv-converter": () => import("@/components/tools/developer/JsonCsvConverter").then((m) => ({ default: m.default as ToolComponent })),
+  "voice-recorder": () => import("@/components/tools/audio/VoiceRecorder").then((m) => ({ default: m.default as ToolComponent })),
 };
 
 export async function loadToolComponent(

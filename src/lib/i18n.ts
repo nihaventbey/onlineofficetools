@@ -67,6 +67,25 @@ export type ToolFileLabels = ToolSharedLabels & {
   limitHint: string;
 };
 
+export type ToolBaseLabels = {
+  title: string;
+  description: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  copy?: string;
+  copied?: string;
+  clear?: string;
+  dropHint?: string;
+  selectHint?: string;
+  remove?: string;
+  download?: string;
+  processing?: string;
+  invalidFile?: string;
+  tooLarge?: string;
+  error?: string;
+  limitHint?: string;
+};
+
 export type Dictionary = {
   common: {
     siteName: string;
@@ -1321,6 +1340,121 @@ export type Dictionary = {
       dominantPalette?: string;
       wcagContrast?: string;
       savedColors?: string;
+    };
+    subtitleEditor: ToolBaseLabels & {
+      loadVideo?: string;
+      changeVideo?: string;
+      importSubtitle?: string;
+      sampleData?: string;
+      clearAll?: string;
+      copySrt?: string;
+      downloadSrt?: string;
+      downloadVtt?: string;
+      noVideoLoaded?: string;
+      noVideoHint?: string;
+      browseVideo?: string;
+      currentPosition?: string;
+      addCueAtCurrent?: string;
+      timeShiftTitle?: string;
+      timeShiftHint?: string;
+      subtitlesList?: string;
+      addNewCue?: string;
+      cueTextPlaceholder?: string;
+      noCuesYet?: string;
+      loadSampleCues?: string;
+    };
+    videoMute: ToolBaseLabels & {
+      muteTitle?: string;
+      muteDescription?: string;
+      safariHint?: string;
+      invalidFile?: string;
+      tooLarge?: string;
+      loadError?: string;
+      unsupportedBrowser?: string;
+      processError?: string;
+      changeVideo?: string;
+      originalVideo?: string;
+      mutedResult?: string;
+      readyToMute?: string;
+      processing?: string;
+      processingBtn?: string;
+      muteAction?: string;
+      downloadMuted?: string;
+    };
+    tiktokDownloader: ToolBaseLabels & {
+      downloaderTitle?: string;
+      downloaderDesc?: string;
+      urlPlaceholder?: string;
+      pasteBtn?: string;
+      fetchingVideo?: string;
+      downloadBtn?: string;
+      downloadNoWatermark?: string;
+      downloadAudio?: string;
+    };
+    instagramDownloader: ToolBaseLabels & {
+      downloaderTitle?: string;
+      downloaderDesc?: string;
+      urlPlaceholder?: string;
+      pasteBtn?: string;
+      fetchingMedia?: string;
+      downloadBtn?: string;
+      downloadVideo?: string;
+      downloadImage?: string;
+    };
+    youtubeThumbnailDownloader: ToolBaseLabels & {
+      downloaderTitle?: string;
+      downloaderDesc?: string;
+      urlPlaceholder?: string;
+      pasteBtn?: string;
+      getThumbnails?: string;
+      invalidUrl?: string;
+      availableQualities?: string;
+      ultraHd?: string;
+      standardDef?: string;
+      highQuality?: string;
+      mediumQuality?: string;
+      downloadImage?: string;
+    };
+    xVideoDownloader: ToolBaseLabels & {
+      downloaderTitle?: string;
+      downloaderDesc?: string;
+      urlPlaceholder?: string;
+      pasteBtn?: string;
+      fetchingTweet?: string;
+      downloadBtn?: string;
+      downloadVideo?: string;
+    };
+    jsonCsvConverter: ToolBaseLabels & {
+      tabJsonToCsv?: string;
+      tabCsvToJson?: string;
+      jsonInputLabel?: string;
+      loadSample?: string;
+      beautify?: string;
+      clear?: string;
+      flattenNested?: string;
+      copyCsv?: string;
+      downloadCsv?: string;
+      downloadExcel?: string;
+      tablePreview?: string;
+      rows?: string;
+      columns?: string;
+      csvInputLabel?: string;
+      jsonOutputLabel?: string;
+      copyJson?: string;
+      downloadJson?: string;
+    };
+    voiceRecorder: ToolBaseLabels & {
+      recorderTitle?: string;
+      recorderDesc?: string;
+      micError?: string;
+      clickToRecord?: string;
+      startRecording?: string;
+      pause?: string;
+      resume?: string;
+      stopRecording?: string;
+      playbackTitle?: string;
+      downloadWav?: string;
+      downloadWebm?: string;
     };
   };
 };

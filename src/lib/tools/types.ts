@@ -76,6 +76,14 @@ export const toolDictKeys = [
   "loanCalculator",
   "fileHash",
   "imageColorPicker",
+  "subtitleEditor",
+  "videoMute",
+  "tiktokDownloader",
+  "instagramDownloader",
+  "youtubeThumbnailDownloader",
+  "xVideoDownloader",
+  "jsonCsvConverter",
+  "voiceRecorder",
 ] as const;
 
 export type ToolDictKey = (typeof toolDictKeys)[number];
