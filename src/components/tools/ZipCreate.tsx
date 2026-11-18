@@ -52,6 +52,10 @@ export default function ZipCreate({ labels }: Props) {
 
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+      <div className="flex items-center justify-between rounded-xl bg-indigo-50/70 border border-indigo-100 px-3.5 py-2.5 text-xs text-indigo-900">
+        <span>💡 Need to view inside, select specific files, or add new items? Try our all-in-one <strong>Archive Studio</strong>.</span>
+        <a href="zip-viewer" className="font-semibold text-indigo-600 hover:underline shrink-0 ml-2">Open Archive Studio →</a>
+      </div>
       <p className="text-sm text-slate-500">{labels.limitHint}</p>
       <FileDropZone
         accept="*/*"

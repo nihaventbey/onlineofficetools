@@ -184,6 +184,10 @@ export default function VideoMute({ labels }: Props) {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+        <div className="flex items-center justify-between rounded-xl bg-indigo-50/70 border border-indigo-100 px-3.5 py-2.5 text-xs text-indigo-900">
+          <span>💡 Need to trim duration, crop aspect ratios, or scale resolution as well? Try the all-in-one <strong>Video Quick Studio</strong>.</span>
+          <a href="video-trim" className="font-semibold text-indigo-600 hover:underline shrink-0 ml-2">Open Video Studio →</a>
+        </div>
         <div>
           <h2 className="text-lg font-bold text-slate-900">
             {labels.muteTitle || "Mute Video (Remove Audio Track)"}
